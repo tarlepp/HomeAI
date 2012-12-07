@@ -95,7 +95,6 @@ class Request implements Interfaces\Request
      */
     protected $_pathInfo = '';
 
-
     /**
      * Construction of the class. Stores "request data" in GPC order.
      *
@@ -107,7 +106,6 @@ class Request implements Interfaces\Request
 
         $this->setRequestUri();
     }
-
 
     /**#@+
      * Start of static -methods.
@@ -134,7 +132,6 @@ class Request implements Interfaces\Request
      */
     /**#@-*/
 
-
     /**
      * Sets a single parameter. A $value of null will unset the $key if it exists.
      *
@@ -153,7 +150,6 @@ class Request implements Interfaces\Request
             $this->_params[$key] = $value;
         }
     }
-
 
     /**
      * Method sets a 'live' cookie.
@@ -184,7 +180,6 @@ class Request implements Interfaces\Request
         return setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 
-
     /**
      * Set action parameters en masse; does not overwrite. Null values will
      * unset the associated key.
@@ -205,7 +200,6 @@ class Request implements Interfaces\Request
             }
         }
     }
-
 
     /**
      * Set GET values.
@@ -238,7 +232,6 @@ class Request implements Interfaces\Request
         $_GET[(string)$key] = $value;
     }
 
-
     /**
      * Set POST values.
      *
@@ -270,7 +263,6 @@ class Request implements Interfaces\Request
         $_POST[(string)$key] = $value;
     }
 
-
     /**
      * Set SESSION values.
      *
@@ -301,7 +293,6 @@ class Request implements Interfaces\Request
 
         $_SESSION[(string)$key] = $value;
     }
-
 
     /**
      * Set the REQUEST_URI on which the instance operates
@@ -352,7 +343,6 @@ class Request implements Interfaces\Request
 
         $this->_requestUri = $requestUri;
     }
-
 
     /**
      * Set the base URL of the request; i.e., the segment leading to the script name
@@ -436,10 +426,10 @@ class Request implements Interfaces\Request
                 $truncatedRequestUri = substr($requestUri, 0, $pos);
             }
 
-            $basename = basename($baseUrl);
+            $baseName = basename($baseUrl);
 
             // no match whatsoever; set it blank
-            if (empty($basename) || !strpos($truncatedRequestUri, $basename)) {
+            if (empty($baseName) || !strpos($truncatedRequestUri, $baseName)) {
                 $this->_baseUrl = '';
 
                 return;
@@ -461,7 +451,6 @@ class Request implements Interfaces\Request
 
         return;
     }
-
 
     /**
      * Set the base path for the URL
@@ -502,7 +491,6 @@ class Request implements Interfaces\Request
 
         return;
     }
-
 
     /**
      * Set the path info string
@@ -550,7 +538,6 @@ class Request implements Interfaces\Request
         $this->_pathInfo = (string)$pathInfo;
     }
 
-
     /**
      * Read stored "request data" by referencing a key.
      *
@@ -576,7 +563,6 @@ class Request implements Interfaces\Request
         return (isset($this->_params[$key])) ? $this->_params[$key] : $default;
     }
 
-
     /**
      * Returns current REQUEST_URI.
      *
@@ -594,7 +580,6 @@ class Request implements Interfaces\Request
 
         return $this->_requestUri;
     }
-
 
     /**
      * Everything in REQUEST_URI before PATH_INFO.
@@ -629,7 +614,6 @@ class Request implements Interfaces\Request
         return ($raw == false) ? urldecode($url) : $url;
     }
 
-
     /**
      * Everything in REQUEST_URI before PATH_INFO not including the filename.
      *
@@ -647,7 +631,6 @@ class Request implements Interfaces\Request
 
         return $this->_basePath;
     }
-
 
     /**
      * Method returns current URL address.
@@ -675,7 +658,6 @@ class Request implements Interfaces\Request
         return ($raw == false) ? urldecode($url) : $url;
     }
 
-
     /**
      * Returns everything between the BaseUrl and QueryString.
      * This value is calculated instead of reading PATH_INFO
@@ -695,7 +677,6 @@ class Request implements Interfaces\Request
 
         return $this->_pathInfo;
     }
-
 
     /**
      * Retrieve a member of the $_GET superglobal. If no $key is passed,
@@ -723,7 +704,6 @@ class Request implements Interfaces\Request
         return (isset($_GET[$key])) ? $_GET[$key] : $default;
     }
 
-
     /**
      * Retrieve a member of the $_POST superglobal. If no $key is passed,
      * returns the entire $_POST array.
@@ -749,7 +729,6 @@ class Request implements Interfaces\Request
 
         return (isset($_POST[$key])) ? $_POST[$key] : $default;
     }
-
 
     /**
      * Retrieve a member of the $_SESSION superglobal. If no $key is passed,
@@ -777,7 +756,6 @@ class Request implements Interfaces\Request
         return (isset($_SESSION[$key])) ? $_SESSION[$key] : $default;
     }
 
-
     /**
      * Retrieve a member of the $_COOKIE superglobal. If no $key is passed,
      * returns the entire $_COOKIE array.
@@ -803,7 +781,6 @@ class Request implements Interfaces\Request
 
         return (isset($_COOKIE[$key])) ? $_COOKIE[$key] : $default;
     }
-
 
     /**
      * Retrieve a member of the $_SERVER superglobal. If no $key is passed,
@@ -831,7 +808,6 @@ class Request implements Interfaces\Request
         return (isset($_SERVER[$key])) ? $_SERVER[$key] : $default;
     }
 
-
     /**
      * Retrieve a member of the $_ENV superglobal. If no $key is passed,
      * returns the entire $_ENV array.
@@ -858,7 +834,6 @@ class Request implements Interfaces\Request
         return (isset($_ENV[$key])) ? $_ENV[$key] : $default;
     }
 
-
     /**
      * Return the method by which the request was made
      *
@@ -872,7 +847,6 @@ class Request implements Interfaces\Request
     {
         return $this->getServer('REQUEST_METHOD');
     }
-
 
     /**
      * Return the raw body of the request if present.
@@ -893,7 +867,6 @@ class Request implements Interfaces\Request
 
         return $this->_rawBody;
     }
-
 
     /**
      * Return the value of the given HTTP header. Pass the header name as the
@@ -939,7 +912,6 @@ class Request implements Interfaces\Request
         return false;
     }
 
-
     /**
      * Get the request URI scheme
      *
@@ -953,7 +925,6 @@ class Request implements Interfaces\Request
     {
         return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
     }
-
 
     /**
      * Get the HTTP host. "Host" ":" host [ ":" port ] ; Section 3.2.2
@@ -988,7 +959,6 @@ class Request implements Interfaces\Request
         }
     }
 
-
     /**
      * Get the client's IP address
      *
@@ -1011,7 +981,6 @@ class Request implements Interfaces\Request
         return $ip;
     }
 
-
     /**
      * Method removes defined cookie.
      *
@@ -1028,7 +997,6 @@ class Request implements Interfaces\Request
         return setcookie($name, null, -1);
     }
 
-
     /**
      * Was the request made by POST?
      *
@@ -1040,7 +1008,6 @@ class Request implements Interfaces\Request
     {
         return ($this->getMethod() == 'POST') ? true : false;
     }
-
 
     /**
      * Was the request made by GET?
@@ -1054,7 +1021,6 @@ class Request implements Interfaces\Request
         return ($this->getMethod() == 'GET') ? true : false;
     }
 
-
     /**
      * Was the request made by PUT?
      *
@@ -1066,7 +1032,6 @@ class Request implements Interfaces\Request
     {
         return ($this->getMethod() == 'PUT') ? true : false;
     }
-
 
     /**
      * Was the request made by DELETE?
@@ -1080,7 +1045,6 @@ class Request implements Interfaces\Request
         return ($this->getMethod() == 'DELETE') ? true : false;
     }
 
-
     /**
      * Was the request made by HEAD?
      *
@@ -1092,7 +1056,6 @@ class Request implements Interfaces\Request
     {
         return ($this->getMethod() == 'HEAD') ? true : false;
     }
-
 
     /**
      * Was the request made by OPTIONS?
@@ -1106,10 +1069,9 @@ class Request implements Interfaces\Request
         return ($this->getMethod() == 'OPTIONS') ? true : false;
     }
 
-
     /**
      * Is request for development environment or not. This is configured
-     * in \config\constants.ini -file.
+     * in \config\config.ini -file.
      *
      * @access  public
      *
@@ -1119,7 +1081,6 @@ class Request implements Interfaces\Request
     {
         return (bool)Config::readIni('config.ini', 'System', 'Production');
     }
-
 
     /**
      * Is the request a Javascript XMLHttpRequest or not? Should work with
@@ -1134,7 +1095,6 @@ class Request implements Interfaces\Request
         return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest') ? true : false;
     }
 
-
     /**
      * Is https secure request
      *
@@ -1146,7 +1106,6 @@ class Request implements Interfaces\Request
     {
         return ($this->getScheme() === self::SCHEME_HTTPS);
     }
-
 
     /**
      * Method determines if current request is from bot or not.
@@ -1171,7 +1130,6 @@ class Request implements Interfaces\Request
 
         return ($matchesNum > 0) ? true : false;
     }
-
 
     /**
      * Method tries to find specified value from multidimensional array.

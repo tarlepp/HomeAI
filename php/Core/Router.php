@@ -41,7 +41,6 @@ class Router implements Interfaces\Router
      */
     private static $defaultAction = 'Default';
 
-
     /**
      * This method handles _all_ request for HomeAI -system. Basically method determines
      * what page and action user want to process.
@@ -54,7 +53,7 @@ class Router implements Interfaces\Router
      *
      * @return  void
      */
-    public static function handleRequest(Request &$request)
+    public static final function handleRequest(Request &$request)
     {
         // Get path info from current url and remove extra '/' characters from it
         $pageData = array_filter(explode('/', preg_replace('#/+#', '/', $request->getPathInfo())));
@@ -83,7 +82,7 @@ class Router implements Interfaces\Router
         /**
          * Create page controller and handle defined request.
          *
-         * @var     $pageController     \HomeAI\Page\Controller     This is for the 'smart' IDE
+         * @var     $pageController     \HomeAI\Module\Controller     This is for the 'smart' IDE
          */
         $pageController = new $controller($request, $page, $action, $pageData);
         $pageController->handleRequest();

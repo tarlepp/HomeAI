@@ -1,6 +1,6 @@
 <?php
 /**
- * \php\Core\Interfaces\iRouter.php
+ * \php\Core\Interfaces\Router.php
  *
  * @package     HomeAI
  * @subpackage  Core
@@ -10,7 +10,7 @@ namespace HomeAI\Core\Interfaces;
 
 use HomeAI\Core\Request;
 
-defined('NETTIBAARI_INIT') OR die('No direct access allowed.');
+defined('HOMEAI_INIT') OR die('No direct access allowed.');
 /**
  * iRouter -interface
  *
@@ -26,5 +26,4 @@ defined('NETTIBAARI_INIT') OR die('No direct access allowed.');
  */
 interface Router
 {
-    public static function handleRequest(Request &$request);
 }
