@@ -35,8 +35,12 @@ TODO, we may need some scripting...
 ### Client
 TODO, we may need some scripting...
 
-Development
------------
-Todo add some heavy stuff here...
+Development / Contributing
+--------------------------
 
-
+1. Fork it, please.
+2. Create a branch (`git checkout -b xxx`)
+3. Commit your changes (`git commit -am "some changes..."`)
+4. Push to the branch (`git push origin xxx`)
+5. Open a [Pull Request][1]
+6. Take some Jaloviina (*) enjoy and wait
