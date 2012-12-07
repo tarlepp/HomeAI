@@ -1,0 +1,11 @@
+IndexIgnore *
+allow from all
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ homeai.php [QSA,L]
+
+    RedirectMatch 404 /\\.svn(/|$)
+</IfModule>
