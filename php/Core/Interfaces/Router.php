@@ -8,11 +8,7 @@
  */
 namespace HomeAI\Core\Interfaces;
 
-use HomeAI\Core\Request;
-
 /**
- * iRouter -interface
- *
  * Interface for \HomeAI\Core\Router -class.
  *
  * @package     HomeAI

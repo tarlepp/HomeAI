@@ -9,8 +9,6 @@
 namespace HomeAI\Core\Interfaces;
 
 /**
- * iRequest -interface
- *
  * Interface for \HomeAI\Core\Request -class.
  *
  * @package     HomeAI
