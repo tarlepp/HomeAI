@@ -14,7 +14,6 @@
  * @revision    $Rev$
  */
 use Nettibaari\Util\Config;
-use Nettibaari\Core\Session;
 
 // Define software initialize bit
 define('HOMEAI_INIT', true);
@@ -91,9 +90,3 @@ foreach (Config::readIni('constants.ini') as $section => $data) {
 
 // Require database library
 require_once 'database.php';
-
-// Create sessions only for real http calls
-if (php_sapi_name() !== 'cli') {
-    // Initialize session handling.
-    Session::initialize();
-}

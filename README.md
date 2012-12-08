@@ -15,16 +15,20 @@ can be simple rrd images, relay controls or something else.
 We provide some default functionalities for default but you can write your own implementation if you
 see that our free library isn't enough. Please remember to contribute our passion about this software.
 
-### What are WE using:
-- PHP 5.3+, what else? :D (http://php.net/)
+### Demo
+http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarantees.
+
+### What are we using to do this all:
+- PHP 5.4+, what else? :D (http://php.net/)
 - Doctrine DBAL (http://www.doctrine-project.org/projects/dbal.html)
 - jQuery (http://jquery.com/)
+- This list will be updated
 
 ### Notes
-I'm looking for some help to do this all :D, Please contact If you are interested in this.
+We're always looking for some help to do this all, please contact if you are interested in this.
 
 ### Why to do this?
-Don't know...
+Don't know, some fucking passion to do something etc.
 
 ### License
 The MIT License is simple and easy to understand and it places almost no restrictions on what you can do with this project.

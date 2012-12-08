@@ -67,7 +67,7 @@ class Router implements Interfaces\Router
         $action = empty($action) ? self::$defaultAction : $action;
 
         // Specify used controller for current request
-        $controller = "\\HomeAI\\Page\\" . $page . "\\Controller";
+        $controller = "\\HomeAI\\Module\\" . $page . "\\Controller";
 
         // Check that asked controller exists
         if (!class_exists($controller)) {
@@ -75,7 +75,7 @@ class Router implements Interfaces\Router
             $page = self::$defaultPage;
 
             // Specify default controller
-            $controller = "\\HomeAI\\Page\\" . $page . "\\Controller";
+            $controller = "\\HomeAI\\Module\\" . $page . "\\Controller";
             $action     = '404';
         }
 

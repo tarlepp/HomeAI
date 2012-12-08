@@ -181,7 +181,7 @@ class Request implements Interfaces\Request
     }
 
     /**
-     * Set action parameters en masse; does not overwrite. Null values will
+     * Set action parameters for masses; does not overwrite. Null values will
      * unset the associated key.
      *
      * @access  public
@@ -207,8 +207,6 @@ class Request implements Interfaces\Request
      * @access  public
      *
      * @throws  \HomeAI\Core\Exception
-     *
-     * @uses    \HomeAI\Core\Request::setQuery()
      *
      * @param   mixed   $key
      * @param   mixed   $value
@@ -239,8 +237,6 @@ class Request implements Interfaces\Request
      *
      * @throws  \HomeAI\Core\Exception
      *
-     * @uses    \HomeAI\Core\Request::setPost()
-     *
      * @param   mixed   $key
      * @param   mixed   $value
      *
@@ -269,8 +265,6 @@ class Request implements Interfaces\Request
      * @access  public
      *
      * @throws  \HomeAI\Core\Exception
-     *
-     * @uses    \HomeAI\Core\Request::setSession()
      *
      * @param   mixed   $key
      * @param   mixed   $value
@@ -303,10 +297,6 @@ class Request implements Interfaces\Request
      * @access  public
      *
      * @throws  \HomeAI\Core\Exception
-     *
-     * @uses    \HomeAI\Core\Request::getScheme()
-     * @uses    \HomeAI\Core\Request::getHttpHost()
-     * @uses    \HomeAI\Core\Request::setQuery()
      *
      * @param   string      $requestUri
      *
@@ -364,8 +354,6 @@ class Request implements Interfaces\Request
      * @access  public
      *
      * @throws  \HomeAI\Core\Exception
-     *
-     * @uses    \HomeAI\Core\Request::getRequestUri()
      *
      * @param   mixed   $baseUrl
      *
@@ -457,8 +445,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::getBaseUrl()
-     *
      * @param   mixed   $basePath
      *
      * @return  void
@@ -496,9 +482,6 @@ class Request implements Interfaces\Request
      * Set the path info string
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::getBaseUrl
-     * @uses    \HomeAI\Core\Request::getRequestUri
      *
      * @param   mixed   $pathInfo
      *
@@ -543,8 +526,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
-     *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
      *
@@ -568,8 +549,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::setRequestUri()
-     *
      * @return  string
      */
     public function getRequestUri()
@@ -585,10 +564,6 @@ class Request implements Interfaces\Request
      * Everything in REQUEST_URI before PATH_INFO.
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::setBaseUrl()
-     * @uses    \HomeAI\Core\Request::getScheme()
-     * @uses    \HomeAI\Core\Request::getHttpHost()
      *
      * @param   boolean $raw
      * @param   boolean $withHost
@@ -619,8 +594,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::setBasePath()
-     *
      * @return  string
      */
     public function getBasePath()
@@ -636,11 +609,6 @@ class Request implements Interfaces\Request
      * Method returns current URL address.
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::getScheme()
-     * @uses    \HomeAI\Core\Request::getHttpHost()
-     * @uses    \HomeAI\Core\Request::getBaseUrl()
-     * @uses    \HomeAI\Core\Request::getPathInfo()
      *
      * @param   boolean     $raw
      *
@@ -665,8 +633,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::setPathInfo()
-     *
      * @return  string
      */
     public function getPathInfo()
@@ -683,8 +649,6 @@ class Request implements Interfaces\Request
      * returns the entire $_GET array.
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
      *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
@@ -710,8 +674,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
-     *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
      *
@@ -735,8 +697,6 @@ class Request implements Interfaces\Request
      * returns the entire $_SESSION array.
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
      *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
@@ -762,8 +722,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
-     *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
      *
@@ -787,8 +745,6 @@ class Request implements Interfaces\Request
      * returns the entire $_SERVER array.
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
      *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
@@ -814,8 +770,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::fetchArrayValue()
-     *
      * @param   mixed   $key
      * @param   mixed   $default    Default value to use if key not found
      *
@@ -838,8 +792,6 @@ class Request implements Interfaces\Request
      * Return the method by which the request was made
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::getServer()
      *
      * @return  string
      */
@@ -917,8 +869,6 @@ class Request implements Interfaces\Request
      *
      * @access  public
      *
-     * @uses    \HomeAI\Core\Request::getServer()
-     *
      * @return  string
      */
     public function getScheme()
@@ -932,9 +882,6 @@ class Request implements Interfaces\Request
      * the port while the URI host doesn't.
      *
      * @access  public
-     *
-     * @uses    \HomeAI\Core\Request::getServer()
-     * @uses    \HomeAI\Core\Request::getScheme()
      *
      * @return  string
      */
