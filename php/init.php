@@ -13,10 +13,7 @@
  * @author      $Author$
  * @revision    $Rev$
  */
-use Nettibaari\Util\Config;
-
-// Define software initialize bit
-define('HOMEAI_INIT', true);
+use HomeAI\Util\Config;
 
 // Default timezone setting
 date_default_timezone_set('Europe/Helsinki');
@@ -29,7 +26,7 @@ mb_http_output('UTF-8');
 mb_internal_encoding('UTF-8');
 
 // We want to show all errors.
-error_reporting(E_ALL);
+error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
 
 // Define system basepath

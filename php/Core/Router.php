@@ -1,6 +1,6 @@
 <?php
 /**
- * \php\Core\Request.php
+ * \php\Core\Router.php
  *
  * @package    HomeAI
  * @subpackage Core
@@ -8,12 +8,10 @@
  */
 namespace HomeAI\Core;
 
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
 /**
- * Request -class
+ * Router -class
  *
- * Generic request helper class which encapsulate request data into the one
- * object providing a single channel for request data access and manipulation.
+ * General router class. Basically all request are routed via this class.
  *
  * @package     HomeAI
  * @subpackage  Core
@@ -26,15 +24,15 @@ defined('HOMEAI_INIT') OR die('No direct access allowed.');
 class Router implements Interfaces\Router
 {
     /**
-     * Default page request.
+     * Default module definition
      *
      * @access  private static
      * @var     string
      */
-    private static $defaultPage = 'Main';
+    private static $defaultModule = 'Main';
 
     /**
-     * Default page action request.
+     * Default module action definition
      *
      * @access  private static
      * @var     string
@@ -43,9 +41,9 @@ class Router implements Interfaces\Router
 
     /**
      * This method handles _all_ request for HomeAI -system. Basically method determines
-     * what page and action user want to process.
+     * what module and action user want to process.
      *
-     * Actual response is made in specified page controller class.
+     * Actual response is made in specified module controller class.
      *
      * @access  public static
      *
@@ -53,40 +51,40 @@ class Router implements Interfaces\Router
      *
      * @return  void
      */
-    public static final function handleRequest(Request &$request)
+    public static function handleRequest(Request &$request)
     {
         // Get path info from current url and remove extra '/' characters from it
         $pageData = array_filter(explode('/', preg_replace('#/+#', '/', $request->getPathInfo())));
 
         // Extract page data from current path
-        $page = array_shift($pageData);
-        $page = empty($page) ? self::$defaultPage : $page;
+        $module = array_shift($pageData);
+        $module = empty($module) ? self::$defaultModule : $module;
 
         // Extract page action data from current path
         $action = array_shift($pageData);
         $action = empty($action) ? self::$defaultAction : $action;
 
         // Specify used controller for current request
-        $controller = "\\HomeAI\\Module\\" . $page . "\\Controller";
+        $controller = "\\HomeAI\\Module\\" . $module . "\\Controller";
 
         // Check that asked controller exists
         if (!class_exists($controller)) {
             // Set default page
-            $page = self::$defaultPage;
+            $module = self::$defaultModule;
 
             // Specify default controller
-            $controller = "\\HomeAI\\Module\\" . $page . "\\Controller";
-            $action     = '404';
+            $controller = "\\HomeAI\\Module\\" . $module . "\\Controller";
+            $action     = "404";
         }
 
         /**
          * Create page controller and handle defined request.
          *
-         * @var     $pageController     \HomeAI\Module\Controller     This is for the 'smart' IDE
+         * @var     $moduleController     \HomeAI\Module\Controller     This is for the 'smart' IDE
          */
-        $pageController = new $controller($request, $page, $action, $pageData);
-        $pageController->handleRequest();
+        $moduleController = new $controller($request, $module, $action, $pageData);
+        $moduleController->handleRequest();
 
-        unset($pageController);
+        unset($moduleController);
     }
 }

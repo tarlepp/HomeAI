@@ -8,7 +8,6 @@
  */
 namespace HomeAI\Core\Interfaces;
 
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
 /**
  * iRequest -interface
  *

@@ -14,8 +14,6 @@
  */
 use Doctrine\Common\ClassLoader;
 
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
-
 // Require doctrine class loader
 require_once PATH_BASE .'libs/DoctrineDBAL/Doctrine/Common/ClassLoader.php';
 

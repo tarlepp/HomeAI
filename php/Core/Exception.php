@@ -8,7 +8,8 @@
  */
 namespace HomeAI\Core;
 
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
+use HomeAI\Util\Logger as Logger;
+
 /**
  * Exception -class
  *
@@ -34,12 +35,12 @@ class Exception extends \Exception
      * @param   integer     $code       Error code
      * @param   \Exception  $previous   Previous exception
      *
-     * @return  \Exception
+     * @return  \HomeAI\Core\Exception
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {
-        Logger::write(Logger::TYPE_EXCEPTION, $this);
-
         parent::__construct($message, $code, $previous);
+
+        Logger::write($this, Logger::TYPE_ERROR);
     }
 }

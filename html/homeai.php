@@ -16,12 +16,16 @@
 use \HomeAI\Core\Router;
 use \HomeAI\Core\Request;
 
-// Require initialize file
-require_once __DIR__ .'/../php/init.php';
+try {
+    // Require initialize file
+    require_once __DIR__ .'/../php/init.php';
 
-$request = Request::getInstance();
+    $request = Request::getInstance();
 
-// Handle current request via Router
-Router::handleRequest($request);
+    // Handle current request via Router
+    Router::handleRequest($request);
+} catch (\Exception $error) {
+    echo "Error occurred please exam logs...";
+}
 
 exit(0);

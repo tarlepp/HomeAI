@@ -1,24 +1,24 @@
 <?php
 /**
- * \php\Util\Interfaces\Config.php
+ * \php\Util\Interfaces\Logger.php
  *
  * @package     Util
- * @subpackage  Config
+ * @subpackage  Logger
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
 
 /**
- * Interface for \HomeAI\Util\Config -class.
+ * Interface for \HomeAI\Util\Logger -class.
  *
  * @package     Util
- * @subpackage  Config
+ * @subpackage  Logger
  * @category    Interface
  *
  * @date        $Date$
  * @author      $Author$
  * @revision    $Rev$
  */
-interface Config
+interface Logger
 {
 }

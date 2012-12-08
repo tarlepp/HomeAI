@@ -1,0 +1,14 @@
+;
+; This file contains system specified PHP constants which are defined
+; automatically in init.php.
+;
+; Note that _all_ values must be in some section/group and they all must
+; be CAPITALIZED, actual values can be 'anything'.
+;
+; Basically constants are defined in following format:
+;
+;   define('SYSTEM_NAME', 'HomeAI');
+;
+[SYSTEM]
+    NAME    = 'HomeAI'
+    VERSION = '0.01pre'

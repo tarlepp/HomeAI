@@ -10,7 +10,6 @@ namespace HomeAI\Core\Interfaces;
 
 use HomeAI\Core\Request;
 
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
 /**
  * iRouter -interface
  *

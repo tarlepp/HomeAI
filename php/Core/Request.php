@@ -10,7 +10,6 @@ namespace HomeAI\Core;
 
 use HomeAI\Util\Config;
 
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
 /**
  * Request -class
  *
@@ -52,7 +51,7 @@ class Request implements Interfaces\Request
      * @access  protected
      * @var     array
      */
-    protected $_params = array();
+    protected $params = array();
 
     /**
      * Raw request body. Can be string or boolean false. If false raw body
@@ -61,7 +60,7 @@ class Request implements Interfaces\Request
      * @access  protected
      * @var     mixed
      */
-    protected $_rawBody = null;
+    protected $rawBody = null;
 
     /**
      * REQUEST_URI
@@ -69,7 +68,7 @@ class Request implements Interfaces\Request
      * @access  protected
      * @var     string;
      */
-    protected $_requestUri = '';
+    protected $requestUri = '';
 
     /**
      * Base URL of request
@@ -77,7 +76,7 @@ class Request implements Interfaces\Request
      * @access  protected
      * @var     string
      */
-    protected $_baseUrl = null;
+    protected $baseUrl = null;
 
     /**
      * Base path of request
@@ -85,7 +84,7 @@ class Request implements Interfaces\Request
      * @access  protected
      * @var     string
      */
-    protected $_basePath = null;
+    protected $basePath = null;
 
     /**
      * Path info
@@ -93,7 +92,7 @@ class Request implements Interfaces\Request
      * @access  protected
      * @var     string
      */
-    protected $_pathInfo = '';
+    protected $pathInfo = '';
 
     /**
      * Construction of the class. Stores "request data" in GPC order.
@@ -144,10 +143,10 @@ class Request implements Interfaces\Request
     {
         $key = (string)$key;
 
-        if (is_null($value) && isset($this->_params[$key])) {
-            unset($this->_params[$key]);
+        if (is_null($value) && isset($this->params[$key])) {
+            unset($this->params[$key]);
         } elseif (!is_null($value)) {
-            $this->_params[$key] = $value;
+            $this->params[$key] = $value;
         }
     }
 
@@ -192,11 +191,11 @@ class Request implements Interfaces\Request
      */
     public function setParams(array $array)
     {
-        $this->_params = $this->_params + (array)$array;
+        $this->params = $this->params + (array)$array;
 
         foreach ($array as $key => $value) {
             if (is_null($value)) {
-                unset($this->_params[$key]);
+                unset($this->params[$key]);
             }
         }
     }
@@ -274,7 +273,9 @@ class Request implements Interfaces\Request
     public function setSession($key, $value = null)
     {
         if (is_null($value) && !is_array($key)) {
-            throw new Exception('Invalid value passed to setSession(); must be either array of values or key/value pair');
+            $message = 'Invalid value passed to ' . __METHOD__ . ' must be either array of values or key/value pair';
+
+            throw new Exception($message);
         }
 
         if (is_null($value) && is_array($key)) {
@@ -331,7 +332,7 @@ class Request implements Interfaces\Request
             }
         }
 
-        $this->_requestUri = $requestUri;
+        $this->requestUri = $requestUri;
     }
 
     /**
@@ -374,8 +375,7 @@ class Request implements Interfaces\Request
                 $baseUrl = $_SERVER['PHP_SELF'];
             } elseif (isset($_SERVER['ORIG_SCRIPT_NAME']) && basename($_SERVER['ORIG_SCRIPT_NAME']) === $filename) {
                 $baseUrl = $_SERVER['ORIG_SCRIPT_NAME']; // 1and1 shared hosting compatibility
-            } // Backtrack up the script_filename to find the portion matching php_self
-            else {
+            } else { // Backtrack up the script_filename to find the portion matching php_self
                 $path    = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '';
                 $file    = isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : '';
                 $segs    = explode('/', trim($file, '/'));
@@ -396,14 +396,14 @@ class Request implements Interfaces\Request
 
             // full $baseUrl matches
             if (strpos($requestUri, $baseUrl) === 0) {
-                $this->_baseUrl = $baseUrl;
+                $this->baseUrl = $baseUrl;
 
                 return;
             }
 
             // directory portion of $baseUrl matches
             if (strpos($requestUri, dirname($baseUrl)) === 0) {
-                $this->_baseUrl = rtrim(dirname($baseUrl), '/');
+                $this->baseUrl = rtrim(dirname($baseUrl), '/');
 
                 return;
             }
@@ -418,7 +418,7 @@ class Request implements Interfaces\Request
 
             // no match whatsoever; set it blank
             if (empty($baseName) || !strpos($truncatedRequestUri, $baseName)) {
-                $this->_baseUrl = '';
+                $this->baseUrl = '';
 
                 return;
             }
@@ -435,7 +435,7 @@ class Request implements Interfaces\Request
             }
         }
 
-        $this->_baseUrl = rtrim($baseUrl, '/');
+        $this->baseUrl = rtrim($baseUrl, '/');
 
         return;
     }
@@ -457,7 +457,7 @@ class Request implements Interfaces\Request
             $baseUrl = $this->getBaseUrl();
 
             if (empty($baseUrl)) {
-                $this->_basePath = '';
+                $this->basePath = '';
 
                 return;
             }
@@ -473,7 +473,7 @@ class Request implements Interfaces\Request
             $basePath = str_replace('\\', '/', $basePath);
         }
 
-        $this->_basePath = rtrim($basePath, '/');
+        $this->basePath = rtrim($basePath, '/');
 
         return;
     }
@@ -518,7 +518,7 @@ class Request implements Interfaces\Request
             }
         }
 
-        $this->_pathInfo = (string)$pathInfo;
+        $this->pathInfo = (string)$pathInfo;
     }
 
     /**
@@ -534,14 +534,14 @@ class Request implements Interfaces\Request
     public function get($key = null, $default = null)
     {
         if (is_null($key)) {
-            return $this->_params;
+            return $this->params;
         }
 
         if (is_array($key)) {
-            return $this->fetchArrayValue($this->_params, $key, $default);
+            return $this->fetchArrayValue($this->params, $key, $default);
         }
 
-        return (isset($this->_params[$key])) ? $this->_params[$key] : $default;
+        return (isset($this->params[$key])) ? $this->params[$key] : $default;
     }
 
     /**
@@ -553,11 +553,11 @@ class Request implements Interfaces\Request
      */
     public function getRequestUri()
     {
-        if (empty($this->_requestUri)) {
+        if (empty($this->requestUri)) {
             $this->setRequestUri();
         }
 
-        return $this->_requestUri;
+        return $this->requestUri;
     }
 
     /**
@@ -572,7 +572,7 @@ class Request implements Interfaces\Request
      */
     public function getBaseUrl($raw = false, $withHost = false)
     {
-        if (is_null($this->_baseUrl)) {
+        if (is_null($this->baseUrl)) {
             $this->setBaseUrl();
         }
 
@@ -580,10 +580,10 @@ class Request implements Interfaces\Request
             $url = $this->getScheme()
                 . '://'
                 . $this->getHttpHost()
-                . $this->_baseUrl
+                . $this->baseUrl
                 . '/';
         } else {
-            $url = $this->_baseUrl;
+            $url = $this->baseUrl;
         }
 
         return ($raw == false) ? urldecode($url) : $url;
@@ -598,11 +598,11 @@ class Request implements Interfaces\Request
      */
     public function getBasePath()
     {
-        if (is_null($this->_basePath)) {
+        if (is_null($this->basePath)) {
             $this->setBasePath();
         }
 
-        return $this->_basePath;
+        return $this->basePath;
     }
 
     /**
@@ -637,11 +637,11 @@ class Request implements Interfaces\Request
      */
     public function getPathInfo()
     {
-        if (empty($this->_pathInfo)) {
+        if (empty($this->pathInfo)) {
             $this->setPathInfo();
         }
 
-        return $this->_pathInfo;
+        return $this->pathInfo;
     }
 
     /**
@@ -811,13 +811,13 @@ class Request implements Interfaces\Request
      */
     public function getRawBody($force = false)
     {
-        if (is_null($this->_rawBody) || $force === true) {
+        if (is_null($this->rawBody) || $force === true) {
             $body = file_get_contents('php://input');
 
-            $this->_rawBody = (strlen(trim($body)) > 0) ? $body : false;
+            $this->rawBody = (strlen(trim($body)) > 0) ? $body : false;
         }
 
-        return $this->_rawBody;
+        return $this->rawBody;
     }
 
     /**

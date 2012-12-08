@@ -8,9 +8,6 @@
  */
 namespace HomeAI\Util;
 
-use HomeAI\Core\Exception;
-
-defined('HOMEAI_INIT') OR die('No direct access allowed.');
 /**
  * Config -class
  *
@@ -24,7 +21,7 @@ defined('HOMEAI_INIT') OR die('No direct access allowed.');
  * @author      $Author$
  * @revision    $Rev$
  */
-class HomeAI implements Interfaces\Config
+class Config implements Interfaces\Config
 {
     /**
      * Used config cache.
@@ -42,7 +39,7 @@ class HomeAI implements Interfaces\Config
      * @access  public
      * @static
      *
-     * @throws  \HomeAI\Core\Exception
+     * @throws  \HomeAI\Util\Exception
      *
      * @param   string  $iniFile    Name of the ini file.
      * @param   string  $section    Ini file section

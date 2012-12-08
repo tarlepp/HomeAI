@@ -1,0 +1,9 @@
+IndexIgnore *
+allow from all
+
+Options +FollowSymLinks
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ homeai.php [QSA,L]

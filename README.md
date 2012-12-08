@@ -7,10 +7,10 @@ General
 This software is for all the home-or-someother-way-made in engineers. Basically we want to provide
 common API for "any kind" of 3th party devices with a minimum of effort.
 
-Purpose of this "software" is connect 1-n hst clients with one (in future many) server instance of
-HomeAI server, clients can be example raspberry pi systems with 1-n sensors or controls. Basically
-We want to make system that can handle 1-n clients which provide different services. These services
-can be simple rrd images, relay controls or something else.
+Purpose of this "software" is connect 1-n host clients with one (in future many) server instance of
+HomeAI server, clients can be example raspberry pi systems with 1-n sensors, relay controls or something
+else. Basically we want to make system that can handle 1-n clients which provide different services.
+These services can be simple rrd images, relay controls or something else.
 
 We provide some default functionalities for default but you can write your own implementation if you
 see that our free library isn't enough. Please remember to contribute our passion about this software.
