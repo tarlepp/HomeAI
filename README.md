@@ -31,12 +31,12 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - PHP 5.4+
 
 You can run system check script via following command in the root directory:
-<code>
- php -q html/check.php
-</code>
+<pre>
+php -q html/check.php
+</pre>
 or pointing your browser to following address after installation:
 <pre>
- http://your-host/check.php
+http://your-host/check.php
 </pre>
 
 ### Notes
