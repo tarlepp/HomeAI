@@ -1,33 +1,30 @@
 <?php
 /**
- * \php\Page\View.php
+ * \php\Module\View.php
  *
  * @package     Core
- * @subpackage  Page
+ * @subpackage  Module
  * @category    View
  */
-namespace Nettibaari\Page;
-use Nettibaari\Auth\Login;
-use Nettibaari\Core\Request;
-use Nettibaari\Page\Model;
-use Nettibaari\Util\Config;
-use Nettibaari\Util\YuiCompressor;
+namespace HomeAI\Module;
 
-defined('NETTIBAARI_INIT') OR die('No direct access allowed.');
+use HomeAI\Auth\Login;
+use HomeAI\Core\Request;
+use HomeAI\Util\Config;
+use HomeAI\Module\Model;
+
 /**
- * View -class
- *
- * Generic page View class. All page View classes must extend this base class.
+ * Generic module view class. All module view classes must extend this base class.
  *
  * @package     Core
- * @subpackage  Page
+ * @subpackage  Module
  * @category    View
  *
- * @date        $Date: 2012-07-15 18:39:49 +0300 (Sun, 15 Jul 2012) $
- * @author      $Author: tle $
- * @revision    $Rev: 126 $
+ * @date        $Date$
+ * @author      $Author$
+ * @revision    $Rev$
  */
-abstract class View implements Interfaces\iView
+abstract class View implements Interfaces\View
 {
     /**#@+
      * Used check constants.
@@ -36,7 +33,7 @@ abstract class View implements Interfaces\iView
      * @type    constant
      * @var     string
      */
-    const CHECK_TYPE_CSS = 'CSS';
+    const CHECK_TYPE_CSS        = 'CSS';
     const CHECK_TYPE_JAVASCRIPT = 'JS';
     /**#@-*/
 
@@ -44,7 +41,7 @@ abstract class View implements Interfaces\iView
      * Request object.
      *
      * @access  protected
-     * @var     \Nettibaari\Core\Request
+     * @var     \HomeAI\Core\Request
      */
     protected $request;
 
@@ -52,20 +49,20 @@ abstract class View implements Interfaces\iView
      * Model object for current view.
      *
      * @access  protected
-     * @var     \Nettibaari\Page\Model
+     * @var     \HomeAI\Module\Model
      */
     protected $model;
 
     /**
-     * Request action of page.
+     * Request module
      *
      * @access  protected
      * @var     string
      */
-    protected $page;
+    protected $module;
 
     /**
-     * Request action of page.
+     * Request action of module.
      *
      * @access  protected
      * @var     string
@@ -97,13 +94,8 @@ abstract class View implements Interfaces\iView
     protected $pageJavascript = array(
         'jQuery/',
         'jQuery-UI/',
-        'jQuery-dataSelector/',
-        'jQuery-fancybox/',
-        'jQuery-Chosen/',
-        'jQuery-Validation/',
         'bootstrap/',
         'qTip2/',
-        'nettibaari.js',
     );
 
     /**
@@ -113,7 +105,7 @@ abstract class View implements Interfaces\iView
      * @var     array
      */
     protected $pageCss = array(
-        'nettibaari.css'=> 'screen, projection',
+        'homeai.css'    => 'screen, projection',
         'print.css'     => 'print',
     );
 
@@ -124,7 +116,7 @@ abstract class View implements Interfaces\iView
      * @access  protected
      * @var     array
      */
-    protected $_pageCss = array();
+    protected $pageCssFirst = array();
 
     /**
      * Title of the current page. This must be system text tag because of
@@ -141,30 +133,7 @@ abstract class View implements Interfaces\iView
      * @access  protected
      * @var     array
      */
-    protected $keywords = array(
-        'cocktail',
-        'juomasekoitus',
-        'drinkkiohje',
-        'drinkki ohje',
-        'martini',
-        'eggnog',
-        'cocktailohje',
-        'nettibaari',
-        'drinkkiohjeita',
-        'drinkkihaku',
-        'cocktailit',
-        'drinkit',
-        'sininen enkeli',
-        'valkovenäläinen',
-        'drinkkiohjeet',
-        'cocktailohjeita',
-        'cocktailohjeet',
-        'resepti',
-        'baarikaappi',
-        'juomasekoitus',
-        'juomasekoitukset',
-    );
-
+    protected $keywords = array();
 
     /**
      * Page extra description string.
@@ -175,43 +144,41 @@ abstract class View implements Interfaces\iView
     protected $description = '';
 
     /**
-     * Samrty object.
+     * Smarty object.
      *
      * @access  protected
      * @var     \Smarty
      */
     protected $smarty = '';
 
-
     /**
      * Construction of the class.
      *
-     * @param   \Nettibaari\Core\Request    $request
-     * @param   string                      $page
-     * @param   string                      $action
-     * @param   array                       $pageData
+     * @param   \HomeAI\Core\Request    $request
+     * @param   string                  $module
+     * @param   string                  $action
+     * @param   array                   $pageData
      *
-     * @return  \Nettibaari\Page\View
+     * @return  \HomeAI\Module\View
      */
-    public function __construct(Request &$request, &$page, &$action, &$pageData)
+    public function __construct(Request &$request, &$module, &$action, &$pageData)
     {
         // Store given data
-        $this->request = $request;
-        $this->page = $page;
-        $this->action = $action;
+        $this->request  = $request;
+        $this->module   = $module;
+        $this->action   = $action;
         $this->pageData = $pageData;
 
         // Initialize smarty
         $this->initializeSmarty();
     }
 
-
     /**
      * Method sets model object for current view object.
      *
      * @access  public
      *
-     * @param   \Nettibaari\Page\Model  $model  Model object of the current page
+     * @param   \HomeAI\Module\Model  $model  Model object of the current page
      *
      * @return  void
      */
@@ -219,7 +186,6 @@ abstract class View implements Interfaces\iView
     {
         $this->model = $model;
     }
-
 
     /**
      * Setter for page title.
@@ -235,13 +201,24 @@ abstract class View implements Interfaces\iView
         $this->pageTitle = $title;
     }
 
+    /**
+     * Setter for page description.
+     *
+     * @access  public
+     *
+     * @param   string  $description    Page description
+     *
+     * @return  void
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
     /**
-     * getSmarty()
-     *
      * Method returns current smarty object.
      *
-     * @acccess public
+     * @access  public
      *
      * @return  \Smarty
      */
@@ -249,13 +226,6 @@ abstract class View implements Interfaces\iView
     {
         return $this->smarty;
     }
-
-
-    public function addDescription($description)
-    {
-        $this->description = $description;
-    }
-
 
     /**
      * Method adds specified keywords to displayed page.
@@ -269,22 +239,17 @@ abstract class View implements Interfaces\iView
     public function addKeyword($keyword)
     {
         // Empty keyword
-        if (empty($keyword))
-        {
+        if (empty($keyword)) {
             return;
-        }
-
-        // Single keyword as string
-        elseif (!is_array($keyword))
-        {
+        } // Single keyword as string
+        elseif (!is_array($keyword)) {
             $keyword = array($keyword);
         }
 
         // Sanitize keywords
         $keyword = array_filter(array_unique($keyword));
 
-        if (empty($keyword))
-        {
+        if (empty($keyword)) {
             return;
         }
 
@@ -295,19 +260,6 @@ abstract class View implements Interfaces\iView
          *       some fucking unknown reason.
          */
         $this->keywords = (array)$keyword + (array)$this->keywords;
-    }
-
-
-    /**
-     * Method sets page image for social media content.
-     *
-     * @param   string  $image
-     *
-     * @return  void
-     */
-    public function setPageImage($image)
-    {
-        $this->smarty->assign('pageImage', $image);
     }
 
 
@@ -326,7 +278,6 @@ abstract class View implements Interfaces\iView
         ($append === true) ? $this->pageJavascript[] = $javascript : $this->pageJavascript = array($javascript);
     }
 
-
     /**
      * CSS file add method.
      *
@@ -341,45 +292,32 @@ abstract class View implements Interfaces\iView
      */
     public function addCss($css, $media = 'screen, projection', $append = true, $first = false)
     {
-        if ($append === false)
-        {
+        if ($append === false) {
             $this->pageCss = array($css => $media);
-        }
-
-        elseif ($first === true)
-        {
-            $this->_pageCss[$css] = $media;
-        }
-
-        else
-        {
+        } elseif ($first === true) {
+            $this->pageCssFirst[$css] = $media;
+        } else {
             $this->pageCss[$css] = $media;
         }
     }
-
 
     /**
      * Method displays defined page.
      *
      * @access  public
      *
-     * @uses    \Nettibaari\Page\View::initializePage()
-     * @uses    \Smarty::assign()
-     * @uses    \Smarty::display()
-     *
      * @param   string  $content    HTML content to overwrite everything else
      * @param   string  $template   Used main template file.
      *
      * @return  void
      */
-    public function display($content = NULL, $template = 'index.tpl')
+    public function display($content = null, $template = 'index.tpl')
     {
         // Initialize current page
-        $this->_initializePage();
+        $this->initializePage();
 
-        // Content is set, so owerwrite everything else
-        if (!is_null($content))
-        {
+        // Content is set, so overwrite everything else
+        if (!is_null($content)) {
             $this->smarty->assign('pageContent', $content);
         }
 
@@ -389,8 +327,9 @@ abstract class View implements Interfaces\iView
         exit(0);
     }
 
-
     /**
+     * Method makes exception error page HTML content.
+     *
      * @access  public
      *
      * @param   \Exception  $error
@@ -404,7 +343,6 @@ abstract class View implements Interfaces\iView
 
         return $template->fetch();
     }
-
 
     /**
      * Method makes 404 page HTML content.
@@ -421,7 +359,6 @@ abstract class View implements Interfaces\iView
         return $template->fetch();
     }
 
-
     /**
      * Method initialized displayed page.
      *
@@ -429,7 +366,7 @@ abstract class View implements Interfaces\iView
      *
      * @return  void
      */
-    private function _initializePage()
+    private function initializePage()
     {
         // Check page specified javascript files
         $this->checkPageJavascript();
@@ -438,9 +375,8 @@ abstract class View implements Interfaces\iView
         $this->checkPageCss();
 
         // Page specified initializing.
-        if (method_exists($this, 'initializePage'))
-        {
-            $this->initializePage();
+        if (method_exists($this, 'preInitializePage')) {
+            $this->preInitializePage();
         }
 
         // Create page keywords
@@ -467,13 +403,9 @@ abstract class View implements Interfaces\iView
         // Create navigation
         $this->makeNavigation();
 
-        // Create displayed ads
-        $this->makeAds();
-
         // Create footer data
         $this->makeFooter();
     }
-
 
     /**
      * Method makes message boxes to page if any UI messages are present.
@@ -485,8 +417,7 @@ abstract class View implements Interfaces\iView
     private function makeMessage()
     {
         // No messages
-        if (!isset($_SESSION['Message']) || !is_array($_SESSION['Message']))
-        {
+        if (!isset($_SESSION['Message']) || !is_array($_SESSION['Message'])) {
             return;
         }
 
@@ -494,10 +425,8 @@ abstract class View implements Interfaces\iView
         $this->addJavascript('jQuery-ctNotify/');
 
         // Iterate messages.
-        foreach ($_SESSION['Message'] as $type => $data)
-        {
-            if (empty($data))
-            {
+        foreach ($_SESSION['Message'] as $type => $data) {
+            if (empty($data)) {
                 continue;
             }
 
@@ -516,7 +445,6 @@ abstract class View implements Interfaces\iView
         unset($_SESSION['Message']);
     }
 
-
     /**
      * Method creates necessary <script src=".."></script> definitions for
      * current displayed page.
@@ -526,69 +454,56 @@ abstract class View implements Interfaces\iView
      *
      * @access  private
      *
-     * @uses    \Nettibaari\Core\Request::isProduction()
-     * @uses    \Nettibaari\Page\View::getCompressedJavascript()
-     * @uses    \Nettibaari\Page\View::addCss()
-     *
      * @return  void
      */
     private function makeJavascript()
     {
         // Reset used temp variables
-        $javascripts = array();
-        $_content = '';
+        $_javascript = array();
+        $_content    = '';
 
         // Iterate javascript definitions
-        foreach ($this->pageJavascript as $javascript)
-        {
+        foreach ($this->pageJavascript as $javascript) {
             // Specify javascript library
-            $library = PATH_BASE .'html/js/'. $javascript;
+            $library = PATH_BASE . 'html/js/' . $javascript;
 
             // Javascript definition is directory, so fetch all .js files from it.
-            if (is_dir($library))
-            {
+            if (is_dir($library)) {
                 // Iterate founded .js files from directory
-                foreach (glob($library .'*.js') as $_filename)
-                {
+                foreach (glob($library . '*.js') as $_filename) {
                     // Add file content to temp variable
                     $_content .= file_get_contents($_filename);
 
                     // Add javascript file to used template variable
-                    $javascripts[] = $_filename;
+                    $_javascript[] = $_filename;
                 }
 
                 // Add possible CSS files for this javascript library
-                $this->addCss('js/'. $javascript, 'screen, projection', true, true);
-            }
-
-            // Javascript file, this is normal situation
-            elseif (is_readable($library))
-            {
+                $this->addCss('js/' . $javascript, 'screen, projection', true, true);
+            } elseif (is_readable($library)) { // Javascript file, this is normal situation
                 // Add file content to temp variable
                 $_content .= file_get_contents($library);
 
                 // Add javascript file to used template variable
-                $javascripts[] = $library;
+                $_javascript[] = $library;
             }
         }
 
         // Check if production environment, if true we must use compressed CSS files
-        if ($this->request->isProduction() === true)
-        {
-            $javascripts = $this->getCompressedJavascript($_content);
+        if ($this->request->isProduction() === true) {
+            $_javascript = $this->getCompressedJavascript($_content);
         }
 
         unset($_content);
 
         // Lambda function to cleanup javascript data array
-        $cleanUp = function($library)
-        {
-            return str_replace(PATH_BASE .'html/js/', '', $library);
+        $cleanUp = function ($library) {
+            return str_replace(PATH_BASE . 'html/js/', '', $library);
         };
 
         // Create javascript template and assign javascript data to it.
         $template = $this->smarty->createTemplate('page_javascript.tpl', $this->smarty);
-        $template->assign('data', array_map($cleanUp, $javascripts));
+        $template->assign('data', array_map($cleanUp, $_javascript));
 
         // Fetch parsed javascript template and assign it to current page.
         $this->smarty->assign('pageJavascript', $template->fetch());
@@ -596,68 +511,55 @@ abstract class View implements Interfaces\iView
         unset($template);
     }
 
-
     /**
-     * Method creates neccessary <link rel="stylesheet" href=".." /> definitions for
+     * Method creates necessary <link rel="stylesheet" href=".." /> definitions for
      * current displayed page.
      *
      * @access  private
-     *
-     * @uses    \Nettibaari\Core\Request::isProduction()
-     * @uses    \Nettibaari\Page\View::getCompressedCss()
      *
      * @return  void
      */
     private function makeCss()
     {
         // Reset used temp variables
-        $css = array();
-        $_content = array();
+        $css     = array();
+        $content = array();
 
         // Iterate CSS files
-        foreach(array_merge($this->_pageCss, $this->pageCss) as $_css => $_media)
-        {
+        foreach (array_merge($this->pageCssFirst, $this->pageCss) as $_css => $_media) {
             // Specify CSS library
-            $library = PATH_BASE .'html/css/'. $_css;
+            $library = PATH_BASE . 'html/css/' . $_css;
 
             // Initialize content variable for this media definition
-            if (!isset($_content[$_media]))
-            {
-                $_content[$_media] = '';
+            if (!isset($content[$_media])) {
+                $content[$_media] = '';
             }
 
             // CSS directory, so fetch all .css files from it.
-            if (is_dir($library))
-            {
+            if (is_dir($library)) {
                 // Iterate founded CSS files
-                foreach (glob($library .'*.css') as $_filename)
-                {
+                foreach (glob($library . '*.css') as $_filename) {
                     // Add file content to temp variable
-                    $_content[$_media] .= file_get_contents($_filename);
+                    $content[$_media] .= file_get_contents($_filename);
 
                     // Add CSS file to used template variable
-                    $css[str_replace(PATH_BASE .'html/css/', '', $_filename)] = $_media;
+                    $css[str_replace(PATH_BASE . 'html/css/', '', $_filename)] = $_media;
                 }
-            }
-
-            // CSS file, this is normal situation
-            elseif (is_readable($library))
-            {
+            } elseif (is_readable($library)) { // CSS file, this is normal situation
                 // Add file content to temp variable
-                $_content[$_media] .= file_get_contents($library);
+                $content[$_media] .= file_get_contents($library);
 
                 // Add CSS file to used template variable
-                $css[str_replace(PATH_BASE .'html/css/', '', $library)] = $_media;
+                $css[str_replace(PATH_BASE . 'html/css/', '', $library)] = $_media;
             }
         }
 
         // Check if production environment, if true we must use compressed CSS files
-        if ($this->request->isProduction() === true)
-        {
-            $css = $this->getCompressedCss($_content);
+        if ($this->request->isProduction() === true) {
+            $css = $this->getCompressedCss($content);
         }
 
-        unset($_content);
+        unset($content);
 
         // Create css template and assign css data to it.
         $template = $this->smarty->createTemplate('page_css.tpl', $this->smarty);
@@ -668,7 +570,6 @@ abstract class View implements Interfaces\iView
 
         unset($template);
     }
-
 
     /**
      * Method makes current page keywords and assign it to smarty object.
@@ -682,7 +583,6 @@ abstract class View implements Interfaces\iView
         $this->smarty->assign('pageKeywords', $this->keywords);
     }
 
-
     /**
      * Method makes current page description and assign it to smarty object.
      *
@@ -694,7 +594,6 @@ abstract class View implements Interfaces\iView
     {
         $this->smarty->assign('pageDescription', $this->description);
     }
-
 
     /**
      * Method makes current page title and assign it to smarty object.
@@ -715,17 +614,11 @@ abstract class View implements Interfaces\iView
         );
 
         // Iterate variables
-        foreach ($_titles as $_title)
-        {
-            if (isset($this->{$_title}) && !empty($this->{$_title}))
-            {
-                if (is_array($this->{$_title}))
-                {
+        foreach ($_titles as $_title) {
+            if (isset($this->{$_title}) && !empty($this->{$_title})) {
+                if (is_array($this->{$_title})) {
                     $title = array_merge($title, $this->{$_title});
-                }
-
-                else
-                {
+                } else {
                     $title[] = $this->{$_title};
                 }
             }
@@ -741,7 +634,6 @@ abstract class View implements Interfaces\iView
         $this->smarty->assign('pageTitle', implode(' | ', $title));
     }
 
-
     /**
      * Method makes current page header section and assign it to smarty object.
      *
@@ -754,9 +646,8 @@ abstract class View implements Interfaces\iView
         // Create css template and assign css data to it.
         $template = $this->smarty->createTemplate('header.tpl', $this->smarty);
 
-        $this->smarty->assign('pageHeader',  $template->fetch());
+        $this->smarty->assign('pageHeader', $template->fetch());
     }
-
 
     /**
      * Method makes current page footer section and assign it to smarty object.
@@ -770,9 +661,8 @@ abstract class View implements Interfaces\iView
         // Create css template and assign css data to it.
         $template = $this->smarty->createTemplate('footer.tpl', $this->smarty);
 
-        $this->smarty->assign('pageFooter',  $template->fetch());
+        $this->smarty->assign('pageFooter', $template->fetch());
     }
-
 
     /**
      * Method makes page navigation section and assign it to smarty object.
@@ -786,25 +676,8 @@ abstract class View implements Interfaces\iView
         // Create css template and assign css data to it.
         $template = $this->smarty->createTemplate('navigation.tpl', $this->smarty);
 
-        $this->smarty->assign('pageNavigation',  $template->fetch());
+        $this->smarty->assign('pageNavigation', $template->fetch());
     }
-
-
-    /**
-     * Method makes page ads section and assign it to smarty object.
-     *
-     * @access  private
-     *
-     * @return  void
-     */
-    private function makeAds()
-    {
-        // Create css template and assign css data to it.
-        $template = $this->smarty->createTemplate('ads.tpl', $this->smarty);
-
-        $this->smarty->assign('pageAds',  $template->fetch());
-    }
-
 
     /**
      * Method makes compressed CSS files for every media type. Method uses YUI
@@ -826,41 +699,35 @@ abstract class View implements Interfaces\iView
         $output = array();
 
         // Iterate media specified CSS content
-        foreach ($cssContent as $media => $cssString)
-        {
+        foreach ($cssContent as $media => $cssString) {
             // Search strings
             $search = array(
                 "url('../",
                 "url(img/",
                 "url('img/",
                 "url(\"img/",
-                "url(chosen-",
-                "url('chosen-",
-                "url('fancybox",
                 "url(images",
             );
 
             // Replacement strings
             $replace = array(
-                "url('". $this->request->getBaseUrl(false, true),
-                "url(". $this->request->getBaseUrl(false, true) ."css/js/bootstrap/img/",
-                "url('". $this->request->getBaseUrl(false, true) ."css/js/bootstrap/img/",
-                "url(\"". $this->request->getBaseUrl(false, true) ."css/js/bootstrap/img/",
-                "url(". $this->request->getBaseUrl(false, true) ."css/js/jQuery-Chosen/chosen-",
-                "url('". $this->request->getBaseUrl(false, true) ."css/js/jQuery-Chosen/chosen-",
-                "url('". $this->request->getBaseUrl(false, true) ."css/js/jQuery-fancybox/fancybox",
-                "url(". $this->request->getBaseUrl(false, true) ."css/js/jQuery-UI/images",
+                "url('" . $this->request->getBaseUrl(false, true),
+                "url(" . $this->request->getBaseUrl(false, true) . "css/js/bootstrap/img/",
+                "url('" . $this->request->getBaseUrl(false, true) . "css/js/bootstrap/img/",
+                "url(\"" . $this->request->getBaseUrl(false, true) . "css/js/bootstrap/img/",
+                "url(" . $this->request->getBaseUrl(false, true) . "css/js/jQuery-UI/images",
             );
 
             // Make necessary url replaces
             $cssString = str_replace($search, $replace, $cssString);
 
             // Specify used cache file for CSS
-            $cacheFile = PATH_BASE .'html/css/_cache/'. preg_replace('/[^a-z0-9]+/i', '_', $media) .'_'. sha1($cssString) .'.css';
+            $cacheFile = PATH_BASE . 'html/css/cache/' . preg_replace('/[^a-z0-9]+/i', '_', $media) . '_' . sha1(
+                $cssString
+            ) . '.css';
 
             // Cache file doesn't exists so we must create new one
-            if (!is_readable($cacheFile))
-            {
+            if (!is_readable($cacheFile)) {
                 // Get compressed CSS content
                 $compressedCss = YuiCompressor::compressCss($cssString);
 
@@ -868,20 +735,17 @@ abstract class View implements Interfaces\iView
                 file_put_contents($cacheFile, $compressedCss);
             }
 
-            $output[str_replace(PATH_BASE .'html/css/', '', $cacheFile)] = $media;
+            $output[str_replace(PATH_BASE . 'html/css/', '', $cacheFile)] = $media;
         }
 
         return $output;
     }
-
 
     /**
      * Method makes compressed Javascript files. Method uses YUI
      * Compressor library to make actual content compressing.
      *
      * @access  private
-     *
-     * @uses    YuiCompressor::compressJavascript()
      *
      * @param   array   $javascriptContent  Javascript content to compress.
      *
@@ -890,11 +754,10 @@ abstract class View implements Interfaces\iView
     private function getCompressedJavascript($javascriptContent)
     {
         // Specify used cache file for Javascript
-        $cacheFile = PATH_BASE .'html/js/_cache/'. sha1($javascriptContent) .'.js';
+        $cacheFile = PATH_BASE . 'html/js/cache/' . sha1($javascriptContent) . '.js';
 
         // Cache file doesn't exists so we must create new one
-        if (!is_readable($cacheFile))
-        {
+        if (!is_readable($cacheFile)) {
             // Get compressed CSS content
             $compressedJavascript = YuiCompressor::compressJavascript($javascriptContent);
 
@@ -905,21 +768,20 @@ abstract class View implements Interfaces\iView
         return array($cacheFile);
     }
 
-
     /**
      * Method checks if current page has defined javascript files which must
      * be appended to current view.
      *
      * @access  private
      *
-     * @uses    \Nettibaari\Page\View::checkPageData()
+     * @uses    \HomeAI\Page\View::checkPageData()
      *
      * @return  void
      */
     private function checkPageJavascript()
     {
         // Define module javascript dir
-        $directory = PATH_BASE ."html/js/Page/". $this->page ."/";
+        $directory = PATH_BASE . "html/js/Module/" . $this->module . "/";
 
         $this->checkPageData(View::CHECK_TYPE_JAVASCRIPT, $directory);
     }
@@ -931,25 +793,24 @@ abstract class View implements Interfaces\iView
      *
      * @access  private
      *
-     * @uses    \Nettibaari\Page\View::checkPageData()
+     * @uses    \HomeAI\Page\View::checkPageData()
      *
      * @return  void
      */
     private function checkPageCss()
     {
-        $directory = PATH_BASE ."html/css/Page/". $this->page ."/";
+        $directory = PATH_BASE . "html/css/Module/" . $this->module . "/";
 
         $this->checkPageData(View::CHECK_TYPE_CSS, $directory);
     }
 
-
     /**
      * Method check css / javascript files from specified directory and adds
-     * them to current view if it's neccessary.
+     * them to current view if it's necessary.
      *
      * @access  private
      *
-     * @throws  \Nettibaari\Page\Exception
+     * @throws  \HomeAI\Module\Exception
      *
      * @param   string  $type       See CHECK_TYPE_* -constants
      * @param   string  $directory  Directory specification
@@ -959,25 +820,22 @@ abstract class View implements Interfaces\iView
     private function checkPageData($type, $directory)
     {
         // Directory doesn't exists so do not continue
-        if (!is_dir($directory))
-        {
+        if (!is_dir($directory)) {
             return;
         }
 
-        switch ($type)
-        {
+        switch ($type) {
             case View::CHECK_TYPE_CSS:
                 $extension = '.css';
-                $method = 'addCss';
+                $method    = 'addCss';
                 break;
-
             case View::CHECK_TYPE_JAVASCRIPT:
                 $extension = '.js';
-                $method = 'addJavascript';
+                $method    = 'addJavascript';
                 break;
-
             default:
-                $message = sprintf("Unknown type: '%s",
+                $message = sprintf(
+                    "Unknown type: '%s",
                     $type
                 );
 
@@ -987,20 +845,17 @@ abstract class View implements Interfaces\iView
 
         // Define searched files
         $files = array(
-            $this->page,
+            $this->module,
             $this->action,
         );
 
-        foreach ($files as $filename)
-        {
+        foreach ($files as $filename) {
             // File is readable, so add it to current view
-            if (is_readable($directory . $filename . $extension))
-            {
-                call_user_func(array($this, $method), "Page/". $this->page ."/". $filename . $extension);
+            if (is_readable($directory . $filename . $extension)) {
+                call_user_func(array($this, $method), "Module/" . $this->module . "/" . $filename . $extension);
             }
         }
     }
-
 
     /**
      * Method initializes Smarty library to use.
@@ -1012,26 +867,27 @@ abstract class View implements Interfaces\iView
     private function initializeSmarty()
     {
         // Require smarty base class
-        require_once PATH_BASE .'libs/smarty/Smarty.class.php';
+        require_once PATH_BASE . 'libs/Smarty/libs/Smarty.class.php';
 
         // Create smarty object
         $this->smarty = new \Smarty;
 
         // Define smarty variables
-        $this->smarty->setTemplateDir(array(
-            PATH_BASE .'templates/'. $this->page .'/',
-            PATH_BASE .'templates/',
-        ));
+        $this->smarty->setTemplateDir(
+            array(
+                PATH_BASE . 'templates/' . $this->module . '/',
+                PATH_BASE . 'templates/',
+            )
+        );
 
         // Set some smarty settings
-        $this->smarty->setCompileDir(PATH_BASE .'templates_cache/');
-        $this->smarty->setConfigDir(PATH_BASE .'config/');
-        $this->smarty->setCacheDir(PATH_BASE .'cache/');
-        $this->smarty->setPluginsDir(array_merge($this->smarty->getPluginsDir(), array(PATH_BASE .'php/Smarty/')));
+        $this->smarty->setCompileDir(PATH_BASE . 'templates_cache/');
+        $this->smarty->setConfigDir(PATH_BASE . 'config/');
+        $this->smarty->setCacheDir(PATH_BASE . 'cache/');
+        $this->smarty->setPluginsDir(array_merge($this->smarty->getPluginsDir(), array(PATH_BASE . 'php/Smarty/')));
 
         // No page cache so clear all
-        if ($this->pageCache === false)
-        {
+        if ($this->pageCache === false) {
             $this->smarty->clearAllCache();
         }
 
@@ -1039,15 +895,10 @@ abstract class View implements Interfaces\iView
         $this->initializeDefaultTemplateVariables();
     }
 
-
     /**
      * Method initializes used global smarty template variables.
      *
      * @access  private
-     *
-     * @uses    \Nettibaari\Core\Request::getScheme()
-     * @uses    \Nettibaari\Core\Request::getHttpHost()
-     * @uses    \Nettibaari\Core\Request::getBaseUrl()
      *
      * @return  void
      */
@@ -1056,41 +907,39 @@ abstract class View implements Interfaces\iView
         // Global template variables.
         $templateVars = array(
             // Generic template variables
-            'pageTitle'         => '',
-            'pageKeywords'      => '',
-            'pageDescription'   => '',
-            'pageImage'         => '',
-            'pageBaseHref'      => $this->request->getBaseUrl(false, true),
-            'pageName'          => $this->page,
-            'pageAction'        => $this->action,
+            'pageTitle'           => '',
+            'pageKeywords'        => '',
+            'pageDescription'     => '',
+            'pageImage'           => '',
+            'pageBaseHref'        => $this->request->getBaseUrl(false, true),
+            'pageName'            => $this->module,
+            'pageAction'          => $this->action,
 
             // Javascript and css variables
-            'pageScript'        => '',
-            'pageJavascript'    => '',
-            'pageCss'           => '',
+            'pageScript'          => '',
+            'pageJavascript'      => '',
+            'pageCss'             => '',
 
             // Actual content variables
-            'pageHeader'        => '',
-            'pageContent'       => '',
-            'pageFooter'        => '',
-            'pageNavigation'    => '',
-            'pageAds'           => '',
+            'pageHeader'          => '',
+            'pageContent'         => '',
+            'pageFooter'          => '',
+            'pageNavigation'      => '',
 
             // Is user logged on or not
-            'admin'             => Login::$auth,
+            'admin'               => Login::$auth,
 
             // System variables
-            'systemVersion'     => SYSTEM_VERSION,
-            'systemEmail'       => Config::readIni('config.ini', 'System', 'Email'),
+            'systemVersion'       => SYSTEM_VERSION,
+            'systemEmail'         => Config::readIni('config.ini', 'System', 'Email'),
 
             // Google specified variables
-            'googleVerifyCode'      => Config::readIni('config.ini', 'System', 'GoogleV1'),
-            'googleAnalyticsCode'   => Config::readIni('config.ini', 'System', 'Analytics'),
+            'googleVerifyCode'    => Config::readIni('config.ini', 'System', 'GoogleV1'),
+            'googleAnalyticsCode' => Config::readIni('config.ini', 'System', 'Analytics'),
         );
 
         // Iterate template variables and assign values to them
-        foreach ($templateVars as $variable => $value)
-        {
+        foreach ($templateVars as $variable => $value) {
             $this->smarty->assign($variable, $value);
         }
     }

@@ -1,32 +1,24 @@
 <?php
 /**
- * \php\Page\Interfaces\iModel.php
+ * \php\Module\Interfaces\Model.php
  *
  * @package     Core
- * @subpackage  Page
+ * @subpackage  Module
  * @category    Interface
  */
-namespace Nettibaari\Page\Interfaces;
+namespace HomeAI\Module\Interfaces;
 
-defined('NETTIBAARI_INIT') OR die('No direct access allowed.');
 /**
- * iModel -interface
- *
- * Interface for \Nettibaari\Page\Model -class.
+ * Interface for \HomeAI\Module\Model -class.
  *
  * @package     Core
- * @subpackage  Page
+ * @subpackage  Module
  * @category    Controller
  *
- * @date        $Date: 2012-06-02 18:01:42 +0300 (Sat, 02 Jun 2012) $
- * @author      $Author: tle $
- * @revision    $Rev: 4 $
+ * @date        $Date$
+ * @author      $Author$
+ * @revision    $Rev$
  */
-interface iModel extends iCommon
+interface Model extends Common
 {
-    public function getOptionsSubstances($showSelect = false, $showEmpty = false);
-    public function getOptionsUnit($showSelect = false, $showEmpty = false);
-    public function getOptionsCategories($showSelect = false, $showEmpty = false);
-    public function getOptionsProcesses($showSelect = false, $showEmpty = false);
-    public function getOptionsGlassTypes($showSelect = true, $showEmpty = false);
 }

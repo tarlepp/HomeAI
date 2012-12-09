@@ -72,7 +72,6 @@ abstract class Model implements Interfaces\Model
      */
     protected $table = '';
 
-
     /**
      * Construction of the class.
      *
@@ -137,72 +136,6 @@ abstract class Model implements Interfaces\Model
             } else {
                 $output[$v[0]] = $v[1];
             }
-        }
-
-        return $output;
-    }
-
-
-    /**
-     * Method determines search terms and returns them as an array. Note that
-     * method will only return ten (10) first search terms.
-     *
-     * @access  protected
-     *
-     * @param   string  $term
-     *
-     * @return  array
-     */
-    protected function determineSearchTerms($term)
-    {
-        $terms = explode(' ', $term);
-
-        $terms = array_filter(array_unique($terms));
-
-        foreach ($terms as $k => $term) {
-            if (mb_strlen($term) < 2) {
-                unset($terms[$k]);
-            }
-        }
-
-        return count($terms) > 10 ? array_slice($terms, 0, 10) : $terms;
-    }
-
-
-    /**
-     * Method combines search data to one array, this method is used in
-     * every search functionality in Nettibaari.
-     *
-     * @access  protected
-     *
-     * @param   array   $data   Data to combine
-     *
-     * @return  array           Combined data
-     */
-    protected function combineSearchData($data)
-    {
-        // Initialize output
-        $output = array();
-
-        // Iterate data
-        foreach ($data as $v) {
-            $id = (int)$v['ID'];
-
-            if (!array_key_exists($id, $output)) {
-                $output[$id]              = $v;
-                $output[$id]['Relevance'] = 1;
-            }
-
-            $relevance = '1';
-            $factor    = $v['Relevance_Like'];
-
-            $mainFactor = isset($v['Factor']) ? $v['Factor'] : 1;
-
-            $output[$id]['Relevance'] = bcmul(
-                bcadd($output[$id]['Relevance'], bcmul($relevance, $factor, 3), 2),
-                $mainFactor,
-                2
-            );
         }
 
         return $output;

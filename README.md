@@ -21,7 +21,9 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 ### What are we using to do this all:
 - PHP 5.4+, what else? :D (http://php.net/)
 - Doctrine DBAL (http://www.doctrine-project.org/projects/dbal.html)
-- jQuery (http://jquery.com/)
+- Smarty Template Engine (http://www.smarty.net/)
+- jQuery (http://www.jquery.com/)
+- jQueryUI (http://www.jqueryui.com/)
 - This list will be updated
 
 ### Notes
