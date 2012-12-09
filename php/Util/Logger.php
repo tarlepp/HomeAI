@@ -41,6 +41,7 @@ class Logger implements Interfaces\Logger
     private $logFiles = array(
         Logger::TYPE_ERROR  => 'error.log',
         Logger::TYPE_DEBUG  => 'debug.log',
+        Logger::TYPE_AUTH   => 'auth.log',
         Logger::TYPE_INFO   => 'info.log',
     );
 
@@ -53,6 +54,7 @@ class Logger implements Interfaces\Logger
      */
     const TYPE_ERROR = 'Error';
     const TYPE_DEBUG = 'Debug';
+    const TYPE_AUTH  = 'Auth';
     const TYPE_INFO  = 'Info';
     /**#@-*/
 
