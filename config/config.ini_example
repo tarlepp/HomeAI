@@ -1,0 +1,34 @@
+;
+; This file contains global config settings for HomeAI -system.
+;
+; Sessions -block
+;   Time        = Seconds that sessions exists in database
+;
+; System -block
+;   Production  = Is system in 'production', this will enable JS and CSS compression
+;   Email       = Admin email where to send emails
+;   GoogleV1    = Google site verification code
+;   Analytics   = Google analytics code
+;
+; Mailer -block
+;   Host        = Host name of the SMTP -server
+;   Port        = Used SMTP port, default is 25
+;   Encryption  = Used encryption, values can be tls, ssl or empty for none
+;   Username    = Username for SMTP server, leave empty if not needed
+;   Password    = Password for SMTP server, leave empty if not needed
+;
+[Sessions]
+    Time        = 3600
+
+[System]
+    Production  = false
+    Email       = ''
+    GoogleV1    = ''
+    Analytics   = ''
+
+[Mailer]
+    Host        = 'mail.inet.fi'
+    Port        = 25
+    Encryption  =
+    Username    =
+    Password    =
