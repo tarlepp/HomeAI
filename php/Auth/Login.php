@@ -105,7 +105,7 @@ class Login implements Interfaces\Login
             Login::$auth = false;
 
             // Write error log
-            Logger::write(Logger::TYPE_AUTH, $error);
+            Logger::write($error, Logger::TYPE_AUTH);
 
             if ($logout === true) {
                 $this->logout($error);
