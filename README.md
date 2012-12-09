@@ -24,7 +24,16 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - Smarty Template Engine (http://www.smarty.net/)
 - jQuery (http://www.jquery.com/)
 - jQueryUI (http://www.jqueryui.com/)
+- YUI Compressor (http://developer.yahoo.com/yui/compressor/)
 - This list will be updated
+
+### Requirements
+- PHP 5.4+
+
+You can run system check script via following command in the root directory:
+ php -q html/check.php
+or pointing your browser to following address after installation:
+ http://your-host/check.php
 
 ### Notes
 We're always looking for some help to do this all, please contact if you are interested in this.
