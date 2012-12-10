@@ -11,6 +11,7 @@ namespace HomeAI\Module;
 use HomeAI\Auth\Login;
 use HomeAI\Core\Request;
 use HomeAI\Util\Config;
+use HomeAI\Util\YuiCompressor;
 use HomeAI\Module\Model;
 
 /**
@@ -644,7 +645,7 @@ abstract class View implements Interfaces\View
     private function makeHeader()
     {
         // Create css template and assign css data to it.
-        $template = $this->smarty->createTemplate('header.tpl', $this->smarty);
+        $template = $this->smarty->createTemplate('page_header.tpl', $this->smarty);
 
         $this->smarty->assign('pageHeader', $template->fetch());
     }
@@ -659,7 +660,7 @@ abstract class View implements Interfaces\View
     private function makeFooter()
     {
         // Create css template and assign css data to it.
-        $template = $this->smarty->createTemplate('footer.tpl', $this->smarty);
+        $template = $this->smarty->createTemplate('page_footer.tpl', $this->smarty);
 
         $this->smarty->assign('pageFooter', $template->fetch());
     }
@@ -674,7 +675,7 @@ abstract class View implements Interfaces\View
     private function makeNavigation()
     {
         // Create css template and assign css data to it.
-        $template = $this->smarty->createTemplate('navigation.tpl', $this->smarty);
+        $template = $this->smarty->createTemplate('page_navigation.tpl', $this->smarty);
 
         $this->smarty->assign('pageNavigation', $template->fetch());
     }
