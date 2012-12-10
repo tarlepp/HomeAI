@@ -1,0 +1,36 @@
+;
+; Configuration of database connections
+;
+; This file contains configuration information about database connection
+;
+; Configurations are made via following parameters
+;
+; driver        The driver specifies the actual implementations of the DBAL
+;                * pdo_mysql: A MySQL driver that uses the pdo_mysql PDO extension.
+;                * pdo_sqlite: An SQLite driver that uses the pdo_sqlite PDO extension.
+;                * pdo_pgsql: A PostgreSQL driver that uses the pdo_pgsql PDO extension.
+;                * pdo_oci: An Oracle driver that uses the pdo_oci PDO extension. Note that
+;                  this driver caused problems in our tests. Prefer the oci8 driver if possible.
+;                * oci8: An Oracle driver that uses the oci8 PHP extension.
+; user          Username for the database.
+; password      Password for the database.
+; host          Hostname of SQL server
+; port          Used port
+; dbname        Name of the database
+;
+;  Below is an example of configuration set.
+;
+;   driver   =  "pdo_mysql"
+;   user     =  "user"
+;   password =  "password"
+;   host     =  "localhost"
+;   port     =  "3306"
+;   dbname   =  "database"
+;
+
+driver       =  ""
+user         =  ""
+password     =  ""
+host         =  ""
+port         =  ""
+dbname       =  ""

@@ -1,3 +1,4 @@
 config/constants.ini
 config/config.ini
+config/database.ini
 logs/*

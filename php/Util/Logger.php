@@ -41,6 +41,7 @@ class Logger implements Interfaces\Logger
     private $logFiles = array(
         Logger::TYPE_ERROR  => 'error.log',
         Logger::TYPE_DEBUG  => 'debug.log',
+        Logger::TYPE_QUERY  => 'query.log',
         Logger::TYPE_AUTH   => 'auth.log',
         Logger::TYPE_INFO   => 'info.log',
     );
@@ -54,6 +55,7 @@ class Logger implements Interfaces\Logger
      */
     const TYPE_ERROR = 'Error';
     const TYPE_DEBUG = 'Debug';
+    const TYPE_QUERY = 'Query';
     const TYPE_AUTH  = 'Auth';
     const TYPE_INFO  = 'Info';
     /**#@-*/
@@ -102,7 +104,6 @@ class Logger implements Interfaces\Logger
         }
     }
 
-
     /**
      * Method formats defined log message from passed exception object.
      *
@@ -120,7 +121,7 @@ class Logger implements Interfaces\Logger
 
         // Message is an exception
         if ($message instanceof \Exception) {
-            $debugMessage = "Exception: ". $message->getMessage();
+            $debugMessage = get_class($message)  .": ". $message->getMessage();
             $backtrace = $message->getTrace();
         } elseif (is_array($message)) {
             $debugMessage = "Array:\n". var_export($message, true);
@@ -175,7 +176,6 @@ class Logger implements Interfaces\Logger
 
         return $output;
     }
-
 
     /**
      * Method get current timestamp with microseconds for debug messages.

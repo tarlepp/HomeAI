@@ -18,5 +18,5 @@ use Doctrine\Common\ClassLoader;
 require_once PATH_BASE .'libs/DoctrineDBAL/Doctrine/Common/ClassLoader.php';
 
 // Register doctrine class loader
-$classLoader = new ClassLoader('Doctrine', PATH_BASE .'libs/doctrine-dbal/');
+$classLoader = new ClassLoader('Doctrine', PATH_BASE .'libs/DoctrineDBAL/');
 $classLoader->register();

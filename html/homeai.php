@@ -25,7 +25,25 @@ try {
     // Handle current request via Router
     Router::handleRequest($request);
 } catch (\Exception $error) {
-    echo "Error occurred please exam logs...";
+    echo "
+    <html>
+        <head>
+        <style type='text/css'>
+            body {
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: 16px;
+            }
+        </style>
+        </head>
+        <body>
+        <h1>Exception '". get_class($error) ."' was not catched</h1>
+        <pre><code>". $error->__toString() ."</code></pre>
+        </body>
+    </html>
+    ";
 }
 
 exit(0);

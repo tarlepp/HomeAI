@@ -104,9 +104,6 @@ class Login implements Interfaces\Login
             // User not logged in
             Login::$auth = false;
 
-            // Write error log
-            Logger::write($error, Logger::TYPE_AUTH);
-
             if ($logout === true) {
                 $this->logout($error);
             }
@@ -144,7 +141,7 @@ class Login implements Interfaces\Login
 
         // User session data is not present.
         if (!is_array($sessionData)) {
-            throw new Exception("Required User session is not present.");
+            throw new Exception("Required User session is not present.", 1);
         }
 
         $message = array();
@@ -183,7 +180,7 @@ class Login implements Interfaces\Login
         unset($sessionData);
 
         if (count($message) > 0) {
-            throw new Exception(implode("\n", $message));
+            throw new Exception(implode("\n", $message), 1);
         }
     }
 
@@ -200,7 +197,7 @@ class Login implements Interfaces\Login
     {
         $message = array();
 
-        // Define sitedata to check
+        // Define site data to check
         $data = array(
             'ip'    => Network::getIp(),
             'agent' => Network::getAgent(),

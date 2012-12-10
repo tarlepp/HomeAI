@@ -1,39 +1,35 @@
 <?php
 /**
- * \php\Core\Exception.php
+ * \php\Database\Exception.php
  *
  * @package     HomeAI
- * @subpackage  Core
+ * @subpackage  Database
  * @category    Exception
  */
-namespace HomeAI\Core;
+namespace HomeAI\Database;
 
-use HomeAI\Util\Logger as Logger;
+use HomeAI\Core\Exception as CException;
+use HomeAI\Util\Logger;
 
 /**
- * Exception -class
- *
- * Generic exception class for HomeAI -software. All Exception classes
- * must extend this class.
- *
- * Note that this class will write all errors to syslog
+ * Exception class for \HomeAI\Database -classes.
  *
  * @package     HomeAI
- * @subpackage  Core
- * @category    Session
+ * @subpackage  Database
+ * @category    Exception
  *
  * @date        $Date$
  * @author      $Author$
  * @revision    $Rev$
  */
-class Exception extends \Exception
+class Exception extends CException
 {
     /**
      * Write error log or not.
      *
      * @var bool
      */
-    protected $writeLog = true;
+    protected $writeLog = false;
 
     /**
      * Construction of main exception class.
@@ -42,14 +38,13 @@ class Exception extends \Exception
      * @param   integer     $code       Error code
      * @param   \Exception  $previous   Previous exception
      *
-     * @return  \HomeAI\Core\Exception
+     * @return  \HomeAI\Database\Exception
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
-        if ($this->writeLog) {
-            Logger::write($this, Logger::TYPE_ERROR);
-        }
+        // Write query error log
+        Logger::write($this, Logger::TYPE_QUERY);
     }
 }
