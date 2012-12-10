@@ -44,7 +44,6 @@
 </head>
 <body>
 
-
 {$pageHeader}
 {$pageNavigation}
 {$pageContent}

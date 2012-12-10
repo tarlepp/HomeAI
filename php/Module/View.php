@@ -94,9 +94,10 @@ abstract class View implements Interfaces\View
      */
     protected $pageJavascript = array(
         'jQuery/',
-        'jQuery-UI/',
+        'jQueryUI/',
         'bootstrap/',
         'qTip2/',
+        'homeai.js'
     );
 
     /**

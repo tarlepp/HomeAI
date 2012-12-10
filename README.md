@@ -24,11 +24,15 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - Smarty Template Engine (http://www.smarty.net/)
 - jQuery (http://www.jquery.com/)
 - jQueryUI (http://www.jqueryui.com/)
+- jQuery ctNotify Plugin (https://github.com/thecodecentral/ctNotify)
+- Twitter Bootstrap (https://github.com/twitter/bootstrap)
+- qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)
-- This list will be updated
+- <em>This list will be updated</em>
 
 ### Requirements
 - PHP 5.4+
+- <em>TODO: add specified requirement list here</em>
 
 You can run system check script via following command in the root directory:
 <pre>
