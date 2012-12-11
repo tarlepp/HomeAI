@@ -39,7 +39,7 @@ TODO:
 <p style="text-decoration: overline;">
 You can run system check script via following command in the root directory:
 <pre>
-<ol>php -q html/check.php
+php -q html/check.php
 </pre>
 or pointing your browser to following address after installation:
 <pre>
