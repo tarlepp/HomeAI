@@ -25,6 +25,7 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - jQuery (http://www.jquery.com/)
 - jQueryUI (http://www.jqueryui.com/)
 - jQuery ctNotify Plugin (https://github.com/thecodecentral/ctNotify)
+- jQuery dashboard plugin (https://connect.gxsoftware.com/dashboardplugin/demo/dashboard.html)
 - Twitter Bootstrap (https://github.com/twitter/bootstrap)
 - qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)
@@ -34,14 +35,17 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - PHP 5.4+
 - <em>TODO: add specified requirement list here</em>
 
+TODO:
+<ol>
 You can run system check script via following command in the root directory:
 <pre>
-php -q html/check.php
+<ol>php -q html/check.php
 </pre>
 or pointing your browser to following address after installation:
 <pre>
 http://your-host/check.php
 </pre>
+</ol>
 
 ### Notes
 We're always looking for some help to do this all, please contact if you are interested in this.

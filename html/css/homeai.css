@@ -52,13 +52,4 @@ footer, .wrapper {
     padding: 0 2px;
 }
 
-.dasboard {
-    margin-top: 10px;
-}
 
-.dasboard .widget {
-    border: 1px solid #E5E5E5;
-    min-height: 50px;
-    padding: 5px;
-    margin-bottom: 10px;
-}

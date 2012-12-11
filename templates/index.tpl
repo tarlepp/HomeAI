@@ -32,6 +32,8 @@
 
     <script type="text/javascript">
         var pageBaseHref = '{$pageBaseHref}';
+        var pageModule = '{$pageModule}';
+        var pageAction = '{$pageAction}';
 
         {if is_array($pageScript)}
             {literal}jQuery(function() {{/literal}

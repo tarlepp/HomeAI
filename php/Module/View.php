@@ -272,13 +272,25 @@ abstract class View implements Interfaces\View
      * @access  public
      *
      * @param   string  $javascript Javascript library name.
-     * @param   boolean $append     Add type.
+     * @param   boolean $append     Append javascript library
+     * @param   boolean $first      But library to first
      *
      * @return  void
      */
-    public function addJavascript($javascript, $append = true)
+    public function addJavascript($javascript, $append = true, $first = false)
     {
-        ($append === true) ? $this->pageJavascript[] = $javascript : $this->pageJavascript = array($javascript);
+        if ($append === true) {
+            if ($first) {
+                $temp = array_reverse($this->pageJavascript);
+                $temp[] = $javascript;
+
+                $this->pageJavascript = array_reverse($temp);
+            } else {
+                $this->pageJavascript[] = $javascript;
+            }
+        } else {
+            $this->pageJavascript = array($javascript);
+        }
     }
 
     /**
@@ -371,16 +383,16 @@ abstract class View implements Interfaces\View
      */
     private function initializePage()
     {
+        // Page specified initializing.
+        if (method_exists($this, 'preInitializePage')) {
+            $this->preInitializePage();
+        }
+
         // Check page specified javascript files
         $this->checkPageJavascript();
 
         // Check page specified css files
         $this->checkPageCss();
-
-        // Page specified initializing.
-        if (method_exists($this, 'preInitializePage')) {
-            $this->preInitializePage();
-        }
 
         // Create page keywords
         $this->makeKeywords();
@@ -784,7 +796,7 @@ abstract class View implements Interfaces\View
     private function checkPageJavascript()
     {
         // Define module javascript dir
-        $directory = PATH_BASE . "html/js/Module/" . $this->module . "/";
+        $directory = PATH_BASE . "html/js/module/" . $this->module . "/";
 
         $this->checkPageData(View::CHECK_TYPE_JAVASCRIPT, $directory);
     }
@@ -802,7 +814,7 @@ abstract class View implements Interfaces\View
      */
     private function checkPageCss()
     {
-        $directory = PATH_BASE . "html/css/Module/" . $this->module . "/";
+        $directory = PATH_BASE . "html/css/module/" . $this->module . "/";
 
         $this->checkPageData(View::CHECK_TYPE_CSS, $directory);
     }
@@ -855,7 +867,7 @@ abstract class View implements Interfaces\View
         foreach ($files as $filename) {
             // File is readable, so add it to current view
             if (is_readable($directory . $filename . $extension)) {
-                call_user_func(array($this, $method), "Module/" . $this->module . "/" . $filename . $extension);
+                call_user_func(array($this, $method), "module/" . $this->module . "/" . $filename . $extension);
             }
         }
     }
@@ -915,7 +927,7 @@ abstract class View implements Interfaces\View
             'pageDescription'     => '',
             'pageImage'           => '',
             'pageBaseHref'        => $this->request->getBaseUrl(false, true),
-            'pageName'            => $this->module,
+            'pageModule'          => $this->module,
             'pageAction'          => $this->action,
 
             // Javascript and css variables

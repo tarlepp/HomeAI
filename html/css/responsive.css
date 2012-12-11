@@ -15,7 +15,11 @@
 }
 
 .wrapper .container {
-   /* border: 1px solid #FF0000; */
+   border: 1px solid #FF0000;
+}
+
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    /*width: 1160px;*/
 }
 
 @media (max-width: 1200px) {

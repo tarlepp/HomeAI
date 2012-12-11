@@ -82,11 +82,12 @@ interface View extends Common
      * @access  public
      *
      * @param   string  $javascript Javascript library name.
-     * @param   boolean $append     Add type.
+     * @param   boolean $append     Append javascript library
+     * @param   boolean $first      But library to first
      *
      * @return  void
      */
-    public function addJavascript($javascript, $append = true);
+    public function addJavascript($javascript, $append = true, $first = false);
 
     /**
      * CSS file add method.
