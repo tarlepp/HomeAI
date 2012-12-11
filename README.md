@@ -36,7 +36,7 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - <em>TODO: add specified requirement list here</em>
 
 TODO:
-<ol>
+<p style="text-decoration: overline;">
 You can run system check script via following command in the root directory:
 <pre>
 <ol>php -q html/check.php
@@ -45,7 +45,7 @@ or pointing your browser to following address after installation:
 <pre>
 http://your-host/check.php
 </pre>
-</ol>
+</p>
 
 ### Notes
 We're always looking for some help to do this all, please contact if you are interested in this.
