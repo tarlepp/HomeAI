@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>{$pageTitle}</title>
@@ -8,6 +8,7 @@
     <meta name="author" content="Tarmo Leppänen"/>
     <meta name="keywords" content="{foreach from=$pageKeywords item=keyword}{$keyword},{/foreach}"/>
     <meta name="description" content="{if empty($pageDescription)}HomeAI see https://github.com/tarlepp/HomeAI{else}{$pageDescription}{/if}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="verify-v1" content="{$googleVerifyCode}"/>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
@@ -45,10 +46,16 @@
 <body>
 
 {$pageHeader}
-{$pageNavigation}
-{$pageContent}
-{$pageFooter}
 
+<div class="wrapper">
+    <div class="container">
+        {$pageContent}
+    </div>
+
+    <div id="push"></div>
+</div>
+
+{$pageFooter}
 
 {if !empty($googleAnalyticsCode)}
 <script type="text/javascript">

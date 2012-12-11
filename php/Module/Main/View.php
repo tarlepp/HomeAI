@@ -37,7 +37,7 @@ class View extends MView implements Interfaces\View
      */
     public function makeMain()
     {
-        $template = $this->smarty->createTemplate('main.tpl', $this->smarty);
+        $template = $this->smarty->createTemplate('dashboard.tpl', $this->smarty);
 
         return $template->fetch();
     }

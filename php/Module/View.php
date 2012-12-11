@@ -108,6 +108,7 @@ abstract class View implements Interfaces\View
      */
     protected $pageCss = array(
         'homeai.css'    => 'screen, projection',
+        'responsive.css'=> 'screen, projection',
         'print.css'     => 'print',
     );
 
@@ -399,11 +400,11 @@ abstract class View implements Interfaces\View
         // Create page title
         $this->makeTitle();
 
-        // Create header data
-        $this->makeHeader();
-
         // Create navigation
         $this->makeNavigation();
+
+        // Create header data
+        $this->makeHeader();
 
         // Create footer data
         $this->makeFooter();

@@ -1,0 +1,82 @@
+.responsiveWidth {
+    position: relative;
+    float: right;
+    color: #FFFFFF;
+    line-height: 40px;
+}
+
+.responsiveWidth:before {
+    content: '> 1200px';
+}
+
+.navbar-fixed-top .navbar-inner,
+.navbar-fixed-bottom .navbar-inner {
+    padding: 0 5px;
+}
+
+.wrapper .container {
+   /* border: 1px solid #FF0000; */
+}
+
+@media (max-width: 1200px) {
+    .responsiveWidth:before {
+        content: '979px < X < 1200px';
+    }
+}
+
+@media (max-width: 979px) {
+    .responsiveWidth:before {
+        content: '767px < X < 979px';
+    }
+
+    .wrapper > .container {
+        padding-top: 0;
+    }
+
+    .navbar-fixed-top {
+        margin-bottom: 0;
+    }
+
+    .navbar .container {
+        width: 724px;
+    }
+}
+
+@media (max-width: 767px) {
+    .responsiveWidth:before {
+        content: '480px < X < 767px';
+    }
+
+    .navbar-fixed-top .navbar-inner,
+    .navbar-fixed-bottom .navbar-inner {
+        padding-left: 20px;
+    }
+
+    .navbar .container {
+        width: auto;
+    }
+
+    .wrapper {
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+    }
+
+    .wrapper > .container {
+        padding-top: 0;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .responsiveWidth:before {
+        content: '320px < X < 480px';
+    }
+}
+
+@media (max-width: 320px) {
+    .responsiveWidth:before {
+        content: '< 320px';
+    }
+}
+

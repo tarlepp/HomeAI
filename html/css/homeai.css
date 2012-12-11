@@ -1,3 +1,64 @@
 /**
  * Add base CSS definitions here
  */
+
+html,
+body {
+    height: 100%;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+footer {
+    background-color: #F5F5F5;
+    border-top: 1px solid #E5E5E5;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -42px;
+    padding: 0;
+}
+
+/* not required for sticky footer; just pushes hero down a bit */
+.wrapper > .container {
+    padding-top: 42px;
+}
+
+footer, .wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.push {
+    height: 40px;
+}
+
+.footer-links {
+    margin: 0;
+}
+
+.footer-links li:first-child {
+    padding-left: 0;
+}
+.footer-links li {
+    display: inline;
+    padding: 0 2px;
+}
+
+.dasboard {
+    margin-top: 10px;
+}
+
+.dasboard .widget {
+    border: 1px solid #E5E5E5;
+    min-height: 50px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
