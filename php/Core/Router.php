@@ -29,7 +29,7 @@ class Router implements Interfaces\Router
      * @access  private static
      * @var     string
      */
-    private static $defaultModule = 'Main';
+    private static $defaultModule = 'Dashboard';
 
     /**
      * Default module action definition

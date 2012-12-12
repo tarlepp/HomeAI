@@ -14,14 +14,6 @@
     padding: 0 5px;
 }
 
-.wrapper .container {
-   border: 1px solid #FF0000;
-}
-
-.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-    /*width: 1160px;*/
-}
-
 @media (max-width: 1200px) {
     .responsiveWidth:before {
         content: '979px < X < 1200px';
