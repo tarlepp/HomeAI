@@ -1,3 +1,16 @@
+.loading {
+    background: no-repeat center center;
+}
+
+.layoutchoice {
+    cursor: pointer;
+}
+
+ul.fullscreen {
+    margin: 0;
+    padding: 0;
+}
+
 .column {
     min-height: 0;
     margin: 0 0 0 10px;
@@ -5,9 +18,8 @@
 }
 
 .selectedcolumn {
-    /*border: 1px dashed #aaaaaa;*/
     border: none;
-    background-color: rgba(200, 200, 2000, 0.1);
+    background-color: rgba(200, 200, 200, 0.1);
 }
 
 .layout {
@@ -75,10 +87,6 @@
     .layout-aaa .column {
         width: 306px;
     }
-
-    .layout-aaa .selectedcolumn {
-        width: 304px;
-    }
 }
 
 @media (max-width: 979px) {
@@ -104,10 +112,6 @@
 
     .layout-aaa .column {
         width: 234px;
-    }
-
-    .layout-aaa .selectedcolumn {
-        width: 232px;
     }
 }
 
@@ -146,6 +150,7 @@
     .layout-aaa .column {
         width: 100%;
         margin-left: 0;
+        padding-bottom: 0;
     }
 
     .column {
@@ -158,16 +163,11 @@
         margin-left: 0;
     }
 
-    .layout-aa .column,
-    .layout-ba .column,
-    .layout-ab .column,
-    .layout-aaa .column {
-        width: 100%;
-        margin-left: 0;
-    }
-
     .column {
         min-height: 0;
+        width: 100%;
+        margin-left: 0;
+        padding-bottom: 0;
     }
 }
 
@@ -176,14 +176,10 @@
         margin-left: 0;
     }
 
-    .layout-aa .column,
-    .layout-ba .column,
-    .layout-ab .column {
-        width: 100%;
-        margin-left: 0;
-    }
-
     .column {
         min-height: 0;
+        width: 100%;
+        margin-left: 0;
+        padding-bottom: 0;
     }
 }

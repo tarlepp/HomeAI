@@ -14,6 +14,7 @@
 
     <link rel="icon" href="{$pageBaseHref}images/layout/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="{$pageBaseHref}images/layout/favicon.ico" type="image/x-icon"/>
+    <link href='http://fonts.googleapis.com/css?family=Cuprum:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
 {$pageJavascript}
 {$pageCss}

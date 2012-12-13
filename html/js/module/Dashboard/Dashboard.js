@@ -14,6 +14,7 @@ $(document).ready(function() {
             json_data : {
                 url: pageBaseHref + "Dashboard/GetMyWidgets"
             },
+            loadingHtml: '<div class="loading"></div>',
             layouts :
                 [
                     { title: "Layout1",

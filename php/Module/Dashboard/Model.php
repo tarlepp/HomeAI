@@ -91,8 +91,5 @@ class Model extends MModel implements Interfaces\Model
         }
         }
          */
-
-
-        die('asdfasdf');
     }
 }

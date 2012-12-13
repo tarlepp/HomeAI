@@ -416,7 +416,7 @@
         layoutDiv.hide();
 
         // move the widget that is maximized to a new fullscreen ul
-        var fs = $('<ul id="fullscreen_' + dashboard.id + '"></ul>');
+        var fs = $('<ul class="fullscreen" id="fullscreen_' + dashboard.id + '"></ul>');
         fs.appendTo(dashboard.element);
         widget.element.parent().attr("id", "placeholder");
         widget.element.appendTo(fs);
@@ -619,13 +619,15 @@
       }
     });
 
-    if ($('#' + layoutOpts.dialogId).length == 0) dashboard.log('Unable to find ' + layoutOpts.dialogId,5);
-    $('#' + layoutOpts.dialogId).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 600,
-      modal: true
-    });
+      if ($('#' + layoutOpts.dialogId).length == 0) dashboard.log('Unable to find ' + layoutOpts.dialogId, 5);
+      $('#' + layoutOpts.dialogId).dialog({
+          autoOpen  : false,
+          height    : 140,
+          width     : 500,
+          modal     : true,
+          resizable : false,
+          draggable : false
+      });
 
     $('.' + layoutOpts.openDialogClass).live('click', function(){
       dashboard.log('dashboardOpenLayoutDialog event thrown',2);

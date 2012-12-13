@@ -5,6 +5,7 @@
 html,
 body {
     height: 100%;
+    font-family: 'Cuprum', sans-serif;
 }
 
 html {
@@ -53,4 +54,17 @@ footer, .wrapper {
     padding: 0 2px;
 }
 
+.ui-widget {
+    font-family: 'Cuprum', sans-serif;
+    font-size: 16px;
+}
 
+.ui-widget-header {
+    border-style: none;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.ui-dialog
+.ui-dialog-content {
+    padding: 5px;
+}
