@@ -54,11 +54,6 @@ We're always looking for some help to do this all, please contact if you are int
 ### Why to do this?
 Don't know, some fucking passion to do something etc.
 
-### License
-The MIT License is simple and easy to understand and it places almost no restrictions on what you can do with this project.
-
-You are free to use this project code in commercial projects as long as the copyright header is left intact.
-
 Installation
 ---------------
 Some installation docs here.
@@ -80,3 +75,15 @@ Development / Contributing
 
 ### IDE recommendation
 Really, use PhpStorm (http://www.jetbrains.com/phpstorm/) it rocks!
+
+License
+-------
+Copyright (c) 2012 Tarmo Leppänen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+<strong>Note:</strong> libs and html/js/ -directories contains 3rd party software, which may have different license that MIT so check them also. Basically every 3rd party software is "freeware" for non-commercial use.
