@@ -25,71 +25,49 @@ class Model extends MModel implements Interfaces\Model
 {
     public function getMyWidgets()
     {
+        $url = $this->request->getBaseUrl(false, true);
+
         return array(
-            'result'            => array(
-                'layout'        => 'layout5',
-                'data'          => array(
+            'result'                    => array(
+                'layout'                => 'layout5',
+                'data'                  => array(
                     array(
-                        'id'        => 'widget1',
-                        'title'     => 'widget 1 tooltip',
-                        'column'    => 'first',
-                        'editurl'   => '',
-                        'open'      => true,
-                        'url'       => '',
+                        'id'            => 'widget1',
+                        'title'         => 'Clock',
+                        'column'        => 'first',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'url'           => $url . '/Widget/Clock',
                     ),
                     array(
-                        'id'        => 'widget2',
-                        'title'     => 'widget 2 tooltip',
-                        'column'    => 'third',
-                        'editurl'   => '',
-                        'open'      => true,
-                        'url'       => '',
+                        'id'            => 'widget2',
+                        'title'         => 'Content fetched via cUrl',
+                        'column'        => 'third',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'metadata'      => array(
+                            'type'      => 'curl',
+                            'data'      => array(
+                                'url'   => 'http://wunder.sytes.net/fizzbuzz.php',
+                            ),
+                        ),
                     ),
                     array(
-                        'id'        => 'widget3',
-                        'title'     => 'widget 3 tooltip',
-                        'column'    => 'second',
-                        'editurl'   => '',
-                        'open'      => true,
-                        'url'       => '',
+                        'id'            => 'widget3',
+                        'title'         => 'RSS feed from ksml.fi',
+                        'column'        => 'second',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'metadata'      =>  array(
+                            'type'      => 'rss',
+                            'data'      => array(
+                                'url'   => 'http://www.ksml.fi/?service=rss',
+                                'limit' => 5,
+                            ),
+                        ),
                     ),
                 ),
             ),
         );
-
-        /**
-         * {
-        "result" :
-        {
-        "layout": "layout2",
-        "data" : [
-        {
-        "title" : "Documentation",
-        "id" : "widget1",
-        "column" : "first",
-        "editurl" : "widgets/editwidget1.html",
-        "open" : true,
-        "url" : "widgets/widget1.html"
-        },
-        {
-        "title" : "Download plugin",
-        "column" : "second",
-        "id" : "widget3",
-        "url" : "widgets/widget3.html",
-        "editurl" : "widgets/editwidget3.html",
-        "open" : true
-        },
-        {
-        "title" : "Examples",
-        "id" : "widget2",
-        "column" : "second",
-        "url" : "widgets/widget2.html",
-        "editurl" : "widgets/editwidget2.html",
-        "open" : true
-        }
-        ]
-        }
-        }
-         */
     }
 }

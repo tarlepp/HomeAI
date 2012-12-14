@@ -75,6 +75,8 @@ abstract class Controller implements Interfaces\Controller
      */
     protected $pageData;
 
+    protected $onlyAjax = false;
+
     /**
      * Construction of the class.
      *
@@ -156,6 +158,19 @@ abstract class Controller implements Interfaces\Controller
      */
     public function handleRequest()
     {
+        // Specify init methods to check
+        $init = array(
+            'initializeRequest',
+            'initializeRequest'. $this->action,
+        );
+
+        // Iterate initialize methods and call them if founded
+        foreach ($init as $method) {
+            if (method_exists($this, $method)) {
+                call_user_func(array($this, $method));
+            }
+        }
+
         // Create dynamic method name.
         $method = 'handleRequest' . $this->action;
 

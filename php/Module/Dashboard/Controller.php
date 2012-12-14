@@ -55,4 +55,6 @@ class Controller extends MController implements Interfaces\Controller
     {
         echo json_encode($this->model->getMyWidgets());
     }
+
+
 }

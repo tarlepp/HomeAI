@@ -31,6 +31,8 @@ class View extends MView implements Interfaces\View
     public function preInitializePage()
     {
         $this->addJavascript('jQuery-dashboard/');
+
+        $this->addCss('Widget.css');
     }
 
     /**

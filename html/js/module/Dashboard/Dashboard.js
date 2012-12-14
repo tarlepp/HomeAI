@@ -10,7 +10,7 @@ $(document).ready(function() {
 
     // call for the minimal dashboard
     function initDashboard() {
-        var dashboard = $('#dashboard').dashboard({
+        var dashboard = jQuery('#dashboard').dashboard({
             json_data : {
                 url: pageBaseHref + "Dashboard/GetMyWidgets"
             },
@@ -49,6 +49,72 @@ $(document).ready(function() {
                     }
                 ]
         });
+
+        var dashboardWidget = jQuery('.widget');
+
+        dashboardWidget.live({
+            'widgetShow': function(event, object) {
+                console.log('show widget: '+ object.widget.title);
+
+                // Remove widget title, this is annoying
+                jQuery(this).find('.widgetcontent').parent().attr('title', '');
+
+                switch (object.widget.metadata.type) {
+                    case 'curl':
+                        handleCurlRequest(jQuery(this), object);
+                        break;
+                    case 'rss':
+                        handleRssRequest(jQuery(this), object);
+                        break;
+                    case 'iframe':
+                        handleIframeRequest(jQuery(this), object);
+                        break;
+                }
+            },
+            'widgetOpen': function(event, object) {
+                console.log('open widget: '+ object.widget.title);
+            },
+            'widgetClose': function(event, object){
+                console.log('close widget: '+ object.widget.title);
+            },
+            'widgetAdded': function(event, object) {
+                console.log('added widget: '+ object.widget.title);
+            }
+        });
+
+        // TODO: refactor below functions...
+
+        function handleCurlRequest(widget, object) {
+            jQuery.ajax({
+                url: pageBaseHref +'Widget/Curl',
+                data: object.widget.metadata.data,
+                dataType: 'text',
+                beforeSend: function(){
+                    // TODO: add loading element to current widget
+                },
+                success: function(data) {
+                    widget.find('.widgetcontent').append(data);
+                }
+            });
+        }
+
+        function handleRssRequest(widget, object) {
+            jQuery.ajax({
+                url: pageBaseHref +'Widget/Rss',
+                data: object.widget.metadata.data,
+                dataType: 'text',
+                beforeSend: function(){
+                    // TODO: add loading element to current widget
+                },
+                success: function(data) {
+                    widget.find('.widgetcontent').append(data);
+                }
+            });
+        }
+
+        function handleIframeRequest(widget, object) {
+        }
+
         dashboard.init();
     }
 });

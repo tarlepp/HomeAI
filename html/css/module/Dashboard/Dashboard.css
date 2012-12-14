@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+.widget {
+    margin-bottom: 0;
+}
+
 ul.fullscreen {
     margin: 0;
     padding: 0;

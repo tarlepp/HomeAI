@@ -3,18 +3,18 @@
  * \php\Page\Module\Exception.php
  *
  * @package     Module
- * @subpackage  Main
+ * @subpackage  Widget
  * @category    Exception
  */
-namespace HomeAI\Module\Main;
+namespace HomeAI\Module\Widget;
 
 use HomeAI\Module\Exception as MException;
 
 /**
- * Exception class for \HomeAI\Module\Main -classes.
+ * Exception class for \HomeAI\Module\Widget -classes.
  *
  * @package     Module
- * @subpackage  Main
+ * @subpackage  Widget
  * @category    Exception
  *
  * @date        $Date$

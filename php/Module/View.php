@@ -95,6 +95,7 @@ abstract class View implements Interfaces\View
     protected $pageJavascript = array(
         'jQuery/',
         'jQueryUI/',
+        'jQuery-noty/',
         'bootstrap/',
         'qTip2/',
         'homeai.js'
@@ -543,29 +544,35 @@ abstract class View implements Interfaces\View
         // Iterate CSS files
         foreach (array_merge($this->pageCssFirst, $this->pageCss) as $_css => $_media) {
             // Specify CSS library
-            $library = PATH_BASE . 'html/css/' . $_css;
+            $cssFiles = array(
+                PATH_BASE . 'html/css/' . $_css,
+                PATH_BASE . 'html/css/module/' . $this->module . '/' . $_css,
+            );
 
             // Initialize content variable for this media definition
             if (!isset($content[$_media])) {
                 $content[$_media] = '';
             }
 
-            // CSS directory, so fetch all .css files from it.
-            if (is_dir($library)) {
-                // Iterate founded CSS files
-                foreach (glob($library . '*.css') as $_filename) {
+            // Iterate specified CSS "files"
+            foreach ($cssFiles as $library) {
+                // CSS directory, so fetch all .css files from it.
+                if (is_dir($library)) {
+                    // Iterate founded CSS files
+                    foreach (glob($library . '*.css') as $_filename) {
+                        // Add file content to temp variable
+                        $content[$_media] .= file_get_contents($_filename);
+
+                        // Add CSS file to used template variable
+                        $css[str_replace(PATH_BASE . 'html/css/', '', $_filename)] = $_media;
+                    }
+                } elseif (is_readable($library)) { // CSS file, this is normal situation
                     // Add file content to temp variable
-                    $content[$_media] .= file_get_contents($_filename);
+                    $content[$_media] .= file_get_contents($library);
 
                     // Add CSS file to used template variable
-                    $css[str_replace(PATH_BASE . 'html/css/', '', $_filename)] = $_media;
+                    $css[str_replace(PATH_BASE . 'html/css/', '', $library)] = $_media;
                 }
-            } elseif (is_readable($library)) { // CSS file, this is normal situation
-                // Add file content to temp variable
-                $content[$_media] .= file_get_contents($library);
-
-                // Add CSS file to used template variable
-                $css[str_replace(PATH_BASE . 'html/css/', '', $library)] = $_media;
             }
         }
 

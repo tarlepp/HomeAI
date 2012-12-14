@@ -1,0 +1,33 @@
+#widgetClock {
+    text-align: center;
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+#widgetClock .time {
+    font-size: 60px;
+    line-height: 60px;
+}
+
+#widgetClock .date {
+    font-size: 24px;
+}
+
+.widgetRss {
+}
+
+.widgetRss ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.widgetRss ul li {
+    margin-bottom: 5px;
+}
+
+.widgetRss ul li span {
+    display: block;
+    font-size: 13px;
+    color: #aaaaaa;
+}

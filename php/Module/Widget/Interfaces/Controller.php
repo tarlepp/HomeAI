@@ -1,18 +1,18 @@
 <?php
 /**
- * \php\Module\Main\Interfaces\Controller.php
+ * \php\Module\Widget\Interfaces\Controller.php
  *
  * @package     Module
- * @subpackage  Main
+ * @subpackage  Widget
  * @category    Interface
  */
-namespace HomeAI\Module\Main\Interfaces;
+namespace HomeAI\Module\Widget\Interfaces;
 
 /**
- * Interface for \HomeAI\Module\Main\Controller -class.
+ * Interface for \HomeAI\Module\Widget\Controller -class.
  *
  * @package     Module
- * @subpackage  Main
+ * @subpackage  Widget
  * @category    Interface
  *
  * @date        $Date$
