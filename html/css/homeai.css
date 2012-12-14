@@ -6,6 +6,7 @@ html,
 body {
     height: 100%;
     font-family: 'Cuprum', sans-serif;
+    cursor: default;
 }
 
 html {
@@ -54,6 +55,10 @@ footer, .wrapper {
     padding: 0 2px;
 }
 
+.tooltipDivContainer {
+    display: none;
+}
+
 .ui-widget {
     font-family: 'Cuprum', sans-serif;
     font-size: 16px;
@@ -64,7 +69,15 @@ footer, .wrapper {
     border-bottom: 1px solid #aaaaaa;
 }
 
-.ui-dialog
-.ui-dialog-content {
-    padding: 5px;
+.qtip {
+    padding: 0;
+}
+
+.qtip .qtip-content {
+    font-size: 12px;
+}
+
+pre {
+    line-height: 15px;
+    margin: 0;
 }
