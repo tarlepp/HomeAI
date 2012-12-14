@@ -24,11 +24,12 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - Smarty Template Engine (http://www.smarty.net/)
 - jQuery (http://www.jquery.com/)
 - jQueryUI (http://www.jqueryui.com/)
-- jQuery ctNotify Plugin (https://github.com/thecodecentral/ctNotify)
+- noty (http://needim.github.com/noty/)
 - jQuery dashboard plugin (https://connect.gxsoftware.com/dashboardplugin/demo/dashboard.html)
 - Twitter Bootstrap (https://github.com/twitter/bootstrap)
 - qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)
+- SimplePie (http://www.simplepie.org/)
 - <em>This list will be updated</em>
 
 ### Requirements
