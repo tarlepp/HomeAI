@@ -47,14 +47,14 @@
     }
 
     dashboard.log = function(msg, level) {
-      //if (level >= opts.debuglevel && typeof console != 'undefined') {
+      if (level >= opts.debuglevel && typeof console != 'undefined') {
         var l = '';
         if (level == 1) l = 'INFO';
         if (level == 2) l = 'EVENT';
         if (level == 3) l = 'WARNING';
         if (level == 5) l = 'ERROR';
         console.log(l + ' - ' + msg);
-      //}
+      }
     }
 
     dashboard.setLayout = function(layout) {
