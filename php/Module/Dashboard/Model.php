@@ -40,6 +40,14 @@ class Model extends MModel implements Interfaces\Model
                         'url'           => $url . '/Widget/Clock',
                     ),
                     array(
+                        'id'            => 'widget4',
+                        'title'         => 'Egg Timer',
+                        'column'        => 'first',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'url'           => $url . '/Widget/EggTimer',
+                    ),
+                    array(
                         'id'            => 'widget2',
                         'title'         => 'Content fetched via cUrl',
                         'column'        => 'third',

@@ -182,7 +182,11 @@ abstract class Controller implements Interfaces\Controller
                 $this->handleRequestDefault();
             }
         } catch (\Exception $error) {
-            $this->view->display($this->view->makeExceptionError($error));
+            if ($this->request->isAjax()) {
+                echo $error->getMessage();
+            } else {
+                $this->view->display($this->view->makeExceptionError($error));
+            }
         }
     }
 

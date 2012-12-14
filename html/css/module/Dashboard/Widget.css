@@ -23,11 +23,12 @@
 }
 
 .widgetRss ul li {
-    margin-bottom: 5px;
+    margin-top: 5px;
+    line-height: 15px;
 }
 
 .widgetRss ul li span {
     display: block;
     font-size: 13px;
-    color: #aaaaaa;
+    opacity: 0.5;
 }

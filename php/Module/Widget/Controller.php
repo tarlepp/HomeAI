@@ -75,6 +75,19 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
+     * Method makes egg timer widget HTML content and echoes it to client.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function handleRequestEggTimer()
+    {
+        echo $this->view->makeEggTimer();
+        exit(0);
+    }
+
+    /**
      * Method handles basic cUrl request to specified url.
      *
      * @access  public

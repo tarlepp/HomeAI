@@ -73,6 +73,9 @@ Development / Contributing
 5. Open a [Pull Request][1]
 6. Take some Jaloviina (*) enjoy and wait
 
+### Questions?
+Contact me via IRC at da_wunder@IRCnet
+
 ### IDE recommendation
 Really, use PhpStorm (http://www.jetbrains.com/phpstorm/) it rocks!
 
