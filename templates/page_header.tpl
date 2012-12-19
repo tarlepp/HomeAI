@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="./index.html">HomeAI</a>
+                <a class="brand" href="{$pageBaseHref}">HomeAI</a>
 
                 <div class="responsiveWidth"></div>
 

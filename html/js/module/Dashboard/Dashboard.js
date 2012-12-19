@@ -93,7 +93,7 @@ $(document).ready(function() {
                     // TODO: add loading element to current widget
                 },
                 success: function(data) {
-                    widget.find('.widgetcontent').append(data);
+                    widget.find('.widgetcontent').html(data);
                 }
             });
         }
@@ -107,7 +107,7 @@ $(document).ready(function() {
                     // TODO: add loading element to current widget
                 },
                 success: function(data) {
-                    widget.find('.widgetcontent').append(data);
+                    widget.find('.widgetcontent').html(data);
                 }
             });
         }

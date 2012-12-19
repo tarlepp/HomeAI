@@ -1,11 +1,11 @@
 <ul class="nav">
-    <li class="">
-        <a href="#">Home</a>
+    <li class="active">
+        <a href="{$pageBaseHref}">Dashboard</a>
     </li>
     <li class="">
         <a href="#">Widgets</a>
     </li>
-    <li class="active">
+    <li class="">
         <a href="#">Admin</a>
     </li>
 </ul>
