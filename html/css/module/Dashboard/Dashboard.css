@@ -10,6 +10,10 @@
     margin-bottom: 10px;
 }
 
+.widgetcontent {
+    padding: 5px;
+}
+
 ul.fullscreen {
     margin: 0;
     padding: 0;

@@ -859,7 +859,7 @@
     widgetNotFoundHtml: "The content of this widget is not available anymore. You may remove this widget.",
     columnClass: 'column',
     widgetClass: 'widget',
-    menuClass: 'controls',
+    menuClass: 'controls_',
     widgetContentClass: 'widgetcontent',
     widgetTitleClass: 'widgettitle',
     widgetHeaderClass: 'widgetheader',

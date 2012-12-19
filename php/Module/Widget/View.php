@@ -49,6 +49,13 @@ class View extends MView implements Interfaces\View
         return $template->fetch();
     }
 
+    public function makeEggTimerSetup()
+    {
+        $template = $this->smarty->createTemplate('widget_eggtimer_setup.tpl', $this->smarty);
+
+        return $template->fetch();
+    }
+
     /**
      * Method makes 'RSS' widget HTML content.
      *

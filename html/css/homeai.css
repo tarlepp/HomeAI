@@ -64,6 +64,9 @@ footer, .wrapper {
     font-size: 16px;
 }
 
+.ui-widget .ui-slider {
+}
+
 .ui-widget-header {
     border-style: none;
     border-bottom: 1px solid #aaaaaa;

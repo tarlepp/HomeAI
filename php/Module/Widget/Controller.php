@@ -83,7 +83,14 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function handleRequestEggTimer()
     {
-        echo $this->view->makeEggTimer();
+        $setter = (bool)$this->request->get('setter', false);
+
+        if ($setter) {
+            echo $this->view->makeEggTimerSetup();
+        } else {
+            echo $this->view->makeEggTimer();
+        }
+
         exit(0);
     }
 

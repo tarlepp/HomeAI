@@ -86,3 +86,30 @@ function makeMessage(text, type) {
         type: type
     });
 }
+
+function showUrlInDialog(url, urlParameters, options){
+    options = options || {};
+
+    var tag = jQuery("<div></div>"); //This tag will the hold the dialog content.
+
+    jQuery.ajax({
+        url: url,
+        type: (options.type || 'GET'),
+        dataType: (options.dataType || 'text'),
+        data: urlParameters,
+        beforeSend: options.beforeSend,
+        error: options.error,
+        complete: options.complete,
+        success: function(data, textStatus, jqXHR) {
+            if (typeof data == "object" && data.html) {
+                //response is assumed to be JSON
+                tag.html(data.html).dialog(options.dialog).dialog('open');
+            } else {
+                //response is assumed to be HTML
+                tag.html(data).dialog(options.dialog).dialog('open');
+            }
+
+            jQuery.isFunction(options.success) && (options.success)(data, textStatus, jqXHR);
+        }
+    });
+}

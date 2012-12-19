@@ -1,16 +1,31 @@
+.widget .form-horizontal .control-label {
+    width: 60px;
+}
+
+.widget .form-horizontal .controls {
+    margin-left: 80px;
+}
+
+.widget .ui-slider {
+    margin-right: 10px;
+}
+
+
 #widgetClock {
     text-align: center;
     margin: 0 auto;
-    font-weight: bold;
 }
 
-#widgetClock .time {
+#widgetClock .time,
+#widgetEggTimer .time {
     font-size: 60px;
     line-height: 60px;
+    font-weight: bold;
 }
 
 #widgetClock .date {
     font-size: 24px;
+    font-weight: bold;
 }
 
 .widgetRss {
@@ -31,4 +46,48 @@
     display: block;
     font-size: 13px;
     opacity: 0.5;
+}
+
+#widgetEggTimer {
+    margin: 10px auto;
+    text-align: center;
+}
+
+#widgetEggTimer .setup {
+    display: none;
+}
+
+#widgetEggTimer .counter-wrapper ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#widgetEggTimer .counter-wrapper ul li {
+    display: inline-block;
+    margin: 0 -8px;
+    padding: 0;
+    line-height: 60px;
+}
+
+#widgetEggTimer .counter-wrapper ul li p {
+    margin: 0;
+}
+
+
+#widgetEggTimer form {
+    margin: 5px 0 0 0;
+}
+
+#widgetEggTimer form button {
+    margin-top: 5px;
+}
+
+#widgetEggTimer .form-horizontal .control-label {
+    padding: 0;
+    margin-top: -3px;
+}
+
+#widgetEggTimer .form-horizontal .control-group {
+    margin-bottom: 5px;
 }
