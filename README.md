@@ -26,6 +26,7 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - jQueryUI (http://www.jqueryui.com/)
 - noty (http://needim.github.com/noty/)
 - jQuery dashboard plugin (https://connect.gxsoftware.com/dashboardplugin/demo/dashboard.html)
+- jQuery jCounter plugin (http://devingredients.com/jcounter/)
 - Twitter Bootstrap (https://github.com/twitter/bootstrap)
 - qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)
@@ -36,7 +37,8 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - PHP 5.4+
 - <em>TODO: add specified requirement list here</em>
 
-TODO:
+TODO: make this check.php script...
+
 <strike>
 You can run system check script via following command in the root directory:
 <pre>
