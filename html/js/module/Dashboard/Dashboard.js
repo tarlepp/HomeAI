@@ -51,6 +51,7 @@ $(document).ready(function() {
         });
 
         var dashboardWidget = jQuery('.widget');
+        var loading = '<div class="loading"></div>';
 
         dashboardWidget.live({
             'widgetShow': function(event, object) {
@@ -90,7 +91,7 @@ $(document).ready(function() {
                 data: object.widget.metadata.data,
                 dataType: 'text',
                 beforeSend: function(){
-                    // TODO: add loading element to current widget
+                    widget.find('.widgetcontent').html(loading);
                 },
                 success: function(data) {
                     widget.find('.widgetcontent').html(data);
@@ -104,7 +105,7 @@ $(document).ready(function() {
                 data: object.widget.metadata.data,
                 dataType: 'text',
                 beforeSend: function(){
-                    // TODO: add loading element to current widget
+                    widget.find('.widgetcontent').html(loading);
                 },
                 success: function(data) {
                     widget.find('.widgetcontent').html(data);

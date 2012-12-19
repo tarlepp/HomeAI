@@ -95,7 +95,7 @@ display:none;
 .loading {
   padding: 50px;
   text-align: center;
-  background-image: url(images/loading.gif);
+  background-image: url(../../../images/loading.gif);
 }
 
 
