@@ -59,7 +59,8 @@ footer, .wrapper {
     display: none;
 }
 
-.ui-widget {
+.ui-widget,
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-family: 'Cuprum', sans-serif;
     font-size: 16px;
 }
@@ -69,7 +70,6 @@ footer, .wrapper {
 
 .ui-widget-header {
     border-style: none;
-    border-bottom: 1px solid #aaaaaa;
 }
 
 .qtip {

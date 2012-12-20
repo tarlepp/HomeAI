@@ -10,6 +10,18 @@
     margin-right: 10px;
 }
 
+.widgetheader {
+    padding: 3px 7px;
+}
+
+.widget .ui-icon {
+    position: relative;
+    top: 2px;
+    cursor: pointer;
+}
+
+.widget .widgetopenfullscreen {
+}
 
 #widgetClock {
     text-align: center;
