@@ -27,6 +27,7 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - noty (http://needim.github.com/noty/)
 - jQuery dashboard plugin (https://connect.gxsoftware.com/dashboardplugin/demo/dashboard.html)
 - jQuery jCounter plugin (http://devingredients.com/jcounter/)
+- jQuery UI Touch Punch (https://github.com/furf/jquery-ui-touch-punch/)
 - Twitter Bootstrap (https://github.com/twitter/bootstrap)
 - qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)

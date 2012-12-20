@@ -95,6 +95,7 @@ abstract class View implements Interfaces\View
     protected $pageJavascript = array(
         'jQuery/',
         'jQueryUI/',
+        'jQueryUI-TouchPunch/',
         'jQuery-noty/',
         'bootstrap/',
         'qTip2/',

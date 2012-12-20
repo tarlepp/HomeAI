@@ -74,6 +74,10 @@
             container.find('button[role=start]').removeAttr('disabled');
         }
 
+        function resetAlarm() {
+            alarm.pause();
+        }
+
         container.find('.setup .controls .sliderInput').each(function () {
             var slider = jQuery(this);
 
@@ -115,8 +119,7 @@
             container.find('button[role=stop]').attr('disabled', 'disabled');
             container.find('button[role=pause]').attr('disabled', 'disabled');
 
-            alarm.pause();
-            alarm.currentTime = 0;
+            resetAlarm();
 
             if (counter.data('started') == true) {
                 counter.jCounter('stop');
@@ -145,8 +148,7 @@
 
                 counter.data('started', true);
 
-                alarm.pause();
-                alarm.currentTime = 0;
+                resetAlarm();
 
                 counter.jCounter({
                     format: "hh:mm:ss",
@@ -155,6 +157,7 @@
                     callback: function() {
                         container.find('button[role=pause]').attr('disabled', 'disabled');
                         container.find('button[role=reset]').attr('disabled', 'disabled');
+                        container.find('button[role=stop]').attr('disabled', 'disabled');
 
                         alarm.play();
                     }
@@ -172,8 +175,7 @@
         container.find('button[role=stop]').on('click', function() {
             counter.jCounter('stop');
 
-            alarm.pause();
-            alarm.currentTime = 0;
+            resetAlarm();
 
             container.find('button[role=reset]').attr('disabled', 'disabled');
             container.find('button[role=stop]').attr('disabled', 'disabled');

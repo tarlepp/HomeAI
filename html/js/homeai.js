@@ -80,7 +80,6 @@ function createQtip(element, tipTitle, tipText, tipWidth, tipMy, tipAt) {
 }
 
 function makeMessage(text, type) {
-    console.log('asdfasdf');
     noty({
         text: text,
         type: type
@@ -112,4 +111,12 @@ function showUrlInDialog(url, urlParameters, options){
             jQuery.isFunction(options.success) && (options.success)(data, textStatus, jqXHR);
         }
     });
+}
+
+function isAppleDevice() {
+    return (
+        (navigator.userAgent.toLowerCase().indexOf("ipad") > -1) ||
+        (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) ||
+        (navigator.userAgent.toLowerCase().indexOf("ipod") > -1)
+    );
 }
