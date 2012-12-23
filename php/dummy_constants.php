@@ -3,7 +3,7 @@
  * \php\dummy_constants.php
  *
  * This file is just for the IDE, basically we need to define all 'dynamic' constants
- * in this file otherwise smart IDE doesn't find these.
+ * in this file otherwise smart IDE does not recognize these.
  *
  * @package     HomeAI
  * @subpackage  Core
