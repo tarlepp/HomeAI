@@ -67,6 +67,9 @@ $(document).ready(function() {
                     case 'rss':
                         handleRssRequest(jQuery(this), object);
                         break;
+                    case 'highchart':
+                        handleHighchartRequest(jQuery(this), object);
+                        break;
                     case 'iframe':
                         handleIframeRequest(jQuery(this), object);
                         break;
@@ -102,6 +105,20 @@ $(document).ready(function() {
         function handleRssRequest(widget, object) {
             jQuery.ajax({
                 url: pageBaseHref +'Widget/Rss',
+                data: object.widget.metadata.data,
+                dataType: 'text',
+                beforeSend: function(){
+                    widget.find('.widgetcontent').html(loading);
+                },
+                success: function(data) {
+                    widget.find('.widgetcontent').html(data);
+                }
+            });
+        }
+
+        function handleHighchartRequest(widget, object) {
+            jQuery.ajax({
+                url: pageBaseHref +'Widget/Highchart',
                 data: object.widget.metadata.data,
                 dataType: 'text',
                 beforeSend: function(){

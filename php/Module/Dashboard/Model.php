@@ -23,6 +23,11 @@ use HomeAI\Module\Model as MModel;
  */
 class Model extends MModel implements Interfaces\Model
 {
+    /**
+     * TODO: make these widgets to be stored to database...
+     *
+     * @return array
+     */
     public function getMyWidgets()
     {
         $url = $this->request->getBaseUrl(false, true);
@@ -40,7 +45,7 @@ class Model extends MModel implements Interfaces\Model
                         'url'           => $url . '/Widget/Clock',
                     ),
                     array(
-                        'id'            => 'widget4',
+                        'id'            => 'widget2',
                         'title'         => 'Egg Timer',
                         'column'        => 'first',
                         'editurl'       => '',
@@ -48,7 +53,7 @@ class Model extends MModel implements Interfaces\Model
                         'url'           => $url . '/Widget/EggTimer',
                     ),
                     array(
-                        'id'            => 'widget2',
+                        'id'            => 'widget3',
                         'title'         => 'Content fetched via cUrl',
                         'column'        => 'third',
                         'editurl'       => '',
@@ -61,7 +66,21 @@ class Model extends MModel implements Interfaces\Model
                         ),
                     ),
                     array(
-                        'id'            => 'widget3',
+                        'id'            => 'widget4',
+                        'title'         => 'Highchart',
+                        'column'        => 'second',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'metadata'      =>  array(
+                            'type'      => 'highchart',
+                            'data'      => array(
+                                'url'   => $url . 'Highchart/Test',
+                                'id'    => 'test',
+                            ),
+                        ),
+                    ),
+                    array(
+                        'id'            => 'widget5',
                         'title'         => 'RSS feed from ksml.fi',
                         'column'        => 'second',
                         'editurl'       => '',

@@ -28,10 +28,18 @@ class View extends MView implements Interfaces\View
      */
     protected $model;
 
+    /**
+     * Pre initialize of current module.
+     *
+     * @return  void
+     */
     public function preInitializePage()
     {
+        // TODO: determine what JS libraries user needs...
+
         $this->addJavascript('jQuery-dashboard/');
         $this->addJavascript('jQuery-jCounter/');
+        $this->addJavascript('Highcharts/');
 
         $this->addCss('Widget.css');
     }

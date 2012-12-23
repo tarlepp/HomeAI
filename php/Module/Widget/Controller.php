@@ -143,4 +143,14 @@ class Controller extends MController implements Interfaces\Controller
 
         exit(0);
     }
+
+    public function handleRequestHighchart()
+    {
+        echo "<pre>";
+        print_r($this->request->get());
+        echo "</pre>";
+        echo "implement highchart here...";
+
+        exit(0);
+    }
 }
