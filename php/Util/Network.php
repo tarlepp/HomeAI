@@ -82,6 +82,9 @@ class Network implements Interfaces\Network
     /**
      * Method converts given HTTP status code to plain error message.
      *
+     * @access  public
+     * @static
+     *
      * @param   integer $code           HTTP status code
      * @param   bool    $includeCode    Include code to output or not
      *
