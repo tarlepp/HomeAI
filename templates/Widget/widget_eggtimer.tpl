@@ -156,8 +156,6 @@
                     customDuration: duration,
                     callback: function() {
                         container.find('button[role=pause]').attr('disabled', 'disabled');
-                        container.find('button[role=reset]').attr('disabled', 'disabled');
-                        container.find('button[role=stop]').attr('disabled', 'disabled');
 
                         alarm.play();
                     }
@@ -186,12 +184,16 @@
         container.find('button[role=pause]').on('click', function() {
             counter.jCounter('pause');
 
+            resetAlarm();
+
             container.find('button[role=start]').removeAttr('disabled');
             container.find('button[role=pause]').attr('disabled', 'disabled');
         });
 
         container.find('button[role=reset]').on('click', function() {
             counter.jCounter('reset');
+
+            resetAlarm();
 
             container.find('button[role=reset]').removeAttr('disabled');
             container.find('button[role=stop]').removeAttr('disabled');

@@ -72,6 +72,10 @@ footer, .wrapper {
     border-style: none;
 }
 
+.btn {
+    padding: 4px 10px;
+}
+
 .qtip {
     padding: 0;
 }
