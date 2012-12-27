@@ -1,0 +1,82 @@
+{
+    chart: {
+        renderTo: '{$renderTo}',
+        type: 'spline',
+        marginRight:10,
+        events: {
+            load: function() {
+                var series = this.series[0];
+
+                setInterval(function() {
+                    jQuery.ajax({
+                        url: pageBaseHref,
+                        data: {
+                            'module': 'Highcharts',
+                            'action': 'ExampleLive',
+                            'type': 'data',
+                            'points': 1
+                        },
+                        success: function(response) {
+                            series.addPoint(response, true, true);
+                        }
+                    });
+                }, 1000);
+            }
+        }
+    },
+    title: {
+        text: null
+    },
+    xAxis: {
+        type: 'datetime',
+        tickPixelInterval: 150
+    },
+    yAxis: {
+        title: {
+            text: null
+        },
+        min: 0,
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    },
+    tooltip: {
+        formatter: function() {
+            return '<b>'+ this.series.name +'</b><br/>'+
+                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                Highcharts.numberFormat(this.y, 2);
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    exporting: {
+        enabled: false
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'Random data',
+        data: (function() {
+            var data = [];
+
+            jQuery.ajax({
+                url: pageBaseHref,
+                async: false,
+                data: {
+                    'module': 'Highcharts',
+                    'action': 'ExampleLive',
+                    'type': 'data'
+                },
+                success: function(response) {
+                    data = response;
+                }
+            });
+
+            return data;
+        })()
+    }]
+}

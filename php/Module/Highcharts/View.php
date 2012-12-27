@@ -28,6 +28,13 @@ class View extends MView implements Interfaces\View
      */
     protected $model;
 
+    /**
+     * Method makes Highcharts config JSON data string for example chart.
+     *
+     * @param   string  $renderTo   Where to draw chart
+     *
+     * @return  string
+     */
     public function makeJsonExample($renderTo)
     {
         // Create template and assign data to it
@@ -37,23 +44,17 @@ class View extends MView implements Interfaces\View
         return $template->fetch();
     }
 
-    public function makeJsonNetworkIo($renderTo)
-    {
-        // Create template and assign data to it
-        $template = $this->smarty->createTemplate('networkio.json', $this->smarty);
-        $template->assign('renderTo', $renderTo);
-
-        return $template->fetch();
-    }
-
     /**
-     * @param $renderTo
-     * @return mixed
+     * Method makes Highcharts config JSON data string for example live chart.
+     *
+     * @param   string  $renderTo   Where to draw chart
+     *
+     * @return  string
      */
-    public function makeJsonCpu($renderTo)
+    public function makeJsonExampleLive($renderTo)
     {
         // Create template and assign data to it
-        $template = $this->smarty->createTemplate('cpu.json', $this->smarty);
+        $template = $this->smarty->createTemplate('example_live.json', $this->smarty);
         $template->assign('renderTo', $renderTo);
 
         return $template->fetch();

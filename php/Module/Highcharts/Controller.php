@@ -78,4 +78,29 @@ class Controller extends MController implements Interfaces\Controller
         echo $this->view->makeJsonExample($renderTo);
         exit(0);
     }
+
+    /**
+     * Method handles example live request for highcharts.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function handleRequestExampleLive()
+    {
+        $type = $this->request->get('type', null);
+
+        if ($type == 'data') {
+            $points = (int)$this->request->get('points', 20);
+
+            $output = JSON::encode($this->model->getLiveData($points));
+        } else {
+            $renderTo = $this->request->get('renderTo');
+
+            $output = $this->view->makeJsonExampleLive($renderTo);
+        }
+
+        echo $output;
+        exit(0);
+    }
 }

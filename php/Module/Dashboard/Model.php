@@ -81,7 +81,7 @@ class Model extends MModel implements Interfaces\Model
                     ),
                     array(
                         'id'            => 'widget5',
-                        'title'         => 'Highcharts eample 1',
+                        'title'         => 'Highcharts example 1',
                         'column'        => 'third',
                         'editurl'       => '',
                         'open'          => true,
@@ -90,7 +90,22 @@ class Model extends MModel implements Interfaces\Model
                             'data'      => array(
                                 'url'   => $url . 'Highcharts/Example',
                                 'id'    => 'HighchartsExample',
-                                'class' => 'exampleClass',
+                                'class' => 'highchartsExampleClass',
+                            ),
+                        ),
+                    ),
+                    array(
+                        'id'            => 'widget6',
+                        'title'         => 'Highcharts live example',
+                        'column'        => 'third',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'metadata'      =>  array(
+                            'type'      => 'highchart',
+                            'data'      => array(
+                                'url'   => $url . 'Highcharts/ExampleLive',
+                                'id'    => 'HighchartsExampleLive',
+                                'class' => 'highchartsExampleLiveClass',
                             ),
                         ),
                     ),

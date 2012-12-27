@@ -104,6 +104,8 @@
     margin-bottom: 5px;
 }
 
-.widgetHighcharts {
+
+.highchartsExampleClass,
+.highchartsExampleLiveClass {
     height: 200px;
 }

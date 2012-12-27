@@ -62,6 +62,9 @@
             threshold: null
         }
     },
+    credits: {
+        enabled: false
+    },
     series: [{
         type: 'area',
         name: 'USD to EUR',
