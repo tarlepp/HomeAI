@@ -58,11 +58,23 @@ class Router implements Interfaces\Router
 
         // Extract page data from current path
         $module = array_shift($pageData);
-        $module = empty($module) ? self::$defaultModule : $module;
+        $_module = $request->get('module', null);
+
+        if (empty($module) && !is_null($_module)) {
+            $module = $_module;
+        } elseif (empty($module)) {
+            $module =  self::$defaultModule;
+        }
 
         // Extract page action data from current path
         $action = array_shift($pageData);
-        $action = empty($action) ? self::$defaultAction : $action;
+        $_action = $request->get('action', null);
+
+        if (empty($action) && !is_null($_action)) {
+            $action = $_action;
+        } elseif (empty($action)) {
+            $action =  self::$defaultAction;
+        }
 
         // Specify used controller for current request
         $controller = "\\HomeAI\\Module\\" . $module . "\\Controller";
