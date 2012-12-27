@@ -65,6 +65,16 @@ footer, .wrapper {
     font-size: 16px;
 }
 
+.ui-widget-content a {
+    color: #0088cc;
+    text-decoration: none;
+}
+
+.ui-widget-content a:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+
 .ui-widget .ui-slider {
 }
 
