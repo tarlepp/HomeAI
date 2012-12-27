@@ -135,4 +135,18 @@ $(document).ready(function() {
 
         dashboard.init();
     }
+
+    var sideMenu = jQuery('#sideMenu');
+
+    sideMenu.find('div').on('mouseenter', function() {
+        sideMenu.find('ul').show();
+    });
+
+    sideMenu.find('div').on('mouseleave', function() {
+        sideMenu.find('ul').hide();
+    });
+
+    sideMenu.find('a').on('click', function() {
+        sideMenu.find('ul').hide();
+    });
 });
