@@ -41,7 +41,7 @@ class Model extends MModel implements Interfaces\Model
 
             for ($i = $start; $i <= 0; $i++) {
                 $output[] = array(
-                    'x' => floatval(($time + $i) * 1000),
+                    'x' => floatval(($time + $i * 5) * 1000),
                     'y' => floatval(rand(0, 10)),
                 );
             }

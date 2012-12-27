@@ -20,7 +20,7 @@
                             series.addPoint(response, true, true);
                         }
                     });
-                }, 1000);
+                }, 5000);
             }
         }
     },
