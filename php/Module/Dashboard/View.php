@@ -58,7 +58,14 @@ class View extends MView implements Interfaces\View
         return $template->fetch();
     }
 
-    public function getTemplates()
+    /**
+     * Method makes Dashboard template selection HTML content.
+     *
+     * @access  public
+     *
+     * @return  string
+     */
+    public function makeTemplates()
     {
         $template = $this->smarty->createTemplate('templates.tpl', $this->smarty);
 

@@ -1,20 +1,21 @@
 <?php
 /**
- * \php\Page\Highchart\Controller.php
+ * \php\Module\Highcharts\Controller.php
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Controller
  */
-namespace HomeAI\Module\Highchart;
+namespace HomeAI\Module\Highcharts;
 
 use HomeAI\Module\Controller as MController;
+use HomeAI\Util\JSON as JSON;
 
 /**
- * Controller class for 'Highchart' -module.
+ * Controller class for 'Highcharts' -module.
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Controller
  *
  * @date        $Date$
@@ -24,14 +25,14 @@ use HomeAI\Module\Controller as MController;
 class Controller extends MController implements Interfaces\Controller
 {
     /**
-     * @var \HomeAI\Module\Highchart\View
+     * @var \HomeAI\Module\Highcharts\View
      */
-    protected $view = null;
+    protected $view;
 
     /**
-     * @var \HomeAI\Module\Highchart\Model
+     * @var \HomeAI\Module\Highcharts\Model
      */
-    protected $model = null;
+    protected $model;
 
     /**
      * General request initializer. This is method is called before any
@@ -43,6 +44,7 @@ class Controller extends MController implements Interfaces\Controller
      */
     protected function initializeRequest()
     {
+        // Only accept AJAX requests
         if (!$this->request->isAjax()) {
             header('HTTP/1.1 400 Bad Request');
             exit(0);
@@ -50,7 +52,7 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
-     * Method handles 'Highchart' -module default action.
+     * Method handles 'Highcharts' -module default action.
      *
      * @access  public
      *
@@ -58,13 +60,22 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function handleRequestDefault()
     {
-        echo "TODO: wut the fuck";
+        // TODO
+        echo "Do we need to show some default examples or something?";
     }
 
-    public function handleRequestTest()
+    /**
+     * Method handles example request for highcharts.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function handleRequestExample()
     {
-        echo "implement highchart here...";
+        $renderTo = $this->request->get('renderTo');
 
+        echo $this->view->makeJsonExample($renderTo);
         exit(0);
     }
 }

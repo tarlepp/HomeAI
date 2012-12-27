@@ -1,18 +1,18 @@
 <?php
 /**
- * \php\Module\Highchart\Interfaces\View.php
+ * \php\Module\Highcharts\Interfaces\View.php
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Interface
  */
-namespace HomeAI\Module\Highchart\Interfaces;
+namespace HomeAI\Module\Highcharts\Interfaces;
 
 /**
- * Interface for \HomeAI\Module\Highchart\View -class.
+ * Interface for \HomeAI\Module\Highcharts\View -class.
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Interface
  *
  * @date        $Date$

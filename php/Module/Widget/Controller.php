@@ -1,6 +1,6 @@
 <?php
 /**
- * \php\Page\Widget\Controller.php
+ * \php\Module\Widget\Controller.php
  *
  * @package     Module
  * @subpackage  Widget
@@ -9,6 +9,8 @@
 namespace HomeAI\Module\Widget;
 
 use HomeAI\Module\Controller as MController;
+use HomeAI\Core\ExceptionJson as ExceptionJson;
+use HomeAI\Core\Exception as ExceptionCore;
 
 /**
  * Controller class for 'Widget' -module.
@@ -26,12 +28,12 @@ class Controller extends MController implements Interfaces\Controller
     /**
      * @var \HomeAI\Module\Widget\View
      */
-    protected $view = null;
+    protected $view;
 
     /**
      * @var \HomeAI\Module\Widget\Model
      */
-    protected $model = null;
+    protected $model;
 
     /**
      * General request initializer. This is method is called before any
@@ -43,6 +45,7 @@ class Controller extends MController implements Interfaces\Controller
      */
     protected function initializeRequest()
     {
+        // Only allow AJAX requests
         if (!$this->request->isAjax()) {
             header('HTTP/1.1 400 Bad Request');
             exit(0);
@@ -58,7 +61,8 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function handleRequestDefault()
     {
-        echo "TODO: make list of all widgets";
+        // TODO
+        echo "Make list of all available widgets or something?";
     }
 
     /**
@@ -83,14 +87,7 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function handleRequestEggTimer()
     {
-        $setter = (bool)$this->request->get('setter', false);
-
-        if ($setter) {
-            echo $this->view->makeEggTimerSetup();
-        } else {
-            echo $this->view->makeEggTimer();
-        }
-
+        echo $this->view->makeEggTimer();
         exit(0);
     }
 
@@ -109,7 +106,6 @@ class Controller extends MController implements Interfaces\Controller
 
         if (is_null($url)) {
             echo "URL not defined.";
-
         } else {
             echo $this->model->getCurlResponse($url, $options);
         }
@@ -130,11 +126,10 @@ class Controller extends MController implements Interfaces\Controller
     {
         // Get used parameters
         $url = $this->request->get('url', null);
-        $limit = $this->request->get('limit', array());
+        $limit = $this->request->get('limit', 5);
 
         if (is_null($url)) {
             echo "RSS feed URL not defined.";
-
         } else {
             require_once PATH_BASE .'libs/simplepie/autoloader.php';
 
@@ -144,12 +139,54 @@ class Controller extends MController implements Interfaces\Controller
         exit(0);
     }
 
-    public function handleRequestHighchart()
+    /**
+     * Method handles highcharts widget content request. Basically method
+     * will fetch highcharts content from specified URL and shows it in widget
+     * template.
+     *
+     * Note that used highcharts config (JSON data) is fetched in separated
+     * method and used in actual view method.
+     *
+     * @access  public
+     *
+     * @throws  \HomeAI\Core\ExceptionJson
+     *
+     * @return  void
+     */
+    public function handleRequestHighcharts()
     {
-        echo "<pre>";
-        print_r($this->request->get());
-        echo "</pre>";
-        echo "implement highchart here...";
+        // Get used parameters
+        $id = $this->request->get('id', null);
+        $url = $this->request->get('url', null);
+        $class = $this->request->get('class', 'widgetHighcharts');
+
+        try {
+            if (is_null($url)) {
+                throw new ExceptionJson("Highcharts data url not defined.");
+            } else {
+                $data = array(
+                    'renderTo'  => $id,
+                );
+
+                /**
+                 * Fetch used Highcharts config, This is a JSON
+                 * encoded string which contains all needed and
+                 * desired options for Highcharts.
+                 *
+                 * See more at: http://api.highcharts.com/highcharts
+                 */
+                $config = $this->model->getHighchartsConfig($url, $data);
+
+                // Used extra options for smarty template
+                $options = array(
+                    'class' => $class,
+                );
+
+                echo $this->view->makeHighcharts($id, $config, $options);
+            }
+        } catch (ExceptionCore $error) {
+            $error->makeJsonResponse();
+        }
 
         exit(0);
     }

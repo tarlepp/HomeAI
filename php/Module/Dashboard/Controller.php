@@ -1,6 +1,6 @@
 <?php
 /**
- * \php\Page\Dashboard\Controller.php
+ * \php\Module\Dashboard\Controller.php
  *
  * @package     Module
  * @subpackage  Dashboard
@@ -26,12 +26,12 @@ class Controller extends MController implements Interfaces\Controller
     /**
      * @var \HomeAI\Module\Dashboard\View
      */
-    protected $view = null;
+    protected $view;
 
     /**
      * @var \HomeAI\Module\Dashboard\Model
      */
-    protected $model = null;
+    protected $model;
 
     /**
      * Method handles 'Dashboard' -module default action.
@@ -47,7 +47,7 @@ class Controller extends MController implements Interfaces\Controller
 
     public function handleRequestGetTemplates()
     {
-        echo $this->view->getTemplates();
+        echo $this->view->makeTemplates();
         exit(0);
     }
 
@@ -55,6 +55,4 @@ class Controller extends MController implements Interfaces\Controller
     {
         echo json_encode($this->model->getMyWidgets());
     }
-
-
 }

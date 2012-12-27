@@ -1,20 +1,20 @@
 <?php
 /**
- * \php\Page\Module\Exception.php
+ * \php\Module\Module\Exception.php
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Exception
  */
-namespace HomeAI\Module\Highchart;
+namespace HomeAI\Module\Highcharts;
 
 use HomeAI\Module\Exception as MException;
 
 /**
- * Exception class for \HomeAI\Module\Highchart -classes.
+ * Exception class for \HomeAI\Module\Highcharts -classes.
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Exception
  *
  * @date        $Date$

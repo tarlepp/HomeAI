@@ -33,7 +33,7 @@ class View extends MView implements Interfaces\View
      *
      * @access  public
      *
-     * @return  string
+     * @return  string  HTML content for "Clock" widget
      */
     public function makeClock()
     {
@@ -42,6 +42,13 @@ class View extends MView implements Interfaces\View
         return $template->fetch();
     }
 
+    /**
+     * Method makes 'Egg Timer' widget HTML content.
+     *
+     * @access  public
+     *
+     * @return  string  HTML content for "Egg Timer" widget
+     */
     public function makeEggTimer()
     {
         $template = $this->smarty->createTemplate('widget_eggtimer.tpl', $this->smarty);
@@ -49,25 +56,40 @@ class View extends MView implements Interfaces\View
         return $template->fetch();
     }
 
-    public function makeEggTimerSetup()
-    {
-        $template = $this->smarty->createTemplate('widget_eggtimer_setup.tpl', $this->smarty);
-
-        return $template->fetch();
-    }
-
     /**
      * Method makes 'RSS' widget HTML content.
      *
-     * @param   array   $items
+     * @param   array   $items  RSS items to shown
      *
-     * @return  string
+     * @return  string          HTML content for RSS widget
      */
     public function makeRssFeed(array $items)
     {
         // Create template and assign data to it
         $template = $this->smarty->createTemplate('widget_rss.tpl', $this->smarty);
         $template->assign('items', $items);
+
+        return $template->fetch();
+    }
+
+    /**
+     * Method makes 'Highcharts' widget HTML content.
+     *
+     * @access  public
+     *
+     * @param   string  $id         Used highcharts id
+     * @param   string  $config     Highcharts config JSON string
+     * @param   array   $options    Used extra options/parameters for template
+     *
+     * @return  string              HTML content for highcharts widget
+     */
+    public function makeHighcharts($id, $config, array $options)
+    {
+        // Create template and assign data to it
+        $template = $this->smarty->createTemplate('widget_highcharts.tpl', $this->smarty);
+        $template->assign('id', $id);
+        $template->assign('config', $config);
+        $template->assign('options', $options);
 
         return $template->fetch();
     }

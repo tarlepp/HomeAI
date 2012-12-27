@@ -1,6 +1,6 @@
 <?php
 /**
- * \php\Page\Module\Exception.php
+ * \php\Module\Dashboard\Exception.php
  *
  * @package     Module
  * @subpackage  Dashboard

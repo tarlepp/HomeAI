@@ -103,3 +103,7 @@
 #widgetEggTimer .form-horizontal .control-group {
     margin-bottom: 5px;
 }
+
+.widgetHighcharts {
+    height: 200px;
+}

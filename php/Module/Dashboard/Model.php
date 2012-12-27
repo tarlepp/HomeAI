@@ -54,8 +54,22 @@ class Model extends MModel implements Interfaces\Model
                     ),
                     array(
                         'id'            => 'widget3',
+                        'title'         => 'RSS feed from ksml.fi',
+                        'column'        => 'second',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'metadata'      =>  array(
+                            'type'      => 'rss',
+                            'data'      => array(
+                                'url'   => 'http://www.ksml.fi/?service=rss',
+                                'limit' => 5,
+                            ),
+                        ),
+                    ),
+                    array(
+                        'id'            => 'widget4',
                         'title'         => 'Content fetched via cUrl',
-                        'column'        => 'third',
+                        'column'        => 'second',
                         'editurl'       => '',
                         'open'          => true,
                         'metadata'      => array(
@@ -66,30 +80,17 @@ class Model extends MModel implements Interfaces\Model
                         ),
                     ),
                     array(
-                        'id'            => 'widget4',
-                        'title'         => 'Highchart',
-                        'column'        => 'second',
+                        'id'            => 'widget5',
+                        'title'         => 'Highcharts eample 1',
+                        'column'        => 'third',
                         'editurl'       => '',
                         'open'          => true,
                         'metadata'      =>  array(
                             'type'      => 'highchart',
                             'data'      => array(
-                                'url'   => $url . 'Highchart/Test',
-                                'id'    => 'test',
-                            ),
-                        ),
-                    ),
-                    array(
-                        'id'            => 'widget5',
-                        'title'         => 'RSS feed from ksml.fi',
-                        'column'        => 'second',
-                        'editurl'       => '',
-                        'open'          => true,
-                        'metadata'      =>  array(
-                            'type'      => 'rss',
-                            'data'      => array(
-                                'url'   => 'http://www.ksml.fi/?service=rss',
-                                'limit' => 5,
+                                'url'   => $url . 'Highcharts/Example',
+                                'id'    => 'HighchartsExample',
+                                'class' => 'exampleClass',
                             ),
                         ),
                     ),

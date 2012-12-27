@@ -118,7 +118,7 @@ $(document).ready(function() {
 
         function handleHighchartRequest(widget, object) {
             jQuery.ajax({
-                url: pageBaseHref +'Widget/Highchart',
+                url: pageBaseHref +'Widget/Highcharts',
                 data: object.widget.metadata.data,
                 dataType: 'text',
                 beforeSend: function(){

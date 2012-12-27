@@ -9,6 +9,7 @@
 namespace HomeAI\Module\Widget;
 
 use HomeAI\Module\Model as MModel;
+use HomeAI\Util\Network as Network;
 
 /**
  * Model class for 'Widget' -Module.
@@ -67,17 +68,22 @@ class Model extends MModel implements Interfaces\Model
 
         // Error occurred
         if ($status >= 400) {
-            $content = "<h1>Error occured</h1><p>HTTP status code: ". $status ."<br />Content:<br />". $content;
+            $content = "<h1>Error occurred</h1><p>"
+                    . Network::getStatusCodeString($status)
+                    . ".<br />Content:<br />"
+                    . $content;
         } elseif (empty($content)) {
-            $content = "Content not found..";
+            $content = "Content not found...";
         }
+
+        curl_close($ch);
 
         return $content;
     }
 
     /**
      * Method fetches specified amount of items from specified RSS feed URL and
-     * returns array of \SimplePie_Item objects or null if feed doesn't contain
+     * returns array of \SimplePie_Item objects or null if feed does not contain
      * any items.
      *
      * @param   string  $url    RSS feed url
@@ -94,5 +100,45 @@ class Model extends MModel implements Interfaces\Model
         $feed->init();
 
         return $feed->get_items(0, $limit);
+    }
+
+    /**
+     * Method fetches used config JSON string for Highcharts.
+     *
+     * @throws  Exception
+     *
+     * @param   string  $url        URL for the highcharts config
+     * @param   array   $postData   Used post data for request
+     *
+     * @return  string
+     */
+    public function getHighchartsConfig($url, array $postData)
+    {
+        // Initialize cURL
+        $ch = curl_init();
+
+        // Set custom headers to "fake" that request is made via AJAX
+        $headers = array(
+            'X-REQUESTED-WITH: XMLHttpRequest',
+        );
+
+        // Set cURL options
+        curl_setopt($ch, \CURLOPT_URL, $url);
+        curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, \CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, \CURLOPT_POSTFIELDS, http_build_query($postData));
+
+        // Get HTTP content and status
+        $content = trim(curl_exec($ch));
+        $status  = curl_getinfo($ch, \CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        // Error occurred
+        if ($status >= 400) {
+            throw new Exception(Network::getStatusCodeString($status), $status);
+        }
+
+        return $content;
     }
 }

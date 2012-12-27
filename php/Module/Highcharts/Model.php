@@ -1,20 +1,20 @@
 <?php
 /**
- * \php\Module\Highchart\Model.php
+ * \php\Module\Highcharts\Model.php
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Model
  */
-namespace HomeAI\Module\Highchart;
+namespace HomeAI\Module\Highcharts;
 
 use HomeAI\Module\Model as MModel;
 
 /**
- * Model class for 'Highchart' -Module.
+ * Model class for 'Highcharts' -Module.
  *
  * @package     Module
- * @subpackage  Highchart
+ * @subpackage  Highcharts
  * @category    Model
  *
  * @date        $Date$
