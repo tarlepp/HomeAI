@@ -14,7 +14,7 @@
     <div>
         <span class="ui-corner-left">&laquo</span>
         <ul class="ui-corner-left">
-            <li><a class="widgetRefresh" href="#">Refresh all<i class="icon-refresh"></i></a></li>
+            <li><a class="widgetRefreshAll" href="#">Refresh all<i class="icon-refresh"></i></a></li>
             <li><a class="widgetEdit" href="#">Edit widgets<i class="icon-edit"></i></a></li>
             <li><a class="editlayout" href="#">Edit layout<i class="icon-th"></i></a></li>
         </ul>

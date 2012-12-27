@@ -14,6 +14,12 @@ $(document).ready(function() {
             json_data : {
                 url: pageBaseHref + "Dashboard/GetMyWidgets"
             },
+            refreshSettings: {
+
+            },
+            editLayoutSettings: {
+
+            },
             loadingHtml: '<div class="loading"></div>',
             layouts :
                 [
@@ -140,10 +146,12 @@ $(document).ready(function() {
 
     sideMenu.find('div').on('mouseenter', function() {
         sideMenu.find('ul').show();
+        jQuery(this).find('span').hide();
     });
 
     sideMenu.find('div').on('mouseleave', function() {
         sideMenu.find('ul').hide();
+        jQuery(this).find('span').show();
     });
 
     sideMenu.find('a').on('click', function() {
