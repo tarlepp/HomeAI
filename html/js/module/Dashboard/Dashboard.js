@@ -1,4 +1,4 @@
-// This is for widget internal time intervals, see usage from example_live.json
+// This is for widgets intervals, this is used if widget has refresh time specified
 var widgetIntervals = [];
 
 // This is for widget internal time intervals, see usage from example_live.json
@@ -20,10 +20,8 @@ jQuery(document).ready(function() {
                 url: pageBaseHref + "Dashboard/GetMyWidgets"
             },
             refreshSettings: {
-
             },
             editLayoutSettings: {
-
             },
             loadingHtml: '<div class="loading"></div>',
             layouts :
