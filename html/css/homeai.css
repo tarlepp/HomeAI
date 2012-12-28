@@ -60,9 +60,20 @@ footer, .wrapper {
 }
 
 .ui-widget,
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+.ui-dialog,
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button,
+.ui-dialog input, .ui-dialog select, .ui-dialog textarea, .ui-dialog button {
     font-family: 'Cuprum', sans-serif;
+    font-size: 14px;
+}
+
+.ui-widget-header,
+.ui-dialog-header {
     font-size: 16px;
+}
+.ui-widget-content,
+.ui-dialog-content {
+    font-size: 14px;
 }
 
 .ui-widget-content a {
@@ -82,8 +93,34 @@ footer, .wrapper {
     border-style: none;
 }
 
+.ui-dialog .ui-dialog-buttonpane {
+    margin: 0;
+    padding: 5px 3px 3px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: 5px 10px;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+    margin: 0 0 0 5px;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 10px 5px 0 5px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+    cursor: pointer;
+}
+
 .btn {
-    padding: 4px 10px;
+    padding: 4px 10px 2px 10px;
+    font-size: 14px;
+}
+
+.btn:focus {
+    outline: none;
 }
 
 .qtip {
@@ -91,7 +128,8 @@ footer, .wrapper {
 }
 
 .qtip .qtip-content {
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 16px;
 }
 
 pre {

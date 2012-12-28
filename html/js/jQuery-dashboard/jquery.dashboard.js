@@ -523,7 +523,6 @@
             return false;
         });
 
-        //$('#' + dashboard.id + ' span.controls').live('click', function (e) {
         jQuery(document).on('click', '#' + dashboard.id + ' span.controls', function (e) {
             var wi = dashboard.getWidget(jQuery(this).closest('.' + opts.widgetClass).attr("id"));
 
@@ -531,6 +530,8 @@
 
             return false;
         });
+
+        var widgetSelector = jQuery('#' + dashboard.id + ' .' + opts.widgetClass);
 
         // add the menu events (by default triggers are connected in dashboard_jsonfeed)
         $('#' + dashboard.id + ' .' + opts.widgetClass).live('widgetCloseMenu', function (e, o) {
@@ -543,11 +544,35 @@
             o.widget.openMenu();
         });
 
-        $('#' + dashboard.id + ' .' + opts.widgetClass).live('widgetDelete', function (e, o) {
-            if (confirm(opts.deleteConfirmMessage)) {
-                dashboard.log("Removing widget " + $(this).attr("id"), 1);
-                o.widget.remove();
-            }
+        jQuery(document).on('widgetDelete', widgetSelector, function (e, o) {
+            var tag = jQuery("<div></div>");
+
+            tag.html(opts.deleteConfirmMessage).dialog({
+                resizable: false,
+                draggable: false,
+                height: 115,
+                modal: true,
+                title: 'Confirm widget removal',
+                buttons: {
+                    'remove': {
+                        'text': 'Remove widget',
+                        'class': 'btn btn-danger',
+                        'click': function() {
+                            dashboard.log("Removing widget " + jQuery(this).attr("id"), 1);
+                            o.widget.remove();
+
+                            jQuery(this).dialog( "close" );
+                        }
+                    },
+                    'cancel': {
+                        'text': 'Cancel',
+                        'class': 'btn',
+                        'click': function() {
+                            jQuery(this).dialog( "close" );
+                        }
+                    }
+                }
+            }).dialog('open');
         });
 
         $('#' + dashboard.id + ' .' + opts.widgetClass).live('widgetRefresh', function (e, o) {
