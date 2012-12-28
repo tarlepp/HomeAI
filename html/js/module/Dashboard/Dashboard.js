@@ -61,45 +61,40 @@ jQuery(document).ready(function() {
         var dashboardWidget = jQuery('.widget');
         var loading = '<div class="loading"></div>';
 
-        dashboardWidget.live({
-            'widgetShow': function(event, object) {
-                console.log('show widget: '+ object.widget.id);
+        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh", dashboardWidget, function(e, o) {
+            console.log(o.widget.id +" - event - "+ e.type);
 
-                var intervalId = 'interval' + object.widget.id;
-                var parameters = jQuery.extend(
-                    {},
-                    object.widget.metadata.data,
-                    {
-                        widgetData: {
-                            id: object.widget.id,
-                            interval: intervalId
+            var widget = jQuery('#'+ o.widget.id);
+
+            switch (e.type) {
+                case 'widgetShow':
+                    var intervalId = 'interval' + o.widget.id;
+                    var parameters = jQuery.extend(
+                        {},
+                        o.widget.metadata.data,
+                        {
+                            widgetData: {
+                                id: o.widget.id,
+                                interval: intervalId
+                            }
                         }
+                    );
+
+                    // Remove widget title, this is annoying
+                    jQuery(this).find('.widgetcontent').parent().attr('title', '');
+
+                    switch (o.widget.metadata.type) {
+                        case 'curl':
+                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters);
+                            break;
+                        case 'rss':
+                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters);
+                            break;
+                        case 'highcharts':
+                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters);
+                            break;
                     }
-                );
-
-                // Remove widget title, this is annoying
-                jQuery(this).find('.widgetcontent').parent().attr('title', '');
-
-                switch (object.widget.metadata.type) {
-                    case 'curl':
-                        handleRequest(pageBaseHref +'Widget/Curl', jQuery(this), parameters);
-                        break;
-                    case 'rss':
-                        handleRequest(pageBaseHref +'Widget/Rss', jQuery(this), parameters);
-                        break;
-                    case 'highcharts':
-                        handleRequest(pageBaseHref +'Widget/Highcharts', jQuery(this), parameters);
-                        break;
-                }
-            },
-            'widgetOpen': function(event, object) {
-                console.log('open widget: '+ object.widget.id);
-            },
-            'widgetClose': function(event, object){
-                console.log('close widget: '+ object.widget.id);
-            },
-            'widgetAdded': function(event, object) {
-                console.log('added widget: '+ object.widget.id);
+                    break;
             }
         });
 

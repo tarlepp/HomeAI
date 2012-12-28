@@ -213,14 +213,15 @@
                 wi.appendTo(column);
 
                 dashboard.widgets[wid] = widget({
-                    id:wid,
-                    element:wi,
-                    column:obj.column,
-                    url:(typeof obj.url != 'undefined' ? obj.url : null),
-                    editurl:obj.editurl,
-                    title:obj.title,
-                    open:obj.open,
-                    metadata:obj.metadata
+                    id:         wid,
+                    element:    wi,
+                    column:     obj.column,
+                    url:        (typeof obj.url != 'undefined' ? obj.url : null),
+                    editurl:    obj.editurl,
+                    title:      obj.title,
+                    open:       obj.open,
+                    metadata:   obj.metadata,
+                    refresh:    (typeof obj.refresh != 'undefined' ? obj.refresh : 0)
                 });
             }
 
