@@ -8,7 +8,6 @@
  */
 namespace HomeAI\Database;
 
-defined('HomeAI_INIT') OR die('No direct access allowed.');
 /**
  * Database table class.
  *

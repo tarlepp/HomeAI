@@ -14,6 +14,7 @@
  * @revision    $Rev$
  */
 use HomeAI\Util\Config;
+use HomeAI\Core\Session;
 
 // Default timezone setting
 date_default_timezone_set('Europe/Helsinki');
@@ -87,3 +88,17 @@ foreach (Config::readIni('constants.ini') as $section => $data) {
 
 // Require database library
 require_once 'database.php';
+
+try {
+    Session::initialize();
+} catch (\Exception $error) {
+    echo "<h1>Fuck</h1>";
+    echo "<h2>Error occurred</h2>";
+    echo "<p>";
+
+    echo $error->getMessage();
+
+    echo "</p>";
+
+    exit();
+}
