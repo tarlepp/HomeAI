@@ -36,6 +36,13 @@ class Controller extends MController implements Interfaces\Controller
     protected $model;
 
     /**
+     * Current widget data from Dashboard.js
+     *
+     * @var array
+     */
+    protected $widgetData = array();
+
+    /**
      * General request initializer. This is method is called before any
      * actual handleRequest* - method calls.
      *
@@ -50,6 +57,9 @@ class Controller extends MController implements Interfaces\Controller
             header('HTTP/1.1 400 Bad Request');
             exit(0);
         }
+
+        // Store current request widget data if any
+        $this->widgetData = $this->request->get('widgetData', array());
     }
 
     /**
@@ -166,6 +176,7 @@ class Controller extends MController implements Interfaces\Controller
             } else {
                 $data = array(
                     'renderTo'  => $id,
+                    'widget'    => $this->widgetData,
                 );
 
                 /**

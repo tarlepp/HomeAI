@@ -1,5 +1,7 @@
-$(document).ready(function() {
+// This is for widget internal time intervals, see usage from example_live.json
+var widgetInternalIntervals = [];
 
+jQuery(document).ready(function() {
     // load the templates
     jQuery('body').append('<div id="templates"></div>');
 
@@ -61,43 +63,50 @@ $(document).ready(function() {
 
         dashboardWidget.live({
             'widgetShow': function(event, object) {
-                console.log('show widget: '+ object.widget.title);
+                console.log('show widget: '+ object.widget.id);
+
+                var intervalId = 'interval' + object.widget.id;
+                var parameters = jQuery.extend(
+                    {},
+                    object.widget.metadata.data,
+                    {
+                        widgetData: {
+                            id: object.widget.id,
+                            interval: intervalId
+                        }
+                    }
+                );
 
                 // Remove widget title, this is annoying
                 jQuery(this).find('.widgetcontent').parent().attr('title', '');
 
                 switch (object.widget.metadata.type) {
                     case 'curl':
-                        handleCurlRequest(jQuery(this), object);
+                        handleRequest(pageBaseHref +'Widget/Curl', jQuery(this), parameters);
                         break;
                     case 'rss':
-                        handleRssRequest(jQuery(this), object);
+                        handleRequest(pageBaseHref +'Widget/Rss', jQuery(this), parameters);
                         break;
-                    case 'highchart':
-                        handleHighchartRequest(jQuery(this), object);
-                        break;
-                    case 'iframe':
-                        handleIframeRequest(jQuery(this), object);
+                    case 'highcharts':
+                        handleRequest(pageBaseHref +'Widget/Highcharts', jQuery(this), parameters);
                         break;
                 }
             },
             'widgetOpen': function(event, object) {
-                console.log('open widget: '+ object.widget.title);
+                console.log('open widget: '+ object.widget.id);
             },
             'widgetClose': function(event, object){
-                console.log('close widget: '+ object.widget.title);
+                console.log('close widget: '+ object.widget.id);
             },
             'widgetAdded': function(event, object) {
-                console.log('added widget: '+ object.widget.title);
+                console.log('added widget: '+ object.widget.id);
             }
         });
 
-        // TODO: refactor below functions...
-
-        function handleCurlRequest(widget, object) {
+        function handleRequest(url, widget, parameters) {
             jQuery.ajax({
-                url: pageBaseHref +'Widget/Curl',
-                data: object.widget.metadata.data,
+                url: url,
+                data: parameters,
                 dataType: 'text',
                 beforeSend: function(){
                     widget.find('.widgetcontent').html(loading);
@@ -106,37 +115,6 @@ $(document).ready(function() {
                     widget.find('.widgetcontent').html(data);
                 }
             });
-        }
-
-        function handleRssRequest(widget, object) {
-            jQuery.ajax({
-                url: pageBaseHref +'Widget/Rss',
-                data: object.widget.metadata.data,
-                dataType: 'text',
-                beforeSend: function(){
-                    widget.find('.widgetcontent').html(loading);
-                },
-                success: function(data) {
-                    widget.find('.widgetcontent').html(data);
-                }
-            });
-        }
-
-        function handleHighchartRequest(widget, object) {
-            jQuery.ajax({
-                url: pageBaseHref +'Widget/Highcharts',
-                data: object.widget.metadata.data,
-                dataType: 'text',
-                beforeSend: function(){
-                    widget.find('.widgetcontent').html(loading);
-                },
-                success: function(data) {
-                    widget.find('.widgetcontent').html(data);
-                }
-            });
-        }
-
-        function handleIframeRequest(widget, object) {
         }
 
         dashboard.init();
@@ -145,13 +123,15 @@ $(document).ready(function() {
     var sideMenu = jQuery('#sideMenu');
 
     sideMenu.find('div').on('mouseenter', function() {
-        sideMenu.find('ul').show();
         jQuery(this).find('span').hide();
+
+        sideMenu.find('ul').show();
     });
 
     sideMenu.find('div').on('mouseleave', function() {
-        sideMenu.find('ul').hide();
         jQuery(this).find('span').show();
+
+        sideMenu.find('ul').hide();
     });
 
     sideMenu.find('a').on('click', function() {

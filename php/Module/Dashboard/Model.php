@@ -86,7 +86,7 @@ class Model extends MModel implements Interfaces\Model
                         'editurl'       => '',
                         'open'          => true,
                         'metadata'      =>  array(
-                            'type'      => 'highchart',
+                            'type'      => 'highcharts',
                             'data'      => array(
                                 'url'   => $url . 'Highcharts/Example',
                                 'id'    => 'HighchartsExample',
@@ -101,7 +101,7 @@ class Model extends MModel implements Interfaces\Model
                         'editurl'       => '',
                         'open'          => true,
                         'metadata'      =>  array(
-                            'type'      => 'highchart',
+                            'type'      => 'highcharts',
                             'data'      => array(
                                 'url'   => $url . 'Highcharts/ExampleLive',
                                 'id'    => 'HighchartsExampleLive',

@@ -35,6 +35,20 @@ class Controller extends MController implements Interfaces\Controller
     protected $model;
 
     /**
+     * Highcharts container id where to render it
+     *
+     * @var string
+     */
+    protected $renderTo = '';
+
+    /**
+     * Current widget data from Dashboard.js
+     *
+     * @var array
+     */
+    protected $widgetData = array();
+
+    /**
      * General request initializer. This is method is called before any
      * actual handleRequest* - method calls.
      *
@@ -49,6 +63,12 @@ class Controller extends MController implements Interfaces\Controller
             header('HTTP/1.1 400 Bad Request');
             exit(0);
         }
+
+        // Store Highcharts container id where to render to if any
+        $this->renderTo = $this->request->get('renderTo', '');
+
+        // Store current request widget data if any
+        $this->widgetData = $this->request->get('widget', array());
     }
 
     /**
@@ -73,9 +93,7 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function handleRequestExample()
     {
-        $renderTo = $this->request->get('renderTo');
-
-        echo $this->view->makeJsonExample($renderTo);
+        echo $this->view->makeJsonExample($this->renderTo);
         exit(0);
     }
 
@@ -95,9 +113,7 @@ class Controller extends MController implements Interfaces\Controller
 
             $output = JSON::encode($this->model->getLiveData($points));
         } else {
-            $renderTo = $this->request->get('renderTo');
-
-            $output = $this->view->makeJsonExampleLive($renderTo);
+            $output = $this->view->makeJsonExampleLive($this->renderTo, $this->widgetData);
         }
 
         echo $output;

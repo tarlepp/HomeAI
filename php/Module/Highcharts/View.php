@@ -48,14 +48,16 @@ class View extends MView implements Interfaces\View
      * Method makes Highcharts config JSON data string for example live chart.
      *
      * @param   string  $renderTo   Where to draw chart
+     * @param   array   $widget     Widget data
      *
      * @return  string
      */
-    public function makeJsonExampleLive($renderTo)
+    public function makeJsonExampleLive($renderTo, array $widget)
     {
         // Create template and assign data to it
         $template = $this->smarty->createTemplate('example_live.json', $this->smarty);
         $template->assign('renderTo', $renderTo);
+        $template->assign('widget', $widget);
 
         return $template->fetch();
     }

@@ -29,6 +29,25 @@ class View extends MView implements Interfaces\View
     protected $model;
 
     /**
+     * Current widget data from Dashboard.js
+     *
+     * @var array
+     */
+    protected $widgetData;
+
+    /**
+     * Setter for widget data.
+     *
+     * @param   array   $widgetData
+     *
+     * @return  void
+     */
+    public function setWidgetData(array $widgetData)
+    {
+        $this->widgetData = $widgetData;
+    }
+
+    /**
      * Method makes 'Clock' widget HTML content.
      *
      * @access  public
@@ -90,6 +109,7 @@ class View extends MView implements Interfaces\View
         $template->assign('id', $id);
         $template->assign('config', $config);
         $template->assign('options', $options);
+        $template->assign('widget', $this->widgetData);
 
         return $template->fetch();
     }

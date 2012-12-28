@@ -7,7 +7,9 @@
             load: function() {
                 var series = this.series[0];
 
-                setInterval(function() {
+                clearInterval(widgetInternalIntervals[{$widget.interval}]);
+
+                widgetInternalIntervals[{$widget.interval}] = setInterval(function() {
                     jQuery.ajax({
                         url: pageBaseHref,
                         data: {
@@ -29,7 +31,7 @@
     },
     xAxis: {
         type: 'datetime',
-        tickPixelInterval: 150
+        tickInterval: 1000 * 30
     },
     yAxis: {
         title: {
