@@ -1,4 +1,7 @@
 // This is for widget internal time intervals, see usage from example_live.json
+var widgetIntervals = [];
+
+// This is for widget internal time intervals, see usage from example_live.json
 var widgetInternalIntervals = [];
 
 jQuery(document).ready(function() {
@@ -61,24 +64,33 @@ jQuery(document).ready(function() {
         var dashboardWidget = jQuery('.widget');
         var loading = '<div class="loading"></div>';
 
-        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh", dashboardWidget, function(e, o) {
+        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh widgetDelete", dashboardWidget, function(e, o) {
             console.log(o.widget.id +" - event - "+ e.type);
 
             var widget = jQuery('#'+ o.widget.id);
+            var intervalId = 'interval' + o.widget.id;
+            var parameters = jQuery.extend(
+                {},
+                o.widget.metadata.data,
+                {
+                    widgetData: {
+                        id: o.widget.id,
+                        interval: intervalId
+                    }
+                }
+            );
 
             switch (e.type) {
                 case 'widgetShow':
-                    var intervalId = 'interval' + o.widget.id;
-                    var parameters = jQuery.extend(
-                        {},
-                        o.widget.metadata.data,
-                        {
-                            widgetData: {
-                                id: o.widget.id,
-                                interval: intervalId
-                            }
-                        }
-                    );
+                    clearInterval(widgetIntervals[intervalId]);
+
+                    var refreshInterval = parseInt(o.widget.refresh, 10);
+
+                    if (refreshInterval) {
+                        widgetIntervals[intervalId] = setInterval(function() {
+                            o.widget.refreshContent();
+                        }, refreshInterval * 1000);
+                    }
 
                     // Remove widget title, this is annoying
                     jQuery(this).find('.widgetcontent').parent().attr('title', '');
@@ -94,6 +106,10 @@ jQuery(document).ready(function() {
                             handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters);
                             break;
                     }
+                    break;
+                case 'widgetClose':
+                case 'widgetDelete':
+                    clearInterval(widgetIntervals[intervalId]);
                     break;
             }
         });

@@ -65,6 +65,7 @@ class Model extends MModel implements Interfaces\Model
                                 'limit' => 5,
                             ),
                         ),
+                        'refresh'       => 120,
                     ),
                     array(
                         'id'            => 'widget4',
