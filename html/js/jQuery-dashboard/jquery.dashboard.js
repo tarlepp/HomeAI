@@ -17,7 +17,7 @@
         // Public properties of dashboard.
         var dashboard = {};
         var loading;
-        var widgetDirectoryUrl;
+
         dashboard.layout;
         dashboard.element = this;
         dashboard.id = this.attr("id");
@@ -32,8 +32,14 @@
             var r = '{"layout": "' + dashboard.layout.id + '", "data" : [';
             // add al widgets in the right order
             var i = 0;
-            if ($('.' + opts.columnClass).length == 0) dashboard.log(opts.columnClass + ' class not found', 5);
-            $('.' + opts.columnClass).each(function () {
+
+            var columns = jQuery('.' + opts.columnClass);
+
+            if (columns.length == 0) {
+                dashboard.log(opts.columnClass + ' class not found', 5);
+            }
+
+            columns.each(function () {
                 $(this).children().each(function () {
                     if ($(this).hasClass(opts.widgetClass)) {
                         if (i > 0) {
@@ -46,7 +52,7 @@
             });
             r += ']}';
             return r;
-        }
+        };
 
         dashboard.log = function (msg, level) {
             if (level >= opts.debuglevel && typeof console != 'undefined') {
@@ -76,9 +82,11 @@
                 }
             }
 
-            // make the columns sortable, see http://jqueryui.com/demos/sortable/ for explaination
-            $('.' + opts.columnClass).sortable({
-                connectWith:$('.' + opts.columnClass),
+            var columns = jQuery('.' + opts.columnClass);
+
+            // make the columns sortable, see http://jqueryui.com/demos/sortable/ for explanation
+            columns.sortable({
+                connectWith: columns,
                 opacity:opts.opacity,
                 handle:'.' + opts.widgetHeaderClass,
                 over:function (event, ui) {
@@ -515,18 +523,12 @@
             return false;
         });
 
-        $('#' + dashboard.id + ' .controls li').live('click', function (e) {
-            // close the menu
-            dashboard.log('widgetCloseMenu event thrown for widget ' + widget.id, 2);
+        //$('#' + dashboard.id + ' span.controls').live('click', function (e) {
+        jQuery(document).on('click', '#' + dashboard.id + ' span.controls', function (e) {
+            var wi = dashboard.getWidget(jQuery(this).closest('.' + opts.widgetClass).attr("id"));
 
-            var wi = dashboard.getWidget($(this).closest('.' + opts.widgetClass).attr("id"));
-            wi.element.trigger('widgetCloseMenu', {"widget":wi});
+            wi.element.trigger(jQuery(this).data('control'), {"widget":wi});
 
-            // use the class on the li to determine what action to trigger
-            dashboard.log($(this).attr('class') + ' event thrown for widget ' + widget.id, 2);
-
-            var wi = dashboard.getWidget($(this).closest('.' + opts.widgetClass).attr("id"));
-            wi.element.trigger($(this).attr('class'), {"widget":wi});
             return false;
         });
 

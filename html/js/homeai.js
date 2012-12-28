@@ -39,13 +39,21 @@ jQuery(document).ready(function() {
     jQuery(document).on('mouseover', '.tooltipDiv', function() {
         createQtipDiv(jQuery(this));
     });
+
+    jQuery(document).on('mouseover', '.tooltipTitle', function() {
+        createQtipTitle(jQuery(this));
+    });
 });
 
 function createQtipDiv(el) {
-    createQtip(el, el.find('.tooltipDivContainer h1').html(), el.find('.tooltipDivContainer div'), 'auto', 'top left', 'bottom left');
+    createQtip(el, el.find('.tooltipDivContainer h1').html(), el.find('.tooltipDivContainer div'), 'auto', 'top left', 'bottom left', true, 100);
 }
 
-function createQtip(element, tipTitle, tipText, tipWidth, tipMy, tipAt) {
+function createQtipTitle(el) {
+    createQtip(el, '', el.attr('title'), 'auto', 'top left', 'bottom left', false, 50);
+}
+
+function createQtip(element, tipTitle, tipText, tipWidth, tipMy, tipAt, tipFixed, tipDelay) {
     element.qtip({
         metadata: {
             type: 'html5',      // Use HTML5 data-* attributes
@@ -67,8 +75,8 @@ function createQtip(element, tipTitle, tipText, tipWidth, tipMy, tipAt) {
             ready: true
         },
         hide: {
-            fixed: true,
-            delay: 100,
+            fixed: tipFixed,
+            delay: tipDelay,
             effect: false
         },
         position: {
