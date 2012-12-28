@@ -7,9 +7,9 @@
             load: function() {
                 var series = this.series[0];
 
-                clearInterval(widgetInternalIntervals[{$widget.interval}]);
+                clearInterval(widgetInternalIntervals["{$widget.interval}"]);
 
-                widgetInternalIntervals[{$widget.interval}] = setInterval(function() {
+                widgetInternalIntervals["{$widget.interval}"] = setInterval(function() {
                     jQuery.ajax({
                         url: pageBaseHref,
                         data: {
@@ -22,6 +22,7 @@
                             series.addPoint(response, true, true);
                         }
                     });
+
                 }, 5000);
             }
         }
