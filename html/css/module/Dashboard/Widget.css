@@ -54,6 +54,10 @@
     line-height: 15px;
 }
 
+.widgetRss ul li:first-of-type {
+    margin-top: 0;
+}
+
 .widgetRss ul li span {
     display: block;
     font-size: 13px;
@@ -86,7 +90,6 @@
     margin: 0;
 }
 
-
 #widgetEggTimer form {
     margin: 5px 0 0 0;
 }
@@ -103,7 +106,6 @@
 #widgetEggTimer .form-horizontal .control-group {
     margin-bottom: 5px;
 }
-
 
 .highchartsExampleClass,
 .highchartsExampleLiveClass {
