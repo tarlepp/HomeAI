@@ -2,7 +2,7 @@
     <ul>
         {foreach from=$items item=item}
             <li>
-                <a href="{$item->get_permalink()}" class="tooltipDiv">
+                <a href="{$item->get_permalink()}" rel="external" target="_blank" class="tooltipDiv">
                     {$item->get_title()}
                     {if $item->get_description()}
                     <div class="tooltipDivContainer">
