@@ -378,6 +378,11 @@ class Session implements Interfaces\Session
      */
     protected function insert($sessionId, $sessionData)
     {
+        // No need to create empty session rows
+        if (empty($sessionData)) {
+            return true;
+        }
+
         // Create required datetime objects
         $dateTimeCreate = new \DateTime('now');
         $dateTimeExpire = new \DateTime('now');
