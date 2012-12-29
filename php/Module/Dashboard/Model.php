@@ -69,8 +69,23 @@ class Model extends MModel implements Interfaces\Model
                     ),
                     array(
                         'id'            => 'widget4',
-                        'title'         => 'Content fetched via cUrl',
+                        'title'         => 'RSS feed from hs.fi',
                         'column'        => 'second',
+                        'editurl'       => '',
+                        'open'          => true,
+                        'metadata'      =>  array(
+                            'type'      => 'rss',
+                            'data'      => array(
+                                'url'   => 'http://www.hs.fi/uutiset/rss/',
+                                'limit' => 5,
+                            ),
+                        ),
+                        'refresh'       => 60,
+                    ),
+                    array(
+                        'id'            => 'widget5',
+                        'title'         => 'Content fetched via cUrl',
+                        'column'        => 'first',
                         'editurl'       => '',
                         'open'          => true,
                         'metadata'      => array(
@@ -81,7 +96,7 @@ class Model extends MModel implements Interfaces\Model
                         ),
                     ),
                     array(
-                        'id'            => 'widget5',
+                        'id'            => 'widget6',
                         'title'         => 'Highcharts example 1',
                         'column'        => 'third',
                         'editurl'       => '',
@@ -96,7 +111,7 @@ class Model extends MModel implements Interfaces\Model
                         ),
                     ),
                     array(
-                        'id'            => 'widget6',
+                        'id'            => 'widget7',
                         'title'         => 'Highcharts live example',
                         'column'        => 'third',
                         'editurl'       => '',

@@ -39,6 +39,7 @@ class View extends MView implements Interfaces\View
 
         $this->addJavascript('jQuery-dashboard/');
         $this->addJavascript('jQuery-jCounter/');
+        $this->addJavascript('jQuery-Timeago/');
         $this->addJavascript('Highcharts/');
 
         $this->addCss('Widget.css');

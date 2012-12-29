@@ -4,15 +4,23 @@
             <li>
                 <a href="{$item->get_permalink()}" class="tooltipDiv">
                     {$item->get_title()}
+                    {if $item->get_description()}
                     <div class="tooltipDivContainer">
                         <h1></h1>
                         <div>
                             {$item->get_description()}
                         </div>
                     </div>
+                    {/if}
                 </a>
-                <span>{$item->get_date()}</span>
+                <time class="timeago" datetime="{$item->get_date()}">{$item->get_date()}</time>
             </li>
         {/foreach}
     </ul>
 </div>
+
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery(".widgetRss time.timeago").timeago();
+    });
+</script>
