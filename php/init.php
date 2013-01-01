@@ -80,25 +80,19 @@ function homeAiAutoload($class)
 }
 
 // Define used constants
-foreach (Config::readIni('constants.ini') as $section => $data) {
-    foreach ($data as $constant => $value) {
-        define($section . '_' . $constant, $value);
+if (!(defined('INIT_NO_CONSTANT') && constant('INIT_NO_CONSTANT'))) {
+    foreach (Config::readIni('constants.ini') as $section => $data) {
+        foreach ($data as $constant => $value) {
+            define($section . '_' . $constant, $value);
+        }
     }
 }
 
 // Require database library
-require_once 'database.php';
+if (!(defined('INIT_NO_DATABASE') && constant('INIT_NO_DATABASE'))) {
+    require_once 'database.php';
+}
 
-try {
+if (!(defined('INIT_NO_SESSION') && constant('INIT_NO_SESSION'))) {
     Session::initialize();
-} catch (\Exception $error) {
-    echo "<h1>Fuck</h1>";
-    echo "<h2>Error occurred</h2>";
-    echo "<p>";
-
-    echo $error->getMessage();
-
-    echo "</p>";
-
-    exit();
 }
