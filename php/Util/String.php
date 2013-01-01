@@ -64,4 +64,36 @@ class String implements Interfaces\String
     {
         return preg_replace(($onlyDuplicates ? '#\s\s+#' : '#\s+#'), $replacement, trim($string));
     }
+
+    /**
+     * Method parses standard doc block to key / value array.
+     *
+     * @access  public
+     * @static
+     *
+     * @param   string  $string String to parse
+     *
+     * @return  array
+     */
+    public static function parseDocBlock($string)
+    {
+        $output = array();
+
+        if (preg_match_all('/@(\w+)\s+(.*)\r?\n/m', $string, $matches)) {
+            foreach ($matches[1] as $index => $name) {
+                if (!isset($output[$name])) {
+                    $output[$name] = $matches[2][$index];
+                } elseif (!is_array($output[$name])) {
+                    $output[$name] = array(
+                        $output[$name],
+                        $matches[2][$index],
+                    );
+                } else {
+                    $output[$name][] = $matches[2][$index];
+                }
+            }
+        }
+
+        return $output;
+    }
 }
