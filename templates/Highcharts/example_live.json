@@ -39,6 +39,7 @@
             text: null
         },
         min: 0,
+        max: 10,
         plotLines: [{
             value: 0,
             width: 1,
