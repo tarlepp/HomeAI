@@ -96,6 +96,11 @@ class Logger implements Interfaces\Logger
         // Format message
         $this->format($message, $type);
 
+        if (!is_readable($this->logFile)) {
+            touch($this->logFile);
+            chmod($this->logFile, 0777);
+        }
+
         // Write error log
         if (is_writable($this->logFile)) {
             error_log($this->message, 3, $this->logFile);
