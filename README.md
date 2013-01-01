@@ -36,13 +36,9 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - <em>This list will be updated</em>
 
 ### Requirements
-- PHP 5.4+
-- <em>TODO: add specified requirement list here</em>
+HomeAI contains script to check all system / environment requirements for running it.
 
-TODO: make this check.php script...
-
-<strike>
-You can run system check script via following command in the root directory:
+You can run system check script via following command in the root directory (note that this is preferred):
 <pre>
 php -q html/check.php
 </pre>
@@ -50,7 +46,6 @@ or pointing your browser to following address after installation:
 <pre>
 http://your-host/check.php
 </pre>
-</strike>
 
 ### Notes
 We're always looking for some help to do this all, please contact if you are interested in this.
