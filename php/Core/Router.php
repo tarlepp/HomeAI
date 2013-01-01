@@ -56,9 +56,18 @@ class Router implements Interfaces\Router
         // Get path info from current url and remove extra '/' characters from it
         $pageData = array_filter(explode('/', preg_replace('#/+#', '/', $request->getPathInfo())));
 
+        if (basename($request->getRequestUri()) === 'homeai.php') {
+            $url = $request->getBaseUrl(false, true);
+
+            header("Location: ". mb_substr($url, 0, mb_strpos($url, 'homeai.php')));
+            exit(0);
+        }
+
         // Extract page data from current path
         $module = array_shift($pageData);
         $_module = $request->get('module', null);
+
+
 
         if (empty($module) && !is_null($_module)) {
             $module = $_module;
