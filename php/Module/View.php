@@ -246,8 +246,7 @@ abstract class View implements Interfaces\View
         // Empty keyword
         if (empty($keyword)) {
             return;
-        } // Single keyword as string
-        elseif (!is_array($keyword)) {
+        } elseif (!is_array($keyword)) { // Single keyword as string
             $keyword = array($keyword);
         }
 
@@ -904,7 +903,7 @@ abstract class View implements Interfaces\View
         );
 
         // Set some smarty settings
-        $this->smarty->setCompileDir(PATH_BASE . 'templates_cache/');
+        $this->smarty->setCompileDir(PATH_BASE . 'templates_compiled/');
         $this->smarty->setConfigDir(PATH_BASE . 'config/');
         $this->smarty->setCacheDir(PATH_BASE . 'cache/');
         $this->smarty->setPluginsDir(array_merge($this->smarty->getPluginsDir(), array(PATH_BASE . 'php/Smarty/')));
