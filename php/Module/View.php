@@ -166,7 +166,7 @@ abstract class View implements Interfaces\View
      *
      * @return  \HomeAI\Module\View
      */
-    public function __construct(Request &$request, &$module, &$action, &$pageData)
+    public function __construct(Request &$request, &$module = null, &$action = null, &$pageData = array())
     {
         // Store given data
         $this->request  = $request;
@@ -175,7 +175,9 @@ abstract class View implements Interfaces\View
         $this->pageData = $pageData;
 
         // Initialize smarty
-        $this->initializeSmarty();
+        if (!is_null($action)) {
+            $this->initializeSmarty();
+        }
     }
 
     /**

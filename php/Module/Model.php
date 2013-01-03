@@ -82,7 +82,7 @@ abstract class Model implements Interfaces\Model
      *
      * @return  \HomeAI\Module\Model
      */
-    public function __construct(Request &$request, &$module, &$action, &$pageData)
+    public function __construct(Request &$request, &$module = null, &$action = null, &$pageData = array())
     {
         // Store given data
         $this->request  = $request;

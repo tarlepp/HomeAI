@@ -104,7 +104,7 @@ class Router implements Interfaces\Router
          * @var     $moduleController     \HomeAI\Module\Controller     This is for the 'smart' IDE
          */
         $moduleController = new $controller($request, $module, $action, $pageData);
-        $moduleController->handleRequest();
+        $moduleController->handleRequest($pageData);
 
         unset($moduleController);
     }

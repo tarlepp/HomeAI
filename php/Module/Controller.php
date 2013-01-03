@@ -87,13 +87,19 @@ abstract class Controller implements Interfaces\Controller
      *
      * @return  \HomeAI\Module\Controller
      */
-    public function __construct(Request &$request, &$module, &$action, &$pageData)
+    public function __construct(Request &$request, &$module = null, &$action = null, &$pageData = array())
     {
         // Store request object and page
         $this->request  = $request;
         $this->module   = $module;
         $this->action   = $action;
         $this->pageData = $pageData;
+
+        if (is_null($this->module)) {
+            $bits = explode('\\', get_called_class());
+
+            $this->module = $bits[2];
+        }
 
         // Create login object
         new Auth\Login(false);
@@ -154,9 +160,11 @@ abstract class Controller implements Interfaces\Controller
      *
      * @access  public
      *
+     * @param   array $pageData
+     *
      * @return  void
      */
-    public function handleRequest()
+    public function handleRequest(array $pageData)
     {
         // Specify init methods to check
         $init = array(
@@ -177,9 +185,9 @@ abstract class Controller implements Interfaces\Controller
         try {
             // Handler defined and founded
             if (!is_null($this->action) && method_exists($this, $method)) {
-                call_user_func(array($this, $method));
+                call_user_func(array($this, $method), $pageData);
             } else { // Otherwise fallback to default request handler.
-                $this->handleRequestDefault();
+                $this->handleRequestDefault($pageData);
             }
         } catch (\Exception $error) {
             if ($this->request->isAjax()) {
