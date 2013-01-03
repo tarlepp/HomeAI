@@ -19,7 +19,7 @@ namespace HomeAI\Util;
  * @author      $Author$
  * @revision    $Rev$
  */
-class UUID implements interfaces\UUID
+class UUID implements Interfaces\UUID
 {
     /**
      * Version 3 (MD5 hash)
