@@ -17,8 +17,7 @@ see that our free library isn't enough. Please remember to contribute our passio
 
 ### Demo
 http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarantees.
-
-<strong>Note: Use Google Chrome (http://www.google.com/chrome), other browsers are not <em>yet</em> supported</strong>
+<strong>Note:</strong> Use Google Chrome (http://www.google.com/chrome), other browsers are not <em>yet</em> supported...
 
 ### What are we using to do this all:
 - PHP 5.4+, what else? :D (http://php.net/)
