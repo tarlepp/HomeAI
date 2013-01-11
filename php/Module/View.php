@@ -97,6 +97,7 @@ abstract class View implements Interfaces\View
         'jQueryUI/',
         'jQueryUI-TouchPunch/',
         'jQuery-noty/',
+        'jQuery-Validate/',
         'bootstrap/',
         'qTip2/',
         'homeai.js'
