@@ -15,13 +15,26 @@ jQuery(document).ready(function() {
 
     // call for the minimal dashboard
     function initDashboard() {
-        var dashboard = jQuery('#dashboard').dashboard({
+        var dashboard = jQuery("#dashboard").dashboard({
+            widgetSetupUrl: pageBaseHref + 'Widget/Setup/',
             json_data : {
-                url: pageBaseHref + "Dashboard/GetMyWidgets"
+                url: pageBaseHref + 'Dashboard/GetMyWidgets'
             },
             refreshSettings: {
             },
             editLayoutSettings: {
+            },
+            addWidgetSettings: {
+                openDialogClass: "widgetEdit",
+                widgetDirectoryUrl: pageBaseHref + "Widget/GetCategories",
+                addWidgetClass:'addwidget',
+                selectCategoryClass:'selectcategory',
+                selectedCategoryClass:'active',
+                categoryClass:'categories',
+                widgetClass:'widgets',
+                dialogId:'addwidgetdialog',
+                categoryTemplate:'categorytemplate',
+                widgetTemplate:'addwidgettemplate'
             },
             loadingHtml: '<div class="loading"></div>',
             layouts :
@@ -29,31 +42,31 @@ jQuery(document).ready(function() {
                     { title: "Layout1",
                         id: "layout1",
                         image: pageBaseHref +"images/layouts/layout1.png",
-                        html: '<div class="layout layout-a"><div class="column first column-first"></div></div>',
+                        html: '<div class="layout layout-a"><div data-column="first" class="column first column-first"></div></div>',
                         classname: 'layout-a'
                     },
                     { title: "Layout2",
                         id: "layout2",
                         image: pageBaseHref +"images/layouts/layout2.png",
-                        html: '<div class="layout layout-aa"><div class="column first column-first"></div><div class="column second column-second"></div></div>',
+                        html: '<div class="layout layout-aa"><div data-column="first" class="column first column-first"></div><div data-column="second" class="column second column-second"></div></div>',
                         classname: 'layout-aa'
                     },
                     { title: "Layout3",
                         id: "layout3",
                         image: pageBaseHref +"images/layouts/layout3.png",
-                        html: '<div class="layout layout-ba"><div class="column first column-first"></div><div class="column second column-second"></div></div>',
+                        html: '<div class="layout layout-ba"><div data-column="first" class="column first column-first"></div><div data-column="second" class="column second column-second"></div></div>',
                         classname: 'layout-ba'
                     },
                     { title: "Layout4",
                         id: "layout4",
                         image: pageBaseHref +"images/layouts/layout4.png",
-                        html: '<div class="layout layout-ab"><div class="column first column-first"></div><div class="column second column-second"></div></div>',
+                        html: '<div class="layout layout-ab"><div data-column="first" class="column first column-first"></div><div data-column="second" class="column second column-second"></div></div>',
                         classname: 'layout-ab'
                     },
                     { title: "Layout5",
                         id: "layout5",
                         image: pageBaseHref +"images/layouts/layout5.png",
-                        html: '<div class="layout layout-aaa"><div class="column first column-first"></div><div class="column second column-second"></div><div class="column third column-third"></div></div>',
+                        html: '<div class="layout layout-aaa"><div data-column="first" class="column first column-first"></div><div data-column="second" class="column second column-second"></div><div data-column="third" class="column third column-third"></div></div>',
                         classname: 'layout-aaa'
                     }
                 ]
@@ -147,3 +160,5 @@ jQuery(document).ready(function() {
         sideMenu.find('ul').hide();
     });
 });
+
+
