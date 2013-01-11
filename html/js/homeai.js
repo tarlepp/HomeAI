@@ -87,14 +87,14 @@ function createQtip(element, tipTitle, tipText, tipWidth, tipMy, tipAt, tipFixed
     });
 }
 
-function makeMessage(text, type) {
-    noty({
+function makeMessage(text, type, options) {
+    noty(jQuery.extend({}, {
         text: text,
         type: type
-    });
+    }, options));
 }
 
-function showUrlInDialog(url, urlParameters, options){
+function showUrlInDialog(url, urlParameters, options) {
     options = options || {};
 
     var tag = jQuery("<div></div>"); //This tag will the hold the dialog content.
