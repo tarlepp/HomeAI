@@ -697,63 +697,65 @@
             open: function(event, ui) {
                 var form = jQuery(this).find('#widgetSetupForm');
 
-                var options = {
-                    ignore: '',
-                    errorClass: 'error',
-                    validClass: '',
-                    errorElement: 'span',
-                    invalidHandler: function(form, validator) {
-                        var errors = validator.numberOfInvalids();
+                if (typeof getWidgetValidationRules == 'function' ) {
+                    var options = {
+                        ignore: '',
+                        errorClass: 'error',
+                        validClass: '',
+                        errorElement: 'span',
+                        invalidHandler: function(form, validator) {
+                            var errors = validator.numberOfInvalids();
 
-                        if (errors) {
-                            var message = errors == 1
-                                ? 'Error in widget configuration! You missed 1 field. This field has been highlighted.'
-                                : 'Errors in widget configuration! You missed ' + errors + ' fields. These fields have been highlighted.';
+                            if (errors) {
+                                var message = errors == 1
+                                    ? 'Error in widget configuration! You missed 1 field. This field has been highlighted.'
+                                    : 'Errors in widget configuration! You missed ' + errors + ' fields. These fields have been highlighted.';
 
-                            makeMessage(message, 'error', {timeout: 7000});
+                                makeMessage(message, 'error', {timeout: 7000});
+                            }
+                        },
+                        highlight: function (element, errorClass, validClass) {
+                            if (element.type === 'radio') {
+                                this.findByName(element.name).closest('div.control-group').removeClass(validClass).addClass(errorClass);
+                            } else {
+                                jQuery(element).closest('div.control-group').removeClass(validClass).addClass(errorClass);
+                            }
+
+                            // This is doesn't work user friendly way, gotta think something else...
+                            /*
+                             jQuery(".tab-content").find("div.tab-pane:hidden:has(div.error)").each(function() {
+                             var id = jQuery(this).attr("id");
+
+                             jQuery('#widgetSetupNavigation').find('a[href="#'+ id +'"]').tab('show');
+                             });
+                             */
+                        },
+                        unhighlight: function (element, errorClass, validClass) {
+                            if (element.type === 'radio') {
+                                this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+                            } else {
+                                jQuery(element).closest('div.control-group').removeClass(errorClass).addClass(validClass);
+                                jQuery(element).next('span.help-block').text('');
+                            }
+                        },
+                        errorPlacement: function(error, element) {
+                            var isInputAppend = (jQuery(element).parent('div.input-append').length > 0);
+
+                            error.addClass('help-block');
+
+                            if (isInputAppend) {
+                                var appendElement = jQuery(element).parent();
+
+                                error.addClass('span9');
+                                error.insertAfter(appendElement);
+                            }else {
+                                error.insertAfter(element);
+                            }
                         }
-                    },
-                    highlight: function (element, errorClass, validClass) {
-                        if (element.type === 'radio') {
-                            this.findByName(element.name).closest('div.control-group').removeClass(validClass).addClass(errorClass);
-                        } else {
-                            jQuery(element).closest('div.control-group').removeClass(validClass).addClass(errorClass);
-                        }
+                    };
 
-                        // This is doesn't work user friendly way, gotta think something else...
-                        /*
-                         jQuery(".tab-content").find("div.tab-pane:hidden:has(div.error)").each(function() {
-                         var id = jQuery(this).attr("id");
-
-                         jQuery('#widgetSetupNavigation').find('a[href="#'+ id +'"]').tab('show');
-                         });
-                         */
-                    },
-                    unhighlight: function (element, errorClass, validClass) {
-                        if (element.type === 'radio') {
-                            this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
-                        } else {
-                            jQuery(element).closest('div.control-group').removeClass(errorClass).addClass(validClass);
-                            jQuery(element).next('span.help-block').text('');
-                        }
-                    },
-                    errorPlacement: function(error, element) {
-                        var isInputAppend = (jQuery(element).parent('div.input-append').length > 0);
-
-                        error.addClass('help-block');
-
-                        if (isInputAppend) {
-                            var appendElement = jQuery(element).parent();
-
-                            error.addClass('span9');
-                            error.insertAfter(appendElement);
-                        }else {
-                            error.insertAfter(element);
-                        }
-                    }
-                };
-
-                form.validate(jQuery.extend(options, getWidgetValidationRules()));
+                    form.validate(jQuery.extend(options, getWidgetValidationRules()));
+                }
 
                 var notFound = jQuery(this).parent().find('#widgetSetupNotFound');
                 var buttonContainer = jQuery(this).parent().parent().find('div.ui-dialog-buttonset');

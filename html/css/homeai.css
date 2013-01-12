@@ -157,6 +157,10 @@ footer, .wrapper {
     line-height: 16px;
 }
 
+.tab-content {
+    margin-top: 5px;
+}
+
 .noty_text {
     font-size: 16px;
 }

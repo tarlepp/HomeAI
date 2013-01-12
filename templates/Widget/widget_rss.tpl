@@ -15,6 +15,10 @@
                 </a>
                 <time class="timeago" datetime="{$item->get_date()}">{$item->get_date()}</time>
             </li>
+        {foreachelse}
+            <li>
+                RSS Feed doesn't contain items.
+            </li>
         {/foreach}
     </ul>
 </div>

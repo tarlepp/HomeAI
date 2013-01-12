@@ -115,26 +115,6 @@ class View extends MView implements Interfaces\View
     }
 
     /**
-     * Method makes cURL setup screen.
-     *
-     * @access  public
-     *
-     * @param   array   $widget Widget data
-     * @param   array   $data   HTML form data
-     *
-     * @return  string          HTML content for cURL -setup
-     */
-    public function makeCurlSetup(array $widget, array $data)
-    {
-        $template = $this->smarty->createTemplate('widget_setup_curl.tpl', $this->smarty);
-        $template->assign('widget', $widget);
-        $template->assign('data', $data);
-
-
-        return $template->fetch();
-    }
-
-    /**
      * @access  public
      *
      * @param   string  $widgetName Name of the widget
@@ -151,6 +131,44 @@ class View extends MView implements Interfaces\View
         $template->assign('widgetName', $widgetName);
         $template->assign('methodName', $methodName);
         $template->assign('className', $className);
+        $template->assign('widget', $widget);
+        $template->assign('data', $data);
+
+        return $template->fetch();
+    }
+
+    /**
+     * Method makes cURL setup screen.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for cURL -setup
+     */
+    public function makeSetupCurl(array $widget, array $data)
+    {
+        $template = $this->smarty->createTemplate('widget_setup_curl.tpl', $this->smarty);
+        $template->assign('widget', $widget);
+        $template->assign('data', $data);
+
+        return $template->fetch();
+    }
+
+    /**
+     * Method makes RSS widget setup GUI. This is shown in jQuery dialog.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for RSS widget -setup
+     */
+    public function makeSetupRss($widget, $data)
+    {
+        $template = $this->smarty->createTemplate('widget_setup_rss.tpl', $this->smarty);
         $template->assign('widget', $widget);
         $template->assign('data', $data);
 

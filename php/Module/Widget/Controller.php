@@ -152,6 +152,7 @@ class Controller extends MController implements Interfaces\Controller
      * @description Generic RSS feed reader widget. With this you can specify desired RSS url where to fetch items to be shown in widget.
      * @category    Network
      * @configure   true
+     * @refreshable true
      *
      * @access  public
      *
@@ -389,7 +390,22 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function widgetSetupCurl(array $widget, array $data)
     {
-        echo $this->view->makeCurlSetup($widget, $data);
+        echo $this->view->makeSetupCurl($widget, $data);
+    }
+
+    /**
+     * Method makes setup for 'RSS' -widget.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   Widget content data
+     *
+     * @return  void
+     */
+    public function widgetSetupRss(array $widget, array $data)
+    {
+        echo $this->view->makeSetupRss($widget, $data);
     }
 
     /**
