@@ -185,7 +185,9 @@ abstract class Controller implements Interfaces\Controller
         try {
             // Handler defined and founded
             if (!is_null($this->action) && method_exists($this, $method)) {
-                call_user_func(array($this, $method), $pageData);
+                // TODO: add check for $pageData and parameters for actual method to call
+
+                call_user_func_array(array($this, $method), $pageData);
             } else { // Otherwise fallback to default request handler.
                 $this->handleRequestDefault($pageData);
             }

@@ -31,9 +31,11 @@ interface Controller extends Common
      *
      * @access  public
      *
+     * @param   array   $pageData
+     *
      * @return  void
      */
-    public function handleRequest();
+    public function handleRequest(array $pageData);
 
     /**
      * Common request for 404 pages.

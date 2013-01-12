@@ -33,5 +33,5 @@ interface Common
      *
      * @return  \HomeAI\Module\Interfaces\Common
      */
-    public function __construct(Request &$request, &$module, &$action, &$pageData);
+    public function __construct(Request &$request, &$module = null, &$action = null, &$pageData = array());
 }
