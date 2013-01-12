@@ -30,6 +30,7 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - jQuery jCounter plugin (http://devingredients.com/jcounter/)
 - jQuery UI Touch Punch (https://github.com/furf/jquery-ui-touch-punch/)
 - jQuery Timeago plugin (http://timeago.yarp.com/)
+- jQuery Validation plugin (https://github.com/jzaefferer/jquery-validation)
 - Twitter Bootstrap (https://github.com/twitter/bootstrap)
 - qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)
