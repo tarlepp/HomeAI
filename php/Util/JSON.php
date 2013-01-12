@@ -32,10 +32,46 @@ class JSON implements Interfaces\JSON
     const TYPE_DECODE = 2;
     /**#@-*/
 
+    /**#@-
+     * Used header types.
+     *
+     * @access  public
+     * @type    constant
+     * @var     int
+     */
+    const HEADER_JSON = 1;
+    const HEADER_JSONP = 1;
+    /**#@-*/
+
+    /**
+     * Method makes JSON headers.
+     *
+     * @access  public
+     * @static
+     *
+     * @param   integer $type   Used header type
+     *
+     * @return  void
+     */
+    public static function makeHeaders($type = self::HEADER_JSON)
+    {
+        switch ($type) {
+            case self::HEADER_JSON:
+                header('Content-Type: application/json');
+                break;
+            case self::HEADER_JSONP:
+                header('Content-Type: application/javascript');
+                break;
+        }
+    }
+
     /**
      * Method checks if JSON string is valid or not. Method will throw
      * an exception if string is not valid otherwise method returns
      * boolean true.
+     *
+     * @access  public
+     * @static
      *
      * @param   string  $string JSON string to be checked
      *
@@ -51,6 +87,9 @@ class JSON implements Interfaces\JSON
     /**
      * Method encodes given data to JSON string with specified options. Note that
      * method throws an exception if encode operations fails for some reason.
+     *
+     * @access  public
+     * @static
      *
      * @throws  Exception
      *
@@ -73,6 +112,9 @@ class JSON implements Interfaces\JSON
      * Method decodes JSON string. Note that method throws an exception if
      * decode operations fails for some reason.
      *
+     * @access  public
+     * @static
+     *
      * @throws  Exception
      *
      * @param   string  $string JSON string to be decoded
@@ -93,6 +135,9 @@ class JSON implements Interfaces\JSON
     /**
      * Method checks if JSON en/decode operations has failed. If so
      * method will throw an exception about that.
+     *
+     * @access  public
+     * @static
      *
      * @throws  Exception
      *
