@@ -1,6 +1,6 @@
 <script type="text/html" id="categorytemplate">
-    <li id="<%= id %>" class="selectcategory">
-        <button><%= title %> (<%= amount %>)</button>
+    <li id="<%= id %>" class="selectcategory" data-category="<%= title %>">
+        <a href="#"><%= title %> ( <%= amount %> ) <i class="icon-chevron-right pull-right"></i></a>
     </li>
 </script>
 
@@ -20,6 +20,10 @@
     </div>
 </script>
 
+<script type="text/html" id="widgetsetuptemplate">
+    <div id="widgetsetupcontainer class="widgetSetup">
+    </div>
+</script>
 
 <script type="text/html" id="selectlayouttemplate">
     <li class="layoutchoice" id="<%= id %>" style="background-image: url('<%= image %>')"></li>
@@ -28,29 +32,40 @@
 
 <script type="text/html" id="addwidgettemplate">
     <li class="widgetitem">
-        <img src="<%= image %>" alt="" height="60" width="120">
-
-        <div class="add-button">
-            <input class="macro-button-add addwidget" id="addwidget<%= id %>" value="Add it Now" type="button"><br>
-            <input class="macro-hidden-uri" value="<%= url %>" type="hidden">
+        <div class="row-fluid">
+            <div class="span3">
+                <img src="<%= image %>" alt="" height="50" width="100" class="img-rounded img-polaroid">
+            </div>
+            <div class="span9">
+                <h3><%= title %></h3>
+                <p class="muted">By <%= creator %></p>
+                <p>
+                    <%= description %>
+                    <button class="macro-button-add addwidget btn btn-primary pull-right" id="addwidget<%= id %>">Add this</button>
+                    <input class="macro-hidden-uri" value="<%= url %>" type="hidden" />
+                </p>
+            </div>
         </div>
-        <!-- // .add-button -->
-        <h3><a href=""><%= title %></a></h3>
-
-        <p>By <%= creator %></p>
-
-        <p><%= description %></p>
     </li>
 </script>
 
+<div id="widgetSetupDialog" class="dialog">
+</div>
+
+
 
 <div class="dialog" id="addwidgetdialog" title="Widget Directory">
-    <ul class="categories">
-    </ul>
+    <div class="row-fluid">
+        <div class="span3">
+            <ul class="categories nav nav-tabs nav-stacked">
+            </ul>
+        </div>
 
-    <div class="panel-body">
-        <ol id="category-all" class="widgets">
-        </ol>
+        <!--<div class="panel-body">-->
+        <div class="span9">
+            <ol id="category-all" class="widgets">
+            </ol>
+        </div>
     </div>
 </div>
 
@@ -61,3 +76,4 @@
         </ul>
     </div>
 </div>
+

@@ -9,6 +9,7 @@
 namespace HomeAI\Module\Dashboard;
 
 use HomeAI\Module\Model as MModel;
+use HomeAI\Module\Widget\Controller as WidgetController;
 
 /**
  * Model class for 'Dashboard' -Module.
@@ -95,6 +96,7 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                     ),
+                    /*
                     array(
                         'id'            => 'widget6',
                         'title'         => 'Highcharts example 1',
@@ -110,6 +112,7 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                     ),
+
                     array(
                         'id'            => 'widget7',
                         'title'         => 'Highcharts live example',
@@ -125,8 +128,14 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                     ),
+                    */
                 ),
             ),
         );
+    }
+
+    public function getCategories()
+    {
+        return (new WidgetController($this->request))->getCategories();
     }
 }

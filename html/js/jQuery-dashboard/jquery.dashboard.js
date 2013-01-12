@@ -183,7 +183,6 @@
                 // set the layout
                 var currentLayout = (typeof dashboard.layout != 'undefined') ? dashboard.layout : getLayout(json.layout);
 
-                console.log(opts);
                 dashboard.setLayout(currentLayout);
                 dashboard.loadWidgets(opts.json_data.data);
             }
@@ -555,6 +554,13 @@
                 modal: true,
                 title: 'Confirm widget removal',
                 buttons: {
+                    'close': {
+                        'text': 'Close',
+                        'class': 'btn',
+                        'click': function() {
+                            jQuery(this).dialog( "close" );
+                        }
+                    },
                     'remove': {
                         'text': 'Remove widget',
                         'class': 'btn btn-danger',
@@ -562,13 +568,6 @@
                             dashboard.log("Removing widget " + jQuery(this).attr("id"), 1);
                             o.widget.remove();
 
-                            jQuery(this).dialog( "close" );
-                        }
-                    },
-                    'cancel': {
-                        'text': 'Cancel',
-                        'class': 'btn',
-                        'click': function() {
                             jQuery(this).dialog( "close" );
                         }
                     }
@@ -647,30 +646,163 @@
             o.widget.openSettings();
         });
 
-        if ($('#' + addOpts.dialogId).length == 0) dashboard.log('Unable to find ' + addOpts.dialogId, 5);
-        $('#' + addOpts.dialogId).dialog({
-            autoOpen:false,
-            height:514,
-            width:750,
-            modal:true,
-            buttons:{
-                Cancel:function () {
-                    $(this).dialog('close');
+        var addWidgetDialog = jQuery('#' + addOpts.dialogId);
+
+        if (addWidgetDialog.length == 0) {
+            dashboard.log('Unable to find ' + addOpts.dialogId, 5);
+        }
+
+        addWidgetDialog.dialog({
+            autoOpen: false,
+            height: 500,
+            width: 700,
+            modal: true,
+            resizable: false,
+            draggable: false,
+            buttons: {
+                'close': {
+                    text: 'Close',
+                    class: 'btn',
+                    'click': function() {
+                        jQuery(this).dialog( "close" );
+                    }
                 }
-            },
-            close:function () {
-                //close
             }
         });
 
-        if ($('#' + layoutOpts.dialogId).length == 0) dashboard.log('Unable to find ' + layoutOpts.dialogId, 5);
-        $('#' + layoutOpts.dialogId).dialog({
-            autoOpen:false,
-            height:140,
-            width:500,
-            modal:true,
-            resizable:false,
-            draggable:false
+        var layoutDialog = jQuery('#' + layoutOpts.dialogId);
+
+        if (layoutDialog.length == 0) {
+            dashboard.log('Unable to find ' + layoutOpts.dialogId, 5);
+        }
+
+        layoutDialog.dialog({
+            autoOpen: false,
+            height: 140,
+            width: 500,
+            modal: true,
+            resizable: false,
+            draggable: false
+        });
+
+        var widgetSetupDialog = jQuery('#widgetSetupDialog');
+
+        widgetSetupDialog.dialog({
+            autoOpen: false,
+            height: 400,
+            width: 600,
+            modal: true,
+            resizable: false,
+            draggable: false,
+            open: function(event, ui) {
+                var form = jQuery(this).find('#widgetSetupForm');
+
+                var options = {
+                    ignore: '',
+                    errorClass: 'error',
+                    validClass: '',
+                    errorElement: 'span',
+                    invalidHandler: function(form, validator) {
+                        var errors = validator.numberOfInvalids();
+
+                        if (errors) {
+                            var message = errors == 1
+                                ? 'Error in widget configuration! You missed 1 field. This field has been highlighted.'
+                                : 'Errors in widget configuration! You missed ' + errors + ' fields. These fields have been highlighted.';
+
+                            makeMessage(message, 'error', {timeout: 7000});
+                        }
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        if (element.type === 'radio') {
+                            this.findByName(element.name).closest('div.control-group').removeClass(validClass).addClass(errorClass);
+                        } else {
+                            jQuery(element).closest('div.control-group').removeClass(validClass).addClass(errorClass);
+                        }
+
+                        // This is doesn't work user friendly way, gotta think something else...
+                        /*
+                         jQuery(".tab-content").find("div.tab-pane:hidden:has(div.error)").each(function() {
+                         var id = jQuery(this).attr("id");
+
+                         jQuery('#widgetSetupNavigation').find('a[href="#'+ id +'"]').tab('show');
+                         });
+                         */
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        if (element.type === 'radio') {
+                            this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+                        } else {
+                            jQuery(element).closest('div.control-group').removeClass(errorClass).addClass(validClass);
+                            jQuery(element).next('span.help-block').text('');
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        var isInputAppend = (jQuery(element).parent('div.input-append').length > 0);
+
+                        error.addClass('help-block');
+
+                        if (isInputAppend) {
+                            var appendElement = jQuery(element).parent();
+
+                            error.addClass('span9');
+                            error.insertAfter(appendElement);
+                        }else {
+                            error.insertAfter(element);
+                        }
+                    }
+                };
+
+                form.validate(jQuery.extend(options, getWidgetValidationRules()));
+
+                var notFound = jQuery(this).parent().find('#widgetSetupNotFound');
+                var buttonContainer = jQuery(this).parent().parent().find('div.ui-dialog-buttonset');
+
+                buttonContainer.find('button').each(function() {
+                    var button = jQuery(this);
+
+                    if (notFound.length > 0 && !button.hasClass('nohide')) {
+                        button.addClass('hide');
+                    } else {
+                        button.removeClass('hide');
+                    }
+                });
+            },
+            buttons: {
+                'close': {
+                    text: 'Close',
+                    class: 'btn nohide',
+                    click: function() {
+                        jQuery(this).dialog('close');
+                    }
+                },
+                'back': {
+                    text: 'Back to browse',
+                    class: 'btn nohide',
+                    click: function() {
+                        var widgetData = widgetSetupDialog.dialog().data('widget');
+
+                        jQuery(this).dialog('close');
+                        jQuery(this).trigger('dashboardOpenWidgetDialog', [widgetData.category]);
+                    }
+                },
+                'ok': {
+                    text: 'Add widget',
+                    class: 'btn btn-primary',
+                    click: function() {
+                        var form = jQuery(this).find('#widgetSetupForm');
+
+                        form.validate().form();
+
+                        if (form.validate().valid()) {
+                            var widgetData = getWidgetData();
+                            var widget = widgetSetupDialog.dialog().data('widget');
+
+                            dashboard.element.trigger('dashboardAddWidget', [widget, widgetData]);
+                        }
+                    }
+                }
+            }
         });
 
         $('.' + layoutOpts.openDialogClass).live('click', function () {
@@ -793,29 +925,37 @@
             return false;
         }
 
-        $('.' + addOpts.selectCategoryClass).live('click', function () {
+        // Category click
+        jQuery(document).on('click', '.' + addOpts.selectCategoryClass, function() {
             dashboard.log('addWidgetDialogSelectCategory event thrown', 2);
+
             dashboard.element.trigger('addWidgetDialogSelectCategory', {"category":$(this)});
+
             return false;
         });
 
-        dashboard.element.live('addWidgetDialogSelectCategory', function (e, obj) {
+        // Fetch category widgets
+        jQuery(document).on('addWidgetDialogSelectCategory', dashboard.element, function(e, obj) {
+            var selectedCategory = jQuery('.' + addOpts.selectCategoryClass);
+            var url = dashboard.widgetCategories[jQuery(obj.category).attr("id")];
+
             // remove the category selection
-            $('.' + addOpts.selectCategoryClass).removeClass(addOpts.selectedCategoryClass);
+            selectedCategory.removeClass(addOpts.selectedCategoryClass).find('a i').removeClass('icon-white');
 
             // empty the widgets div
-            $('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).empty();
+            jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).empty();
 
             // select the category
-            $(obj.category).addClass(addOpts.selectedCategoryClass);
-
-            // get the widgets
-            url = dashboard.widgetCategories[$(obj.category).attr("id")];
+            jQuery(obj.category).addClass(addOpts.selectedCategoryClass).find('a i').addClass('icon-white');
 
             dashboard.log('Getting JSON feed : ' + url, 1);
-            $.getJSON(url, {"cache":true}, function (json) {
+
+            // get the widgets
+            jQuery.getJSON(url, {"cache": true}, function (json) {
                 // load the widgets from the category
-                if (json.result.data == 0) dashboard.log('Empty data returned', 3);
+                if (json.result.data == 0) {
+                    dashboard.log('Empty data returned', 3);
+                }
 
                 var items = json.result.data;
 
@@ -823,13 +963,20 @@
                     items = new Array(json.result.data);
                 }
 
-                $.each(items, function (i, item) {
+                jQuery.each(items, function (i, item) {
+                    dashboard.log('Applying template : ' + addOpts.widgetTemplate, 1);
+
                     dashboard.widgetsToAdd[item.id] = item;
 
-                    dashboard.log('Applying template : ' + addOpts.widgetTemplate, 1);
-                    if ($('#' + addOpts.widgetTemplate).length == 0) dashboard.log('Template "' + addOpts.widgetTemplate + ' not found', 5);
-                    var html = tmpl($('#' + addOpts.widgetTemplate).html(), item);
-                    $('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).append(html);
+                    var widgetTemplate = jQuery('#' + addOpts.widgetTemplate);
+
+                    if (widgetTemplate.length == 0) {
+                        dashboard.log('Template "' + addOpts.widgetTemplate + ' not found', 5);
+                    }
+
+                    var html = tmpl(widgetTemplate.html(), item);
+
+                    jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).append(html);
                 });
             });
 
@@ -838,13 +985,57 @@
         });
 
 
-        $('.' + addOpts.addWidgetClass).live('click', function () {
-            var widget = dashboard.widgetsToAdd[$(this).attr("id").replace('addwidget', '')];
-            dashboard.log('dashboardAddWidget event thrown', 2);
-            dashboard.element.trigger('dashboardAddWidget', {"widget":widget});
+        jQuery(document).on('addWidgetDialogSetupsLoaded', function(e, widget) {
+            widgetSetupDialog.dialog('option', 'title', 'Configure of \''+ widget.title +'\' widget');
+            widgetSetupDialog.dialog().data('widget', widget);
+            widgetSetupDialog.dialog('open');
+        });
+
+        // TODO
+        jQuery(document).on('dashboardAddWidget', function(e, widget, data) {
+            data = (typeof data != 'undefined' ? data : {});
+
+            console.log('add widget');
+            console.log(widget);
+            console.log(data);
+
+        });
+
+        jQuery('.' + addOpts.addWidgetClass).live('click', function () {
+            var widget = dashboard.widgetsToAdd[jQuery(this).attr("id").replace('addwidget', '')];
 
             dashboard.log('dashboardCloseWidgetDialog event thrown', 2);
             dashboard.element.trigger('dashboardCloseWidgetDialog');
+
+            dashboard.log('dashboardAddWidget event thrown', 2);
+
+            if (widget.configure == true) {
+                if (typeof opts.widgetSetupUrl != 'undefined' && opts.widgetSetupUrl != null && opts.widgetSetupUrl != '') {
+                    var data = {
+                        data: {},
+                        widget: widget
+                    };
+
+                    widgetSetupDialog.empty();
+
+                    jQuery.ajax({
+                        url: opts.widgetSetupUrl + widget.method,
+                        type: 'POST',
+                        data: data,
+                        dataType: 'text',
+                        success: function(data, textStatus, jqXHR) {
+                            widgetSetupDialog.html(data);
+
+                            dashboard.element.trigger('addWidgetDialogSetupsLoaded', widget);
+                        }
+                    });
+                } else {
+                    alert('Widget setup url not defined');
+                }
+            } else {
+                dashboard.element.trigger('dashboardAddWidget', widget);
+            }
+
             return false;
         });
 
@@ -854,40 +1045,52 @@
             return false;
         });
 
-        dashboard.element.live('dashboardCloseWidgetDialog', function () {
-            // close the dialog
-            $('#' + addOpts.dialogId).dialog('close');
+        jQuery(document).on('dashboardCloseWidgetDialog', function() {
+            jQuery('#' + addOpts.dialogId).dialog('close');
         });
 
-        dashboard.element.live('dashboardOpenWidgetDialog', function () {
+        jQuery(document).on('dashboardOpenWidgetDialog', dashboard.element, function(event, category) {
+            var dialog = jQuery('#' + addOpts.dialogId);
 
             //remove existing categories/widgets from the DOM, to prevent duplications
-            $('#' + addOpts.dialogId).find('.' + addOpts.categoryClass).empty();
-            $('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).empty();
+            dialog.find('.' + addOpts.categoryClass).empty();
+            dialog.find('.' + addOpts.widgetClass).empty();
 
             dashboard.log('Opening dialog ' + addOpts.dialogId, 1);
-            $('#' + addOpts.dialogId).dialog('open');
+            dialog.dialog('open');
 
             dashboard.log('Getting JSON feed : ' + addOpts.widgetDirectoryUrl, 1);
-            $.getJSON(addOpts.widgetDirectoryUrl, function (json) {
-                if (json.category == 0) dashboard.log('Empty data returned', 3);
-                $.each(json.categories.category, function (i, item) {
+
+            jQuery.getJSON(addOpts.widgetDirectoryUrl, function (json) {
+                if (json.category == 0) {
+                    dashboard.log('Empty data returned', 3);
+                }
+
+                jQuery.each(json.categories.category, function (i, item) {
                     // Add the categories to the dashboard
                     dashboard.widgetCategories[item.id] = item.url;
 
                     dashboard.log('Applying template : ' + addOpts.categoryTemplate, 1);
-                    if ($('#' + addOpts.categoryTemplate).length == 0) dashboard.log('Template "' + addOpts.categoryTemplate + ' not found', 5);
-                    var html = tmpl($('#' + addOpts.categoryTemplate).html(), item);
-                    $('#' + addOpts.dialogId).find('.' + addOpts.categoryClass).append(html);
+
+                    var categoryTemplate = jQuery('#' + addOpts.categoryTemplate);
+
+                    if (categoryTemplate.length == 0) {
+                        dashboard.log('Template "' + addOpts.categoryTemplate + ' not found', 5);
+                    }
+
+                    var html = tmpl(categoryTemplate.html(), item);
+
+                    dialog.find('.' + addOpts.categoryClass).append(html);
                 });
+
                 dashboard.log('addWidgetDialogCategoriesLoaded event thrown', 2);
                 dashboard.element.trigger('addWidgetDialogCategoriesLoaded');
 
+                // TODO determine which category to open
+
                 dashboard.log('addWidgetDialogSelectCategory event thrown', 2);
-                dashboard.element.trigger('addWidgetDialogSelectCategory', {"category":$('#' + addOpts.dialogId).find('.' + addOpts.categoryClass + '>li:first')});
-
+                dashboard.element.trigger('addWidgetDialogSelectCategory', {"category": jQuery('#' + addOpts.dialogId).find('.' + addOpts.categoryClass + '>li:first')});
             });
-
         });
 
         return dashboard;
@@ -914,6 +1117,7 @@
         widgetFullScreenClass:'widgetopenfullscreen',
         iconsClass:'icons',
         stateChangeUrl:'',
+        widgetSetupUrl:'',
 
         addWidgetSettings:{
             openDialogClass:'openaddwidgetdialog',

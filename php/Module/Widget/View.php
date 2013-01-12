@@ -113,4 +113,47 @@ class View extends MView implements Interfaces\View
 
         return $template->fetch();
     }
+
+    /**
+     * Method makes cURL setup screen.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for cURL -setup
+     */
+    public function makeCurlSetup(array $widget, array $data)
+    {
+        $template = $this->smarty->createTemplate('widget_setup_curl.tpl', $this->smarty);
+        $template->assign('widget', $widget);
+        $template->assign('data', $data);
+
+
+        return $template->fetch();
+    }
+
+    /**
+     * @access  public
+     *
+     * @param   string  $widgetName Name of the widget
+     * @param   string  $methodName Setup method name
+     * @param   string  $className  Controller class name
+     * @param   array   $widget     Widget basic data
+     * @param   array   $data       Widget content data
+     *
+     * @return  string              HTML content for cURL -setup
+     */
+    public function makeSetupMethodNotFound($widgetName, $methodName, $className, array $widget, array $data)
+    {
+        $template = $this->smarty->createTemplate('widget_setup_not_found.tpl', $this->smarty);
+        $template->assign('widgetName', $widgetName);
+        $template->assign('methodName', $methodName);
+        $template->assign('className', $className);
+        $template->assign('widget', $widget);
+        $template->assign('data', $data);
+
+        return $template->fetch();
+    }
 }

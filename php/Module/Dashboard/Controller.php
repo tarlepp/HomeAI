@@ -54,5 +54,12 @@ class Controller extends MController implements Interfaces\Controller
     public function handleRequestGetMyWidgets()
     {
         echo json_encode($this->model->getMyWidgets());
+        exit(0);
+    }
+
+    public function handleRequestGetCategories()
+    {
+        echo json_encode($this->model->getCategories());
+        exit(0);
     }
 }

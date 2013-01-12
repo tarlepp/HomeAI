@@ -30,37 +30,28 @@ class Model extends MModel implements Interfaces\Model
      *
      * This response is shown in the cUrl widget content.
      *
-     * @param   string  $url        URL to fetch
-     * @param   array   $options    Possible cUrl options, following keys:
-     *                               - type     = string, Request type
-     *                               - headers  = array, Used request headers
-     *                               - data     = array, Post fields
+     * @param   string  $url        Url to fetch
+     * @param   string  $type       Request type
+     * @param   array   $headers    Used headers
+     * @param   array   $postData   Used post data
      *
      * @return  string
      */
-    public function getCurlResponse($url, $options)
+    public function getCurlResponse($url, $type, array $headers, array $postData)
     {
+        // Filter headers and post data
+        $headers = array_filter($headers);
+        $postData = array_filter($postData);
+
         // Initialize cURL
         $ch = curl_init();
 
         // Set cURL options
         curl_setopt($ch, \CURLOPT_URL, $url);
         curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-
-        // Request type
-        if (isset($options['type'])) {
-            curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, $options['type']);
-        }
-
-        // Request headers
-        if (isset($options['headers'])) {
-            curl_setopt($ch, \CURLOPT_HTTPHEADER, $options['headers']);
-        }
-
-        // Request post fields
-        if (isset($options['data'])) {
-            curl_setopt($ch, \CURLOPT_POSTFIELDS, http_build_query($options['data']));
-        }
+        curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, $type);                    // Request type
+        curl_setopt($ch, \CURLOPT_HTTPHEADER, $headers);                    // Request headers
+        curl_setopt($ch, \CURLOPT_POSTFIELDS, http_build_query($postData)); // Request post fields
 
         // Get HTTP status code and actual response from server
         $content = trim(curl_exec($ch));
