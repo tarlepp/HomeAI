@@ -6,21 +6,25 @@ jQuery(document).ready(function() {
             action: pageAction
         },
         error: function(jqXHR, exception) {
+            var message = '';
+
             if (jqXHR.status === 0) {
-                makeMessage('Not connect. Verify Network.', 'error');
+                message = 'Not connect. Verify Network.';
             } else if (jqXHR.status == 404) {
-                makeMessage('Requested page not found [404].', 'error');
+                message = 'Requested page not found [404].';
             } else if (jqXHR.status == 500) {
-                makeMessage('Internal Server Error [500].', 'error');
+                message = 'Internal Server Error [500].';
             } else if (exception === 'parsererror') {
-                makeMessage('Requested JSON parse failed.', 'error');
+                message = 'Requested JSON parse failed.';
             } else if (exception === 'timeout') {
-                makeMessage('Time out error.', 'error');
+                message = 'Time out error.';
             } else if (exception === 'abort') {
-                makeMessage('Ajax request aborted.', 'error');
+                message = 'Ajax request aborted.';
             } else {
-                makeMessage('Uncaught Error.\n' + jqXHR.responseText, 'error');
+                message = 'Uncaught Error.\n' + jqXHR.responseText;
             }
+
+            makeMessage(message, 'error', {timeout: 5000});
         },
         dataType: "json",
         type: "post"
