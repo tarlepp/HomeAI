@@ -174,7 +174,6 @@
             }
 
             // Store current value
-
             metadata['data'][key] = value;
 
             return true;
@@ -298,10 +297,6 @@
 
             var loading = '<div class="loading"></div>';
             var data = getWidgetData();
-
-    console.log('asdf');
-    console.log(data.metadata.data);
-    console.log('{/literal}{$widget.url}{literal}');
 
             jQuery.ajax({
                 url: '{/literal}{$widget.url}{literal}',
