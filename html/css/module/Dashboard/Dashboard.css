@@ -2,6 +2,143 @@
     background: url(../../../images/loading.gif) no-repeat center center;
 }
 
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover {
+    cursor: default;
+    color: #FFFFFF;
+    background-color: #0088CC;
+}
+
+.nav-tabs-white > .active > a,
+.nav-tabs-white > .active > a:hover,
+.nav-tabs-white > .active > a:active {
+    cursor: default;
+    color: #333333;
+    background-color: white;
+    outline: none;
+}
+
+.nav-tabs-white a:active {
+    border: 1px solid #FF0000;
+}
+
+.nav-tabs-white {
+    margin-bottom: 5px;
+}
+
+.nav-tabs a i {
+    position: relative;
+    top: 2px;
+}
+
+#addwidgetdialog,
+#widgetSetupDialog {
+    overflow-y: scroll;
+}
+
+.dialog .categories {
+    padding: 0;
+    border: none;
+}
+
+.dialog .widgetitem {
+    width: 100%;
+    height: auto;
+    float: none;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.dialog .widgetitem img {
+    margin: 0 0 0 5px;
+}
+
+.dialog .widgetitem h3 {
+    margin: 0;
+}
+
+.dialog .widgetitem .span9 {
+}
+
+.dialog .widgetitem p.muted {
+    margin: -5px 0 5px 0;
+    font-size: 13px;
+}
+
+.dialog ol.widgets {
+    float: none;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.dialog ol.widgets li {
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px #CCCCCC solid;
+}
+
+.dialog ol.widgets li:last-of-type {
+    border-bottom: none;
+}
+
+.dialog ol.widgets li:first-of-type {
+    margin-top: 0;
+}
+
+.dialog ol.widgets li {
+}
+
+#widgetSetup {
+    margin-top: -5px;
+}
+
+#widgetSetup .form-horizontal input + .help-block,
+#widgetSetup .form-horizontal .input-append + .help-block,
+#widgetSetup .form-horizontal select + .help-block {
+    margin-top: 5px;
+}
+
+#widgetSetup .widgetSetupRefresh .control-group-slider .span9 {
+    height: 13px;
+    min-height: 13px;
+    max-height: 13px;
+}
+
+#widgetSetup .widgetSetupRefresh .control-label-slider {
+    padding: 0;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#widgetSetup .widgetSetupRefresh .control-group-slider {
+    margin-bottom: 0;
+}
+
+#widgetSetup .widgetSetupRefresh .control-group-slider .span9 {
+    height: 13px;
+    min-height: 13px;
+    max-height: 13px;
+}
+
+#widgetSetup div.inline-inputs .span4 {
+    width: 25.623931623931625%;
+}
+
+#widgetSetup div.inline-inputs .span6 {
+    width: 42.917948717948715%;
+}
+
+#widgetSetup .input-append .span9 {
+    width: 68.35897435897436%;
+}
+
+#widgetSetup input.no-left-border-radious {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+
 .layoutchoice {
     cursor: pointer;
 }
