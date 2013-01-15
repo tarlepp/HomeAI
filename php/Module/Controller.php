@@ -211,4 +211,35 @@ abstract class Controller implements Interfaces\Controller
     {
         $this->view->display($this->view->make404());
     }
+
+    /**
+     * Generic redirect method.
+     *
+     * @access  public
+     *
+     * @param   null|string $module Module where to redirect
+     * @param   null|string $action Action where to redirect
+     * @param   array       $params Used query parameters
+     *
+     * @return  void
+     */
+    public function redirect($module = null, $action = null, array $params = array())
+    {
+        if (is_null($module)) {
+            $module = $this->module;
+        }
+
+        if (is_null($action)) {
+            $action = $this->action;
+        }
+
+        $url = $this->request->getBaseUrl(false, true) . $module .'/'. $action;
+
+        if (!empty($params)) {
+            $url .= '?'. http_build_query($params);
+        }
+
+        header('Location: '. $url);
+        exit(0);
+    }
 }

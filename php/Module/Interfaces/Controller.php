@@ -26,6 +26,20 @@ interface Controller extends Common
      */
 
     /**
+     * Method returns current View object.
+     *
+     * @return \HomeAI\Module\View
+     */
+    public function getView();
+
+    /**
+     * Method returns current Model object.
+     *
+     * @return \HomeAI\Module\Model
+     */
+    public function getModel();
+
+    /**
      * Common request handler for pages. All requests are routed via
      * this method.
      *
@@ -47,18 +61,17 @@ interface Controller extends Common
     public function handleRequest404();
 
     /**
-     * Method returns current View object.
+     * Generic redirect method.
      *
-     * @return \HomeAI\Module\View
-     */
-    public function getView();
-
-    /**
-     * Method returns current Model object.
+     * @access  public
      *
-     * @return \HomeAI\Module\Model
+     * @param   null|string $module Module where to redirect
+     * @param   null|string $action Action where to redirect
+     * @param   array       $params Used query parameters
+     *
+     * @return  void
      */
-    public function getModel();
+    public function redirect($module = null, $action = null, array $params = array());
     /**#@-*/
 
     /**#@-
