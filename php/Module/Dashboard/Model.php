@@ -9,7 +9,6 @@
 namespace HomeAI\Module\Dashboard;
 
 use HomeAI\Module\Model as MModel;
-use HomeAI\Module\Widget\Controller as WidgetController;
 
 /**
  * Model class for 'Dashboard' -Module.
@@ -25,11 +24,61 @@ use HomeAI\Module\Widget\Controller as WidgetController;
 class Model extends MModel implements Interfaces\Model
 {
     /**
-     * TODO: make these widgets to be stored to database...
+     * Getter method for current user widgets.
      *
-     * @return array
+     * @access  public
+     *
+     * @return  array
      */
-    public function getMyWidgets()
+    public function getWidgets()
+    {
+        $output = $this->request->getSession('widgets', null);
+
+        if (is_null($output)) {
+            $output = $this->getDefaultWidgets();
+
+            $this->request->setSession('widgets', $output);
+        }
+
+        return $output;
+    }
+
+    /**
+     * Setter method for current user widgets.
+     *
+     * @access  public
+     *
+     * @param   array   $widgets
+     *
+     * @return  void
+     */
+    public function setWidgets(array $widgets)
+    {
+        $this->request->setSession('widgets', $widgets);
+    }
+
+    /**
+     * Method reset user widgets.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function resetWidgets()
+    {
+        $this->request->removeSession('widgets');
+    }
+
+    /**
+     * Getter method for default widgets.
+     *
+     * TODO: Specify default widgets later...
+     *
+     * @access  protected
+     *
+     * @return  array
+     */
+    protected function getDefaultWidgets()
     {
         $url = $this->request->getBaseUrl(false, true);
 
@@ -38,18 +87,16 @@ class Model extends MModel implements Interfaces\Model
                 'layout'                => 'layout5',
                 'data'                  => array(
                     array(
-                        'id'            => 'widget1',
+                        'id'            => 'Clock',
                         'title'         => 'Clock',
                         'column'        => 'first',
-                        'editurl'       => '',
                         'open'          => true,
                         'url'           => $url . '/Widget/Clock',
                     ),
                     array(
-                        'id'            => 'widget2',
+                        'id'            => 'EggTimer',
                         'title'         => 'Egg Timer',
                         'column'        => 'first',
-                        'editurl'       => '',
                         'open'          => true,
                         'url'           => $url . '/Widget/EggTimer',
                     ),
@@ -57,9 +104,8 @@ class Model extends MModel implements Interfaces\Model
                         'id'            => 'widget3',
                         'title'         => 'RSS feed from ksml.fi',
                         'column'        => 'second',
-                        'editurl'       => '',
                         'open'          => true,
-                        'metadata'      =>  array(
+                        'metadata'      => array(
                             'type'      => 'rss',
                             'data'      => array(
                                 'url'   => 'http://www.ksml.fi/?service=rss',
@@ -72,9 +118,8 @@ class Model extends MModel implements Interfaces\Model
                         'id'            => 'widget4',
                         'title'         => 'RSS feed from hs.fi',
                         'column'        => 'second',
-                        'editurl'       => '',
                         'open'          => true,
-                        'metadata'      =>  array(
+                        'metadata'      => array(
                             'type'      => 'rss',
                             'data'      => array(
                                 'url'   => 'http://www.hs.fi/uutiset/rss/',
@@ -112,7 +157,6 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                     ),
-
                     array(
                         'id'            => 'widget7',
                         'title'         => 'Highcharts live example',
@@ -132,10 +176,5 @@ class Model extends MModel implements Interfaces\Model
                 ),
             ),
         );
-    }
-
-    public function getCategories()
-    {
-        return (new WidgetController($this->request))->getCategories();
     }
 }

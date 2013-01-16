@@ -21,4 +21,8 @@ namespace HomeAI\Module\Dashboard\Interfaces;
  */
 interface Controller
 {
+    public function handleRequestGetTemplates();
+    public function handleRequestGetWidgets();
+    public function handleRequestUpdate();
+    public function handleRequestReset();
 }

@@ -9,6 +9,7 @@
 namespace HomeAI\Module\Dashboard;
 
 use HomeAI\Module\Controller as MController;
+use HomeAI\Util\JSON;
 
 /**
  * Controller class for 'Dashboard' -module.
@@ -45,21 +46,76 @@ class Controller extends MController implements Interfaces\Controller
         $this->view->display($this->view->makeDashboard());
     }
 
+    /**
+     * Method handles 'Dashboard' -module 'GetTemplates' -action.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
     public function handleRequestGetTemplates()
     {
+        // Only allow AJAX request.
+        if (!$this->request->isAjax()) {
+            $this->redirect('');
+        }
+
         echo $this->view->makeTemplates();
         exit(0);
     }
 
-    public function handleRequestGetMyWidgets()
+    /**
+     * Method handles 'Dashboard' -module 'GetWidgets' -action.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function handleRequestGetWidgets()
     {
-        echo json_encode($this->model->getMyWidgets());
+        // Only allow AJAX request.
+        if (!$this->request->isAjax()) {
+            $this->redirect('');
+        }
+
+        echo JSON::encode($this->model->getWidgets());
         exit(0);
     }
 
-    public function handleRequestGetCategories()
+    /**
+     * Method handles 'Dashboard' -module 'Update' -action.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function handleRequestUpdate()
     {
-        echo json_encode($this->model->getCategories());
+        // Only allow AJAX request.
+        if (!$this->request->isAjax()) {
+            $this->redirect('');
+        }
+
+        // Get dashboard settings
+        $settings = $this->request->get('settings');
+
+        // Store current settings
+        $this->model->setWidgets(array('result' => $settings));
+        exit(0);
+    }
+
+    /**
+     * Method handles 'Dashboard' -module 'Reset' -action.
+     *
+     * @access  public
+     *
+     * @return  void
+     */
+    public function handleRequestReset()
+    {
+        $this->model->resetWidgets();
+
+        $this->redirect('');
         exit(0);
     }
 }

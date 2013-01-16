@@ -21,4 +21,7 @@ namespace HomeAI\Module\Dashboard\Interfaces;
  */
 interface Model
 {
+    public function getWidgets();
+    public function setWidgets(array $widgets);
+    public function resetWidgets();
 }
