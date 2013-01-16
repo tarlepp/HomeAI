@@ -671,11 +671,20 @@
 
         layoutDialog.dialog({
             autoOpen: false,
-            height: 140,
+            height: 180,
             width: 500,
             modal: true,
             resizable: false,
-            draggable: false
+            draggable: false,
+            buttons: {
+                'close': {
+                    text: 'Close',
+                    class: 'btn',
+                    'click': function() {
+                        jQuery(this).dialog( "close" );
+                    }
+                }
+            }
         });
 
         var widgetSetupDialog = jQuery('#widgetSetupDialog');
@@ -802,8 +811,11 @@
 
 
 
-        $('.' + refreshOpts.refreshAllClass).live('click', function () {
-            $.each(dashboard.widgets, function (id, item) {
+        // Refresh all widgets click event
+        jQuery(document).on('click', '.' + refreshOpts.refreshAllClass, function() {
+            dashboard.log('dashboardRefreshAllWidgets event thrown', 2);
+
+            jQuery.each(dashboard.widgets, function (id, item) {
                 item.refreshContent();
             });
         });
@@ -849,6 +861,12 @@
             bindSelectLayout();
         });
 
+        // Layout change dialog close method
+        jQuery(document).on('dashboardCloseLayoutDialog', dashboard.element, function() {
+            // close the dialog
+            jQuery('#' + layoutOpts.dialogId).dialog('close');
+        });
+
         // Dashboard state changed, ex. moved widgets etc.
         jQuery(document).on('dashboardStateChange', dashboard.element, function() {
             if (typeof opts.stateChangeUrl != 'undefined' && opts.stateChangeUrl != null && opts.stateChangeUrl != '') {
@@ -874,10 +892,7 @@
         });
 
 
-        dashboard.element.live('dashboardCloseLayoutDialog', function () {
-            // close the dialog
-            $('#' + layoutOpts.dialogId).dialog('close');
-        });
+
 
         // FIXME: why doesn't the live construct work in this case
         function bindSelectLayout() {
