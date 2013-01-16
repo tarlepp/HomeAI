@@ -382,6 +382,28 @@ interface Request
     public function getClientIp($checkProxy = true);
 
     /**
+     * Method removes defined cookie.
+     *
+     * @access  public
+     *
+     * @param   string  $name   Name of the cookie
+     *
+     * @return  bool
+     */
+    public function removeCookie($name);
+
+    /**
+     * Method removes defined session value.
+     *
+     * @access  public
+     *
+     * @param   string  $name   Name of the session value to be removed
+     *
+     * @return  bool
+     */
+    public function removeSession($name);
+
+    /**
      * Was the request made by POST?
      *
      * @access  public

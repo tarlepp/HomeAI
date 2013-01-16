@@ -945,6 +945,22 @@ class Request implements Interfaces\Request
     }
 
     /**
+     * Method removes defined session value.
+     *
+     * @access  public
+     *
+     * @param   string  $name   Name of the session value to be removed
+     *
+     * @return  bool
+     */
+    public function removeSession($name)
+    {
+        unset($_SESSION[$name]);
+
+        return true;
+    }
+
+    /**
      * Was the request made by POST?
      *
      * @access  public
