@@ -80,6 +80,7 @@ class Controller extends MController implements Interfaces\Controller
     /**
      * Method makes widget clock HTML content and echoes it to client.
      *
+     * @id          Clock
      * @title       Clock
      * @description This is a simple widget which will shown a clock with time and current date. Everybody needs a <em>clock</em>, right?
      * @category    Common
@@ -98,6 +99,7 @@ class Controller extends MController implements Interfaces\Controller
     /**
      * Method makes egg timer widget HTML content and echoes it to client.
      *
+     * @id          EggTimer
      * @title       Egg Timer
      * @description This widget is used to generate all-purpose egg timer. You can specify desired timer value and let the widget notify you when the <em>eggs are ready</em>... Everyone needs this!
      * @category    Common
@@ -359,9 +361,7 @@ class Controller extends MController implements Interfaces\Controller
      */
     public function handleRequestSetup($widgetName)
     {
-        /**
-         * Fetch widget data and actual content data if any
-         */
+        // Fetch widget data and actual content data if any
         $data = (array)$this->request->get('data', array());
         $widget = (array)$this->request->get('widget', array());
 
