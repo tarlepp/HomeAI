@@ -65,13 +65,13 @@ interface Controller extends Common
      *
      * @access  public
      *
-     * @param   null|string $module Module where to redirect
      * @param   null|string $action Action where to redirect
+     * @param   null|string $module Module where to redirect
      * @param   array       $params Used query parameters
      *
      * @return  void
      */
-    public function redirect($module = null, $action = null, array $params = array());
+    public function redirect($action = null, $module = null, array $params = array());
     /**#@-*/
 
     /**#@-

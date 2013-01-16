@@ -217,20 +217,20 @@ abstract class Controller implements Interfaces\Controller
      *
      * @access  public
      *
-     * @param   null|string $module Module where to redirect
      * @param   null|string $action Action where to redirect
+     * @param   null|string $module Module where to redirect
      * @param   array       $params Used query parameters
      *
      * @return  void
      */
-    public function redirect($module = null, $action = null, array $params = array())
+    public function redirect($action = null, $module = null, array $params = array())
     {
-        if (is_null($module)) {
-            $module = $this->module;
+        if (is_null($action)) {
+            $action = 'Default';
         }
 
-        if (is_null($action)) {
-            $action = $this->action;
+        if (is_null($module)) {
+            $module = $this->module;
         }
 
         $url = $this->request->getBaseUrl(false, true) . $module .'/'. $action;
