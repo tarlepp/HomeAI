@@ -835,8 +835,8 @@
             bindSelectLayout();
         });
 
-
-        dashboard.element.live('dashboardStateChange', function () {
+        // Dashboard state changed, ex. moved widgets etc.
+        jQuery(document).on('dashboardStateChange', dashboard.element, function() {
             if (typeof opts.stateChangeUrl != 'undefined' && opts.stateChangeUrl != null && opts.stateChangeUrl != '') {
                 jQuery.ajax({
                     url: opts.stateChangeUrl,
