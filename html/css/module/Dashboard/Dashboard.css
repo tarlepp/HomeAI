@@ -149,6 +149,15 @@
     cursor: pointer;
 }
 
+#layout-dialog .layoutchoice {
+    opacity: 0.7;
+}
+
+#layout-dialog .selected,
+#layout-dialog .layoutchoice:hover {
+    opacity: 1;
+}
+
 .widget {
     margin-bottom: 10px;
 }
