@@ -800,11 +800,7 @@
             }
         });
 
-        $('.' + layoutOpts.openDialogClass).live('click', function () {
-            dashboard.log('dashboardOpenLayoutDialog event thrown', 2);
-            dashboard.element.trigger("dashboardOpenLayoutDialog");
-            return false;
-        });
+
 
         $('.' + refreshOpts.refreshAllClass).live('click', function () {
             $.each(dashboard.widgets, function (id, item) {
@@ -812,25 +808,43 @@
             });
         });
 
-        dashboard.element.live('dashboardOpenLayoutDialog', function () {
+        // Layout change link click event
+        jQuery(document).on('click', '.' + layoutOpts.openDialogClass, function() {
+            dashboard.log('dashboardOpenLayoutDialog event thrown', 2);
+            dashboard.element.trigger("dashboardOpenLayoutDialog");
+
+            return false;
+        });
+
+        // Layout change dialog open method
+        jQuery(document).on('dashboardOpenLayoutDialog', dashboard.element, function() {
             dashboard.log('Opening dialog ' + layoutOpts.dialogId, 1);
-            $('#' + layoutOpts.dialogId).dialog('open');
+
+            var dialogElement = jQuery('#' + layoutOpts.dialogId);
+            var layoutTemplate = jQuery('#' + layoutOpts.layoutTemplate);
+
+            dialogElement.dialog('open');
 
             // add the layout images
-            var h = $('#' + layoutOpts.dialogId).find('.' + layoutOpts.layoutClass);
+            var h = dialogElement.find('.' + layoutOpts.layoutClass);
+
             h.empty();
-            if (h.children().length == 0) {
+
+            if (layoutTemplate.length == 0) {
+                dashboard.log('Template "' + layoutOpts.layoutTemplate + ' not found', 5);
+            } else if (h.children().length == 0) {
                 dashboard.log('Number of layouts : ' + opts.layouts.length, 1);
-                $.each(opts.layouts, function (i, item) {
+
+                jQuery.each(opts.layouts, function (i, item) {
                     dashboard.log('Applying template : ' + layoutOpts.layoutTemplate, 1);
-                    if ($('#' + layoutOpts.layoutTemplate).length == 0) dashboard.log('Template "' + layoutOpts.layoutTemplate + ' not found', 5);
-                    h.append(tmpl($('#' + layoutOpts.layoutTemplate).html(), item));
+
+                    h.append(tmpl(layoutTemplate.html(), item));
                 });
             }
 
-            // set the selected class for the selected layout
-            $('.' + layoutOpts.selectLayoutClass).removeClass(layoutOpts.selectedLayoutClass);
-            $('#' + dashboard.layout.id).addClass(layoutOpts.selectedLayoutClass);
+            // Set the selected class for the selected layout
+            jQuery('.' + layoutOpts.selectLayoutClass).removeClass(layoutOpts.selectedLayoutClass);
+            jQuery('#' + dashboard.layout.id).addClass(layoutOpts.selectedLayoutClass);
 
             bindSelectLayout();
         });
@@ -846,6 +860,7 @@
                         settings:   dashboard.serialize()
                     },
                     success: function (data) {
+                        // TODO: make error handling
                         if (data == "NOK" || data.indexOf('<response>NOK</response>') != -1) {
                             dashboard.log('dashboardSaveFailed event thrown', 2);
                             dashboard.element.trigger("dashboardSaveFailed");
