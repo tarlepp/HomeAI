@@ -1173,13 +1173,15 @@
     };
 
     // Default widget settings.
-    $.fn.dashboard.widget = {
-        defaults:{
-            open:true,
-            fullscreen:false,
-            loaded:false,
-            url:'',
-            metadata:{}
+    jQuery.fn.dashboard.widget = {
+        defaults: {
+            open: true,
+            fullscreen: false,
+            loaded: false,
+            url: '',
+            metadata: {},
+            refresh: 0,
+            configure: false
         }
     };
 
