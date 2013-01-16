@@ -17,8 +17,9 @@ jQuery(document).ready(function() {
     function initDashboard() {
         var dashboard = jQuery("#dashboard").dashboard({
             widgetSetupUrl: pageBaseHref + 'Widget/Setup/',
+            stateChangeUrl: pageBaseHref + 'Dashboard/Update/',
             json_data : {
-                url: pageBaseHref + 'Dashboard/GetMyWidgets'
+                url: pageBaseHref + 'Dashboard/GetWidgets'
             },
             refreshSettings: {
             },
@@ -76,7 +77,7 @@ jQuery(document).ready(function() {
         var loading = '<div class="loading"></div>';
 
         jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh widgetDelete", dashboardWidget, function(e, o) {
-            console.log(o.widget.id +" - event - "+ e.type);
+            //console.log(o.widget.id +" - event - "+ e.type);
 
             var widget = jQuery('#'+ o.widget.id);
             var intervalId = 'interval' + o.widget.id;

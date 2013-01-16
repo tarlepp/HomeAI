@@ -29,10 +29,8 @@
         // Public methods
         dashboard.serialize = function () {
             dashboard.log('entering serialize function', 1);
-            var r = '{"layout": "' + dashboard.layout.id + '", "data" : [';
-            // add al widgets in the right order
-            var i = 0;
 
+            var widgetData = [];
             var columns = jQuery('.' + opts.columnClass);
 
             if (columns.length == 0) {
@@ -40,18 +38,17 @@
             }
 
             columns.each(function () {
-                $(this).children().each(function () {
-                    if ($(this).hasClass(opts.widgetClass)) {
-                        if (i > 0) {
-                            r += ',';
-                        }
-                        r += (dashboard.getWidget($(this).attr("id"))).serialize();
-                        i++;
+                jQuery(this).children().each(function () {
+                    if (jQuery(this).hasClass(opts.widgetClass)) {
+                        widgetData.push((dashboard.getWidget(jQuery(this).attr("id"))).serialize());
                     }
                 });
             });
-            r += ']}';
-            return r;
+
+            return {
+                layout: dashboard.layout.id,
+                data:   widgetData
+            };
         };
 
         dashboard.log = function (msg, level) {
@@ -173,6 +170,7 @@
                         alert('Unable to get json. If you are using chrome: there is an issue with loading json with local files. It works on a server :-)', 5);
                         return;
                     }
+
                     // set the layout
                     var obj = json.result;
                     var currentLayout = (typeof dashboard.layout != 'undefined') ? dashboard.layout : getLayout(obj.layout);
@@ -402,30 +400,25 @@
                 dashboard.log('dashboardStateChange event thrown for widget ' + widget.id, 2);
                 dashboard.element.trigger("dashboardStateChange", {"stateChange":"widgetRemoved", "widget":widget});
             };
+
             widget.serialize = function () {
+                // TODO
                 dashboard.log('entering serialize function', 1);
-                var r = '{"title" : "' + widget.title + '", "id" : "' + widget.id + '", "column" : "' + widget.column + '","editurl" : "' + widget.editurl + '","open" : ' + widget.open + ',"url" : "' + widget.url + '"';
+
+                var output = {
+                    title:      widget.title,
+                    id:         widget.id,
+                    column:     widget.column,
+                    editurl:    widget.editurl,
+                    open:       widget.open,
+                    url:        widget.url
+                };
 
                 if (typeof widget.metadata != 'undefined') {
-                    r += ',"metadata":{'
-                    var obj = widget.metadata;
-                    var i = 0;
-                    for (var item in obj) {
-                        if (i > 0) {
-                            r += ','
-                        }
-                        ;
-
-                        // FIXME: support for more than string, eg numbers subobjects
-                        r += '"' + item + '":"' + obj[item] + '"';
-                        i++;
-                    }
-                    r += '}'
-
+                    output['metadata'] = widget.metadata;
                 }
 
-                r += '}';
-                return r;
+                return output;
             };
             widget.openFullscreen = function () {
                 dashboard.log('entering openFullscreen function', 1);
@@ -845,10 +838,14 @@
 
         dashboard.element.live('dashboardStateChange', function () {
             if (typeof opts.stateChangeUrl != 'undefined' && opts.stateChangeUrl != null && opts.stateChangeUrl != '') {
-                $.ajax({type:'POST',
-                    url:opts.stateChangeUrl,
-                    data:{ dashboard:dashboard.element.attr("id"), settings:dashboard.serialize() },
-                    success:function (data) {
+                jQuery.ajax({
+                    url: opts.stateChangeUrl,
+                    type: 'POST',
+                    data: {
+                        dashboard:  dashboard.element.attr("id"),
+                        settings:   dashboard.serialize()
+                    },
+                    success: function (data) {
                         if (data == "NOK" || data.indexOf('<response>NOK</response>') != -1) {
                             dashboard.log('dashboardSaveFailed event thrown', 2);
                             dashboard.element.trigger("dashboardSaveFailed");
@@ -856,12 +853,7 @@
                             dashboard.log('dashboardSuccessfulSaved event thrown', 2);
                             dashboard.element.trigger("dashboardSuccessfulSaved");
                         }
-                    },
-                    error:function (XMLHttpRequest, textStatus, errorThrown) {
-                        dashboard.log('dashboardSaveFailed event thrown', 2);
-                        dashboard.element.trigger("dashboardSaveFailed");
-                    },
-                    dataType:"text"
+                    }
                 });
             }
         });
@@ -997,6 +989,7 @@
         jQuery(document).on('dashboardAddWidget', function(e, widget, data) {
             data = (typeof data != 'undefined' ? data : {});
 
+            alert('adding new widgets is not yet implemented...');
             console.log('add widget');
             console.log(widget);
             console.log(data);
