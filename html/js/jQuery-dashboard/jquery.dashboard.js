@@ -271,11 +271,20 @@
 
             tempDashboard.remove();
 
+            var columns = jQuery('.' + opts.columnClass);
+            var heights = [];
+
             // add the text to the empty columns
-            jQuery('.' + opts.columnClass).each(function() {
+            columns.each(function(index) {
                 if (jQuery(this).children().length == 0) {
                     jQuery(this).html('<div class="emptycolumn">' + opts.emptyColumnHtml + '</div>');
                 }
+
+                heights[index] = jQuery(this).outerHeight();
+            });
+
+            columns.each(function(index) {
+                jQuery(this).css('minHeight', Math.max.apply(Math, heights));
             });
 
             dashboard.initialized = true;
@@ -536,6 +545,17 @@
 
             return r;
         }
+
+        // TODO
+        jQuery(document).on('dashboardLayoutLoaded', '#' + dashboard.id, function() {
+            jQuery('#'+ dashboard.id).find('.'+ opts.columnClass).each(function(index, element) {
+                var column = jQuery(this);
+
+                column.children().each(function() {
+                    console.log('dddd');
+                });
+            });
+        });
 
         jQuery(document).on('click', '#' + dashboard.id + ' .menutrigger', function() {
             dashboard.log('widgetOpenMenu event thrown for widget ' + widget.id, 2);
