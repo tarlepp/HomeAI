@@ -102,8 +102,13 @@ footer, .wrapper {
 }
 
 .ui-dialog .ui-dialog-buttonpane {
-    margin: 0;
-    padding: 5px 3px 3px;
+    margin: 0 0 0 -2px;
+    padding: 5px 3px 3px 0;
+    text-align: right;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    width: 100%;
 }
 
 .ui-dialog .ui-dialog-titlebar {
