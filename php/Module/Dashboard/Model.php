@@ -92,6 +92,7 @@ class Model extends MModel implements Interfaces\Model
                         'column'        => 'first',
                         'open'          => true,
                         'url'           => $url . '/Widget/Clock',
+                        'method'        => 'Clock',
                     ),
                     array(
                         'id'            => 'EggTimer',
@@ -99,6 +100,7 @@ class Model extends MModel implements Interfaces\Model
                         'column'        => 'first',
                         'open'          => true,
                         'url'           => $url . '/Widget/EggTimer',
+                        'method'        => 'EggTimer',
                     ),
                     array(
                         'id'            => 'widget3',
@@ -109,10 +111,11 @@ class Model extends MModel implements Interfaces\Model
                             'type'      => 'rss',
                             'data'      => array(
                                 'url'   => 'http://www.ksml.fi/?service=rss',
-                                'limit' => 5,
+                                'limit' => 7,
                             ),
                         ),
                         'refresh'       => 120,
+                        'method'        => 'Rss',
                     ),
                     array(
                         'id'            => 'widget4',
@@ -127,6 +130,7 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                         'refresh'       => 60,
+                        'method'        => 'Rss',
                     ),
                     array(
                         'id'            => 'widget5',
@@ -140,6 +144,7 @@ class Model extends MModel implements Interfaces\Model
                                 'url'   => 'http://wunder.sytes.net/fizzbuzz.php',
                             ),
                         ),
+                        'method'        => 'Curl',
                     ),
                     /*
                     array(

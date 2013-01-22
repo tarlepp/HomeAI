@@ -5,6 +5,14 @@
         <li class=""><a href="#widgetSetupTabOutput">Output</a></li>
     </ul>
 
+    {foreach from=$metadata key=key item=item}
+        {if isset($data.metadata.data.{$item})}
+            {assign var=$key value=$data.metadata.data.{$item}}
+        {else}
+            {assign var=$key value=""}
+        {/if}
+    {/foreach}
+
     <form id="widgetSetupForm" class="form-horizontal row-fluid">
         <div class="tab-content">
 
@@ -16,7 +24,7 @@
                 <div class="control-group">
                     <label class="control-label span3">RSS feed URL</label>
                     <div class="controls span9">
-                        <input type="text" name="url" class="span9" required placeholder="Add RSS URL to fetch..." />
+                        <input type="text" name="url" class="span9" required placeholder="Add RSS URL to fetch..." value="{$_url}" />
                     </div>
                 </div>
 
@@ -30,7 +38,7 @@
                 <div class="control-group">
                     <label class="control-label span3"></label>
                     <div class="controls span9 input-append">
-                        <input name="limit" class="span2 pagination-right" required type="text" value="5" />
+                        <input name="limit" class="span2 pagination-right" required type="text" value="{$_limit}" />
                         <span class="add-on">pc</span>
                     </div>
                 </div>
@@ -142,6 +150,14 @@
             jQuery(this).tab('show');
         });
 
+        var limitValue = parseInt(itemCount.val(), 10);
+
+        if (isNaN(limitValue)) {
+            limitValue = 5;
+
+            itemCount.val(limitValue);
+        }
+
         slider.slider({
             range : 'min',
             min   : parseInt(slider.data('min')),
@@ -152,6 +168,9 @@
             }
         });
 
+        if (jQuery.trim(form.find('input[name=url]').val()).length > 0) {
+            form.find('#testRssRequest').removeClass('disabled');
+        }
 
         form.on('keyup', 'input[name=url]', function() {
             var value = jQuery.trim(jQuery(this).val());

@@ -10,7 +10,7 @@
  *
  */
 
-(function ($) { // Create closure.
+(function (jQuery) { // Create closure.
 
     // Constructor for dashboard object.
     $.fn.dashboard = function(options) {
@@ -230,7 +230,8 @@
                     title:      obj.title,
                     open:       obj.open,
                     metadata:   obj.metadata,
-                    refresh:    (typeof obj.refresh != 'undefined' ? obj.refresh : 0)
+                    refresh:    (typeof obj.refresh != 'undefined' ? obj.refresh : 0),
+                    method:     obj.method
                 });
             }
 
@@ -458,7 +459,8 @@
                     editurl:    widget.editurl,
                     open:       widget.open,
                     url:        widget.url,
-                    refresh:    widget.refresh
+                    refresh:    widget.refresh,
+                    method:     widget.method
                 };
 
                 if (typeof widget.metadata != 'undefined') {
@@ -502,7 +504,31 @@
             widget.openSettings = function () {
                 dashboard.log('entering openSettings function', 1);
 
-                widget.element.trigger("editSettings", {"widget": widget});
+                if (typeof opts.widgetSetupUrl != 'undefined' && opts.widgetSetupUrl != null && opts.widgetSetupUrl != '') {
+                    var data = {
+                        data: widget.serialize(),
+                        widget: {}
+                    };
+
+                    widgetSetupDialog.empty();
+
+                    jQuery.ajax({
+                        url: opts.widgetSetupUrl + widget.method,
+                        type: 'POST',
+                        data: data,
+                        dataType: 'text',
+                        success: function(data, textStatus, jqXHR) {
+                            widgetSetupDialog.html(data);
+
+                            dashboard.element.trigger('addWidgetDialogSetupsLoaded', [widget, true]);
+                        }
+                    });
+
+                } else {
+                    alert('Widget setup url not defined');
+                }
+
+                return false;
             };
 
             // called when widget is initialized
@@ -864,7 +890,7 @@
                         button.removeClass('hide');
                     }
                 });
-            },
+            }/*,
             buttons: {
                 'close': {
                     text: 'Close',
@@ -900,6 +926,7 @@
                     }
                 }
             }
+            */
         });
 
         // Refresh all widgets click event
@@ -1094,9 +1121,84 @@
             dashboard.element.trigger('addWidgetDialogWidgetsLoaded');
         });
 
-        jQuery(document).on('addWidgetDialogSetupsLoaded', function(e, widget) {
+        // TODO
+        jQuery(document).on('addWidgetDialogSetupsLoaded', function(e, widget, edit) {
             widgetSetupDialog.dialog('option', 'title', 'Configure of \''+ widget.title +'\' widget');
             widgetSetupDialog.dialog().data('widget', widget);
+
+            var buttonsAll = {
+                'close': {
+                    text: 'Close',
+                    class: 'btn nohide',
+                    click: function() {
+                        jQuery(this).dialog('close');
+                    }
+                }
+            };
+
+            var buttons = {};
+
+            if (edit) {
+                buttons = {
+                    'delete': {
+                        text: 'Delete',
+                        class: 'btn btn-danger pull-left',
+                        click: function() {
+                            // TODO
+
+                            jQuery(this).dialog('close');
+                        }
+                    },
+                    'ok': {
+                        text: 'Save widget',
+                        class: 'btn btn-primary',
+                        click: function() {
+                            var form = jQuery(this).find('#widgetSetupForm');
+
+                            form.validate().form();
+
+                            if (form.validate().valid()) {
+                                var widgetData = getWidgetData();
+                                var widget = widgetSetupDialog.dialog().data('widget');
+
+                                // TODO
+                                dashboard.element.trigger('dashboardSaveWidget', [widget, widgetData]);
+                            }
+                        }
+                    }
+                }
+            } else {
+                buttons = {
+                    'back': {
+                        text: 'Back to browse',
+                        class: 'btn nohide',
+                        click: function() {
+                            var widgetData = widgetSetupDialog.dialog().data('widget');
+
+                            jQuery(this).dialog('close');
+                            jQuery(this).trigger('dashboardOpenWidgetDialog', [widgetData.category]);
+                        }
+                    },
+                    'ok': {
+                        text: 'Add widget',
+                        class: 'btn btn-primary',
+                        click: function() {
+                            var form = jQuery(this).find('#widgetSetupForm');
+
+                            form.validate().form();
+
+                            if (form.validate().valid()) {
+                                var widgetData = getWidgetData();
+                                var widget = widgetSetupDialog.dialog().data('widget');
+
+                                dashboard.element.trigger('dashboardAddWidget', [widget, widgetData]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            widgetSetupDialog.dialog({buttons: jQuery.extend({}, buttonsAll, buttons)});
             widgetSetupDialog.dialog('open');
         });
 
@@ -1108,8 +1210,18 @@
             console.log('add widget');
             console.log(widget);
             console.log(data);
-
         });
+
+        // TODO
+        jQuery(document).on('dashboardSaveWidget', function(e, widget, data) {
+            data = (typeof data != 'undefined' ? data : {});
+
+            alert('save of widget data is not yet implemented...');
+            console.log('save widget data');
+            console.log(widget);
+            console.log(data);
+        });
+
 
         jQuery('.' + addOpts.addWidgetClass).live('click', function () {
             var widget = dashboard.widgetsToAdd[jQuery(this).attr("id").replace('addwidget', '')];
@@ -1119,31 +1231,27 @@
 
             dashboard.log('dashboardAddWidget event thrown', 2);
 
-            if (widget.configure == true) {
-                if (typeof opts.widgetSetupUrl != 'undefined' && opts.widgetSetupUrl != null && opts.widgetSetupUrl != '') {
-                    var data = {
-                        data: {},
-                        widget: widget
-                    };
+            if (typeof opts.widgetSetupUrl != 'undefined' && opts.widgetSetupUrl != null && opts.widgetSetupUrl != '') {
+                var data = {
+                    data: {},
+                    widget: widget
+                };
 
-                    widgetSetupDialog.empty();
+                widgetSetupDialog.empty();
 
-                    jQuery.ajax({
-                        url: opts.widgetSetupUrl + widget.method,
-                        type: 'POST',
-                        data: data,
-                        dataType: 'text',
-                        success: function(data, textStatus, jqXHR) {
-                            widgetSetupDialog.html(data);
+                jQuery.ajax({
+                    url: opts.widgetSetupUrl + widget.method,
+                    type: 'POST',
+                    data: data,
+                    dataType: 'text',
+                    success: function(data, textStatus, jqXHR) {
+                        widgetSetupDialog.html(data);
 
-                            dashboard.element.trigger('addWidgetDialogSetupsLoaded', widget);
-                        }
-                    });
-                } else {
-                    alert('Widget setup url not defined');
-                }
+                        dashboard.element.trigger('addWidgetDialogSetupsLoaded', [widget, false]);
+                    }
+                });
             } else {
-                dashboard.element.trigger('dashboardAddWidget', widget);
+                alert('Widget setup url not defined');
             }
 
             return false;
@@ -1262,8 +1370,7 @@
             loaded: false,
             url: '',
             metadata: {},
-            refresh: 0,
-            configure: false
+            refresh: 0
         }
     };
 

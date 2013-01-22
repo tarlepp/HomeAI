@@ -166,11 +166,34 @@ class View extends MView implements Interfaces\View
      *
      * @return  string          HTML content for RSS widget -setup
      */
-    public function makeSetupRss($widget, $data)
+    public function makeSetupRss(array $widget, array $data)
     {
-        $template = $this->smarty->createTemplate('widget_setup_rss.tpl', $this->smarty);
+        // Used widget metadata
+        $metadata = array(
+            '_url'      => 'url',
+            '_limit'    => 'limit',
+        );
+
+        // Used template file
+        $template = 'widget_setup_rss.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
+    }
+
+    /**
+     * @param   string  $template   Used template file
+     * @param   array   $widget     Widget data
+     * @param   array   $data       HTML form data
+     * @param   array   $metadata   Widget metadata definitions
+     *
+     * @return  string              HTML content for specified widget -setup
+     */
+    private function createTemplate($template, $widget, $data, $metadata)
+    {
+        $template = $this->smarty->createTemplate($template, $this->smarty);
         $template->assign('widget', $widget);
         $template->assign('data', $data);
+        $template->assign('metadata', $metadata);
 
         return $template->fetch();
     }

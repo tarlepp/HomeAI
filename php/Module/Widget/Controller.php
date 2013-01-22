@@ -84,7 +84,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       Clock
      * @description This is a simple widget which will shown a clock with time and current date. Everybody needs a <em>clock</em>, right?
      * @category    Common
-     * @configure   false
      *
      * @access  public
      *
@@ -103,7 +102,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       Egg Timer
      * @description This widget is used to generate all-purpose egg timer. You can specify desired timer value and let the widget notify you when the <em>eggs are ready</em>... Everyone needs this!
      * @category    Common
-     * @configure   false
      *
      * @access  public
      *
@@ -121,7 +119,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       cURL
      * @description With this widget you can fetch specified url contents to be shown in widget content. You can specify used parameters for actual cURL request if those are needed.
      * @category    Network
-     * @configure   true
      * @refreshable true
      *
      * @access  public
@@ -153,7 +150,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       RSS Reader
      * @description Generic RSS feed reader widget. With this you can specify desired RSS url where to fetch items to be shown in widget.
      * @category    Network
-     * @configure   true
      * @refreshable true
      *
      * @access  public
@@ -188,7 +184,7 @@ class Controller extends MController implements Interfaces\Controller
      * @title       Highcharts
      * @description Generic Highcharts widget
      * @category    Charts
-     * @configure   true
+     * @refreshable true
      *
      * @access  public
      *
@@ -368,6 +364,14 @@ class Controller extends MController implements Interfaces\Controller
         // Determine setup method name
         $method = 'widgetSetup'. $widgetName;
 
+        if (empty($widget)) {
+            $widget = $this->getWidgetData($widgetName);
+
+            if (!is_array($widget)) {
+                die(__FILE__ .":". __LINE__);
+            }
+        }
+
         // Call actual widget setup method if it exists, otherwise show error
         if (method_exists($this, $method)) {
             call_user_func_array(array($this, $method), array($widget, $data));
@@ -408,6 +412,21 @@ class Controller extends MController implements Interfaces\Controller
         echo $this->view->makeSetupRss($widget, $data);
     }
 
+    private function getWidgetData($widgetName)
+    {
+        $method = 'handleRequest'. $widgetName;
+
+        // TODO
+        $method = new \ReflectionMethod($this, $method);
+        $comments = String::parseDocBlock($method->getDocComment());
+
+        if (!$this->isWidget($comments, $method->getName())) {
+            return null;
+        }
+
+        return $comments;
+    }
+
     /**
      * @param   array   $comments
      * @param   string  $methodName
@@ -444,10 +463,6 @@ class Controller extends MController implements Interfaces\Controller
             'image'         => array(
                 'required'  => false,
                 'default'   => $url .'images/widgets/'. str_replace('handleRequest', '', $methodName) .'.jpg',
-            ),
-            'configure'     => array(
-                'required'  => true,
-                'convert'   => 'boolean'
             ),
             'refreshable'   => array(
                 'required'  => false,
