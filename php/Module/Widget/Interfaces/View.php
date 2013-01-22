@@ -21,4 +21,12 @@ namespace HomeAI\Module\Widget\Interfaces;
  */
 interface View
 {
+    public function setWidgetData(array $widgetData);
+    public function makeClock();
+    public function makeEggTimer();
+    public function makeRssFeed(array $items);
+    public function makeHighcharts($id, $config, array $options);
+    public function makeSetupMethodNotFound($widgetName, $methodName, $className, array $widget, array $data);
+    public function makeSetupCurl(array $widget, array $data);
+    public function makeSetupRss(array $widget, array $data);
 }
