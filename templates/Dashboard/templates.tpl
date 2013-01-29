@@ -9,7 +9,7 @@
     <div class="ui-widget ui-corner-all ui-widget-content widget" id="<%= id %>" title="<%= title %>">
         <div class="ui-widget-header ui-corner-all widgetheader">
             <span class="widgettitle"><%= title %></span>
-            <span class="right icons hidden">
+            <span class="right icons hidden-phone hidden-tablet hidden-desktop">
                 <span class="controls tooltipTitle" title="Refresh widget content" data-control="widgetRefresh"><i class="icon-refresh"></i></span>
                 <span class="controls tooltipTitle" title="Edit widget settings" data-control="widgetEdit"><i class="icon-edit"></i></span>
                 <span class="controls tooltipTitle" title="Remove this widget" data-control="widgetDelete"><i class="icon-remove"></i></span>
