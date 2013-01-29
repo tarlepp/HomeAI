@@ -123,8 +123,8 @@ footer, .wrapper {
     padding: 10px 5px 0 5px;
 }
 
-.ui-dialog .ui-dialog-titlebar-close span {
-    cursor: pointer;
+.ui-dialog-titlebar-close {
+    display: none;
 }
 
 .ui-dialog .form-horizontal .control-group {
