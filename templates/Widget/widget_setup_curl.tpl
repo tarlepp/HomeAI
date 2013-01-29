@@ -199,7 +199,7 @@
             jQuery(this).tab('show');
         });
 
-        form.on('change', jQuery('#widgetSetupCurlType'), function() {
+        form.on('change', '#widgetSetupCurlType', function() {
             switch (jQuery('#widgetSetupCurlType option:selected', form).val()) {
                 case 'GET':
                     postDataContainer.addClass('hide');
