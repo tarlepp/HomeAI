@@ -214,7 +214,7 @@
                     dashboard.log('Template "' + opts.widgetTemplate + ' not found', 5);
                 }
 
-                var widgetStr = tmpl(template.html(), obj);
+                var widgetStr = jQuery.trim(tmpl(template.html(), obj));
 
                 wi = jQuery(widgetStr);
 
@@ -747,11 +747,12 @@
         });
 
         jQuery(document).on('mouseover', '#' + dashboard.id + ' .' + opts.widgetHeaderClass, function(e, o) {
-            jQuery(this).find('.' + opts.iconsClass).removeClass("hidden");
+            jQuery(this).find('.' + opts.iconsClass).addClass("visible-desktop");
         });
 
         jQuery(document).on('mouseout', '#' + dashboard.id + ' .' + opts.widgetHeaderClass, function(e, o) {
-            jQuery(this).find('.' + opts.iconsClass).addClass("hidden");
+
+            jQuery(this).find('.' + opts.iconsClass).removeClass("visible-desktop");
         });
 
         jQuery('body').click(function() {
@@ -833,6 +834,12 @@
                                     : 'Errors in widget configuration! You missed ' + errors + ' fields. These fields have been highlighted.';
 
                                 makeMessage(message, 'error', {timeout: 7000});
+
+                                jQuery(".tab-content").find("div.tab-pane:hidden:has(div.error)").each(function() {
+                                    var id = jQuery(this).attr("id");
+
+                                    jQuery('#widgetSetupNavigation').find('a[href="#'+ id +'"]').tab('show');
+                                });
                             }
                         },
                         highlight: function(element, errorClass, validClass) {
@@ -841,15 +848,6 @@
                             } else {
                                 jQuery(element).closest('div.control-group').removeClass(validClass).addClass(errorClass);
                             }
-
-                            // This is doesn't work user friendly way, gotta think something else...
-                            /*
-                             jQuery(".tab-content").find("div.tab-pane:hidden:has(div.error)").each(function() {
-                             var id = jQuery(this).attr("id");
-
-                             jQuery('#widgetSetupNavigation').find('a[href="#'+ id +'"]').tab('show');
-                             });
-                             */
                         },
                         unhighlight: function(element, errorClass, validClass) {
                             if (element.type === 'radio') {
@@ -890,43 +888,7 @@
                         button.removeClass('hide');
                     }
                 });
-            }/*,
-            buttons: {
-                'close': {
-                    text: 'Close',
-                    class: 'btn nohide',
-                    click: function() {
-                        jQuery(this).dialog('close');
-                    }
-                },
-                'back': {
-                    text: 'Back to browse',
-                    class: 'btn nohide',
-                    click: function() {
-                        var widgetData = widgetSetupDialog.dialog().data('widget');
-
-                        jQuery(this).dialog('close');
-                        jQuery(this).trigger('dashboardOpenWidgetDialog', [widgetData.category]);
-                    }
-                },
-                'ok': {
-                    text: 'Add widget',
-                    class: 'btn btn-primary',
-                    click: function() {
-                        var form = jQuery(this).find('#widgetSetupForm');
-
-                        form.validate().form();
-
-                        if (form.validate().valid()) {
-                            var widgetData = getWidgetData();
-                            var widget = widgetSetupDialog.dialog().data('widget');
-
-                            dashboard.element.trigger('dashboardAddWidget', [widget, widgetData]);
-                        }
-                    }
-                }
             }
-            */
         });
 
         // Refresh all widgets click event
@@ -947,6 +909,8 @@
         });
 
         // Layout change dialog open method
+        // TODO
+
         jQuery(document).on('dashboardOpenLayoutDialog', dashboard.element, function() {
             dashboard.log('Opening dialog ' + layoutOpts.dialogId, 1);
 
@@ -1004,13 +968,16 @@
             }
         });
 
+
         // FIXME: why doesn't the live construct work in this case
         function bindSelectLayout() {
-            if ($('.' + layoutOpts.selectLayoutClass).length == 0) {
+            var selectedLayout = jQuery('.' + layoutOpts.selectLayoutClass);
+
+            if (selectedLayout.length == 0) {
                 dashboard.log('Unable to find ' + layoutOpts.selectLayoutClass, 5);
             }
 
-            $('.' + layoutOpts.selectLayoutClass).bind('click', function (e) {
+            selectedLayout.bind('click', function (e) {
                 var currentLayout = dashboard.layout;
 
                 dashboard.log('dashboardCloseLayoutDialog event thrown', 2);
@@ -1072,7 +1039,8 @@
         });
 
         // Fetch category widgets
-        jQuery(document).on('addWidgetDialogSelectCategory', dashboard.element, function(e, obj) {
+        //jQuery(document).on('addWidgetDialogSelectCategory', dashboard.element, function(e, obj) {
+        jQuery(document).on('addWidgetDialogSelectCategory', function(e, obj) {
             var selectedCategory = jQuery('.' + addOpts.selectCategoryClass);
             var url = dashboard.widgetCategories[jQuery(obj.category).attr("id")];
 
@@ -1222,8 +1190,7 @@
             console.log(data);
         });
 
-
-        jQuery('.' + addOpts.addWidgetClass).live('click', function () {
+        jQuery(document).on('click', '.' + addOpts.addWidgetClass, function(e, widget, data) {
             var widget = dashboard.widgetsToAdd[jQuery(this).attr("id").replace('addwidget', '')];
 
             dashboard.log('dashboardCloseWidgetDialog event thrown', 2);
@@ -1257,7 +1224,7 @@
             return false;
         });
 
-        $('.' + addOpts.openDialogClass).live('click', function () {
+        jQuery(document).on('click', '.' + addOpts.openDialogClass, function(e, widget, data) {
             dashboard.log('dashboardOpenWidgetDialog event thrown', 2);
             dashboard.element.trigger('dashboardOpenWidgetDialog');
 
@@ -1268,7 +1235,8 @@
             jQuery('#' + addOpts.dialogId).dialog('close');
         });
 
-        jQuery(document).on('dashboardOpenWidgetDialog', dashboard.element, function(event, category) {
+        //jQuery(document).on('dashboardOpenWidgetDialog', dashboard.element, function(event, category) {
+        jQuery(document).on('dashboardOpenWidgetDialog', function(event, category) {
             var dialog = jQuery('#' + addOpts.dialogId);
 
             //remove existing categories/widgets from the DOM, to prevent duplications
