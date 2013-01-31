@@ -111,7 +111,7 @@ class Model extends MModel implements Interfaces\Model
                             'type'      => 'rss',
                             'data'      => array(
                                 'url'   => 'http://www.ksml.fi/?service=rss',
-                                'limit' => 7,
+                                'limit' => 5,
                             ),
                         ),
                         'refresh'       => 120,
@@ -129,7 +129,7 @@ class Model extends MModel implements Interfaces\Model
                                 'limit' => 5,
                             ),
                         ),
-                        'refresh'       => 60,
+                        'refresh'       => 120,
                         'method'        => 'Rss',
                     ),
                     array(
@@ -146,6 +146,22 @@ class Model extends MModel implements Interfaces\Model
                         ),
                         'method'        => 'Curl',
                     ),
+                    array(
+                        'id'            => 'widgetAmpparit',
+                        'title'         => 'Uusimmat uutiset (ampparit.com)',
+                        'column'        => 'third',
+                        'open'          => true,
+                        'metadata'      => array(
+                            'type'      => 'rss',
+                            'data'      => array(
+                                'url'   => 'http://feeds.feedburner.com/ampparit-uutiset',
+                                'limit' => 10,
+                            ),
+                        ),
+                        'refresh'       => 60,
+                        'method'        => 'Rss',
+                    ),
+
                     /*
                     array(
                         'id'            => 'widget6',
