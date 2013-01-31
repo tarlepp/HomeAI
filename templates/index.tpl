@@ -17,7 +17,7 @@
     <link href='http://fonts.googleapis.com/css?family=Cuprum:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
 {$pageJavascript}
-    <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-git.js"></script>
 {$pageCss}
 
 {literal}
