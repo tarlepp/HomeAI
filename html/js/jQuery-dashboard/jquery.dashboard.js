@@ -388,6 +388,49 @@
                 }
             };
 
+            widget.refreshContentSilently = function() {
+                dashboard.log('entering refreshContentSilently function', 1);
+
+                if (widget.open) {
+                    var parameters = jQuery.extend(
+                        {},
+                        widget.metadata.data,
+                        {
+                            widgetData: {
+                                id: widget.id
+                            }
+                        }
+                    );
+
+                    switch (widget.metadata.type) {
+                        case 'curl':
+                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters);
+                            break;
+                        case 'rss':
+                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters);
+                            break;
+                        case 'highcharts':
+                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters);
+                            break;
+                    }
+                }
+            };
+
+            function handleRequest(url, widget, parameters) {
+                jQuery.ajax({
+                    url: url,
+                    data: parameters,
+                    dataType: 'text',
+                    success: function(data) {
+                        var widgetElement = jQuery('#'+ widget.id).find('.widgetcontent');
+
+                        if (widgetElement.html() != data) {
+                            widgetElement.html(data);
+                        }
+                    }
+                });
+            }
+
             widget.setTitle = function(newTitle) {
                 dashboard.log('entering setTitle function', 1);
 

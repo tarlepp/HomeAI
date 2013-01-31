@@ -76,7 +76,7 @@ jQuery(document).ready(function() {
         var dashboardWidget = jQuery('.widget');
         var loading = '<div class="loading"></div>';
 
-        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh widgetDelete", dashboardWidget, function(e, o) {
+        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh widgetDelete", '.widget', function(e, o) {
             //console.log(o.widget.id +" - event - "+ e.type);
 
             var widget = jQuery('#'+ o.widget.id);
@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
 
                     if (refreshInterval) {
                         widgetIntervals[intervalId] = setInterval(function() {
-                            o.widget.refreshContent();
+                            o.widget.refreshContentSilently();
                         }, refreshInterval * 1000);
                     }
 
