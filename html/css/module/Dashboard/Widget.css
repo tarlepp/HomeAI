@@ -53,6 +53,9 @@
     background-image: -webkit-linear-gradient(top, #ffffff, #d2d2d2);
     background-image: -o-linear-gradient(top, #ffffff, #d2d2d2);
     background-image: linear-gradient(to bottom, #ffffff, #d2d2d2);
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
 }
 
 .widget .navbar .nav > li > a {
