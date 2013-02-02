@@ -7,13 +7,20 @@
 
 <script type="text/html" id="widgettemplate">
     <div class="ui-widget ui-corner-all ui-widget-content widget" id="<%= id %>" title="<%= title %>">
-        <div class="ui-widget-header ui-corner-all widgetheader">
-            <span class="widgettitle"><%= title %></span>
-            <span class="right icons hidden-phone hidden-tablet hidden-desktop">
-                <span class="controls tooltipTitle" title="Refresh widget content" data-control="widgetRefresh"><i class="icon-refresh"></i></span>
-                <span class="controls tooltipTitle" title="Edit widget settings" data-control="widgetEdit"><i class="icon-edit"></i></span>
-                <span class="controls tooltipTitle" title="Remove this widget" data-control="widgetDelete"><i class="icon-remove"></i></span>
-            </span>
+        <div class="navbar">
+            <div class="ui-widget-header ui-corner-all widgetheader navbar-inner">
+                <span class="widgettitle"><%= title %></span>
+                <ul class="nav pull-right dropdown" role="navigation">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-pencil"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" class="controls" data-control="widgetRefresh"><i class="icon-refresh"></i>Refresh content</a></li>
+                            <li><a href="#" class="controls" data-control="widgetEdit"><i class="icon-edit"></i>Edit settings</a></li>
+                            <li><a href="#" class="controls" data-control="widgetDelete"><i class="icon-remove"></i>Remove this widget</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="widgetcontent">
         </div>

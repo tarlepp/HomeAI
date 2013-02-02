@@ -136,12 +136,19 @@ jQuery(document).ready(function() {
                 },
                 success: function(data) {
                     widget.find('.widgetcontent').html(data);
+                    widget.find('.dropdown-toggle').dropdown();
                 }
             });
         }
 
         dashboard.init();
     }
+
+    /*
+    jQuery(document).on('mouseover', '.dropdown-toggle', function() {
+        jQuery(this).trigger('click');
+    });
+    */
 
     var sideMenu = jQuery('#sideMenu');
 

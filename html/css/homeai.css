@@ -75,10 +75,13 @@ footer, .wrapper {
     font-size: 14px;
 }
 
-.ui-widget-header,
-.ui-dialog-header {
+
+.ui-dialog-title {
     font-size: 16px;
+    font-weight: normal;
+    text-shadow: 0 1px 0 #ffffff;
 }
+
 .ui-widget-content,
 .ui-dialog-content {
     font-size: 14px;
@@ -112,7 +115,23 @@ footer, .wrapper {
 }
 
 .ui-dialog .ui-dialog-titlebar {
+    margin: -0.2em;
+    margin-bottom: 0;
     padding: 5px 10px;
+    background-color: #fafafa;
+    background-image: -moz-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#d2d2d2));
+    background-image: -webkit-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -o-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: linear-gradient(to bottom, #ffffff, #d2d2d2);
+    background-repeat: repeat-x;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    border: none;
 }
 
 .ui-dialog .ui-dialog-buttonpane button {

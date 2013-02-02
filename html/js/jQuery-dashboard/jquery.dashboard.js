@@ -654,7 +654,7 @@
             return false;
         });
 
-        jQuery(document).on('click', '#' + dashboard.id + ' span.controls', function() {
+        jQuery(document).on('click', '#' + dashboard.id + ' a.controls', function() {
             var wi = dashboard.getWidget(jQuery(this).closest('.' + opts.widgetClass).attr("id"));
 
             wi.element.trigger(jQuery(this).data('control'), {"widget": wi});
@@ -696,7 +696,7 @@
                     },
                     'remove': {
                         'text': 'Remove widget',
-                        'class': 'btn btn-danger',
+                        'class': 'btn btn-danger pull-left',
                         'click': function() {
                             dashboard.log("Removing widget " + jQuery(this).attr("id"), 1);
                             o.widget.remove();
