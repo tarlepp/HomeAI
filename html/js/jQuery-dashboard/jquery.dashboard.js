@@ -13,7 +13,7 @@
 (function (jQuery) { // Create closure.
 
     // Constructor for dashboard object.
-    $.fn.dashboard = function(options) {
+    jQuery.fn.dashboard = function(options) {
         // Public properties of dashboard.
         var dashboard = {};
 
@@ -1027,7 +1027,7 @@
                 dashboard.element.trigger('dashboardCloseLayoutDialog');
 
                 // Now set the new layout
-                var newLayout = getLayout($(this).attr("id"));
+                var newLayout = getLayout(jQuery(this).attr("id"));
                 dashboard.layout = newLayout;
 
                 // remove the class of the old layout
@@ -1037,16 +1037,17 @@
                     fixSortableColumns();
 
                     // check if there are widgets in hidden columns, move them to the first column
-                    if ($('.' + opts.columnClass).length == 0) dashboard.log('Unable to find ' + opts.columnClass, 5);
+                    if (jQuery('.' + opts.columnClass).length == 0) dashboard.log('Unable to find ' + opts.columnClass, 5);
                     dashboard.element.find('.nonsortablecolumn').each(function () {
                         // move the widgets to the first column
-                        $(this).children().appendTo(dashboard.element.find('.' + opts.columnClass + ':first'));
+                        jQuery(this).children().appendTo(dashboard.element.find('.' + opts.columnClass + ':first'));
 
-                        $('.emptycolumn').remove();
+                        jQuery('.emptycolumn').remove();
+
                         // add the text to the empty columns
-                        $('.' + opts.columnClass).each(function () {
-                            if ($(this).children().length == 0) {
-                                $(this).html('<div class="emptycolumn">' + opts.emptyColumnHtml + '</div>');
+                        jQuery('.' + opts.columnClass).each(function () {
+                            if (jQuery(this).children().length == 0) {
+                                jQuery(this).html('<div class="emptycolumn">' + opts.emptyColumnHtml + '</div>');
                             }
                         });
 
@@ -1055,8 +1056,8 @@
 
                 } else {
                     // set the new layout, but first move the dashboard to a temp
-                    var temp = $('<div style="display:none" id="tempdashboard"></div>');
-                    temp.appendTo($("body"));
+                    var temp = jQuery('<div style="display:none" id="tempdashboard"></div>');
+                    temp.appendTo(jQuery("body"));
 
                     dashboard.element.children().appendTo(temp);
 
@@ -1076,7 +1077,7 @@
         jQuery(document).on('click', '.' + addOpts.selectCategoryClass, function() {
             dashboard.log('addWidgetDialogSelectCategory event thrown', 2);
 
-            dashboard.element.trigger('addWidgetDialogSelectCategory', {"category":$(this)});
+            dashboard.element.trigger('addWidgetDialogSelectCategory', {"category": jQuery(this)});
 
             return false;
         });
