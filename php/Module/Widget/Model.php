@@ -10,6 +10,7 @@ namespace HomeAI\Module\Widget;
 
 use HomeAI\Module\Model as MModel;
 use HomeAI\Util\Network as Network;
+use HomeAI\Module\Dashboard\Model as DModel;
 
 /**
  * Model class for 'Widget' -Module.
@@ -131,5 +132,80 @@ class Model extends MModel implements Interfaces\Model
         }
 
         return $content;
+    }
+
+    /**
+     * Widget store method. Basically this method calls either update or insert
+     * method depending specified store type.
+     *
+     * @throws  Exception
+     *
+     * @param   string  $type   Store type
+     * @param   array   $data   Widget content data
+     * @param   array   $widget Widget data
+     *
+     * @return  array|void
+     */
+    public function store($type, array $data, array $widget)
+    {
+        if (strcmp($type, 'update') === 0) {
+            $output = $this->update($data, $widget);
+        } elseif (strcmp($type, 'insert') === 0) {
+            $output = $this->insert($data, $widget);
+        } else {
+            throw new Exception("What the fuck, how did this happen...");
+        }
+
+        return $output;
+    }
+
+    /**
+     * Widget update method.
+     *
+     * @throws  Exception
+     *
+     * @param   array   $data   Widget content data
+     * @param   array   $widget Widget data
+     *
+     * @return  array
+     */
+    private function update(array $data, array $widget)
+    {
+        // Fetch Dashboard model object
+        $model = new DModel($this->request);
+
+        // Get current user widgets
+        $widgets = $model->getWidgets();
+
+        // Check that user widgets are "valid"
+        if (!isset($widgets['result']['data']) || !is_array($widgets['result']['data'])) {
+            throw new Exception("Couldn't determine user widgets...");
+        }
+
+        // Initialize used data variables
+        $widgetData = $output = array();
+
+        // Iterate current widgets.
+        foreach ($widgets['result']['data'] as $currentWidget) {
+
+            if (strcmp($currentWidget['id'], $widget['id']) === 0) {
+                $widgetData[] = $output = array_merge($currentWidget, $data);
+            }
+
+            $widgetData[] = $currentWidget;
+        }
+
+        $widgets['result']['data'] = $widgetData;
+
+        $model->setWidgets($widgets);
+
+        return $output;
+    }
+
+    private function insert(array $data, array $widget)
+    {
+        // TODO: not yet implemented
+
+        return array();
     }
 }

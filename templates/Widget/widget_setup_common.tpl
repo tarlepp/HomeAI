@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="control-group">
+<div class="control-group{if isset($data.id)} hidden{/if}">
     <label class="control-label span3">Column where to add</label>
     <div class="controls span9">
         <select name="column" class="span9">
@@ -233,7 +233,7 @@
                 parseInt(value / 60 ) % 60,
                 value % 60
             ];
-            console.log(jQuery(this).val());
+
             timeBits = jQuery.map(timeBits, function(value) {
                 return isNaN(value) ? 0 : value;
             });

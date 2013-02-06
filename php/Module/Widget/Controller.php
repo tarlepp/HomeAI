@@ -75,6 +75,7 @@ class Controller extends MController implements Interfaces\Controller
     {
         // TODO
         echo "Make list of all available widgets or something?";
+        exit(__FILE__ .":". __LINE__);
     }
 
     /**
@@ -182,7 +183,7 @@ class Controller extends MController implements Interfaces\Controller
      * method and used in actual view method.
      *
      * @title       Highcharts
-     * @description Generic Highcharts widget
+     * @description Generic Highcharts widget.
      * @category    Charts
      * @refreshable true
      *
@@ -347,6 +348,46 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
+     * Method handles widget save request. Method handles both 'insert' and 'update'
+     * actions for widgets. Method echoes widget data as a JSON string if save action
+     * was made successfully. Otherwise method echoes error JSON string which is
+     * processed in javascript.
+     *
+     * @throws  Exception
+     *
+     * @return  void
+     */
+    public function handleRequestSave()
+    {
+        try {
+            $type = $this->request->get('type');
+            $data = (array)$this->request->get('data', array());
+            $widget = (array)$this->request->get('widget', array());
+
+            if (!(strcmp($type, 'update') === 0 || strcmp($type, 'insert'))) {
+                throw new Exception("Unknown type.");
+            }
+
+            if (empty($data)) {
+                throw new Exception("Missing widget content data.");
+            }
+
+            if (empty($widget)) {
+                throw new Exception("Missing widget data.");
+            }
+
+            $output = $this->model->store($type, $data, $widget);
+        } catch (\Exception $error) {
+            $output = array(
+                'error' => $error->getMessage(),
+            );
+        }
+
+        echo JSON::encode($output);
+        exit(0);
+    }
+
+    /**
      * Generic widget setup handler.
      *
      * @access  public
@@ -412,14 +453,24 @@ class Controller extends MController implements Interfaces\Controller
         echo $this->view->makeSetupRss($widget, $data);
     }
 
+    /**
+     * Method determines specified widget data. Widget data is determined
+     * via it's metadata which is defined to actual widget -method comments.
+     *
+     * @param   string  $widgetName
+     *
+     * @return  array|null
+     */
     private function getWidgetData($widgetName)
     {
+        // Specify widget method name
         $method = 'handleRequest'. $widgetName;
 
-        // TODO
+        // Get widget comments and parse it
         $method = new \ReflectionMethod($this, $method);
         $comments = String::parseDocBlock($method->getDocComment());
 
+        // No valid widget
         if (!$this->isWidget($comments, $method->getName())) {
             return null;
         }
@@ -428,8 +479,15 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
-     * @param   array   $comments
-     * @param   string  $methodName
+     * Method checks if specified comment block contains all necessary widget
+     * metadata information or not.
+     *
+     * Note that method will modify given comment block data array.
+     *
+     * @todo    Check if widget image exists on fs.
+     *
+     * @param   array   $comments   Method comments
+     * @param   string  $methodName Name of the method
      *
      * @return  bool
      */
@@ -438,6 +496,7 @@ class Controller extends MController implements Interfaces\Controller
         // Store HomeAI base url
         $url = $this->request->getBaseUrl(false, true);
 
+        // Widget metadata properties
         $properties = array(
             'id'            => array(
                 'required'  => false,

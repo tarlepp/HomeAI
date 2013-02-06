@@ -386,6 +386,8 @@
                 if (widget.open) {
                     widget.openContent();
                 }
+
+                widget.setTitle(widget.title);
             };
 
             widget.refreshContentSilently = function() {
@@ -1173,8 +1175,9 @@
                                 var widgetData = getWidgetData();
                                 var widget = widgetSetupDialog.dialog().data('widget');
 
-                                // TODO
                                 dashboard.element.trigger('dashboardSaveWidget', [widget, widgetData]);
+
+                                jQuery(this).dialog('close');
                             }
                         }
                     }
@@ -1220,18 +1223,38 @@
 
             alert('adding new widgets is not yet implemented...');
             console.log('add widget');
-            console.log(widget);
+            console.log( widget.serialize());
             console.log(data);
         });
 
-        // TODO
+        // Save existing widget data
         jQuery(document).on('dashboardSaveWidget', function(e, widget, data) {
-            data = (typeof data != 'undefined' ? data : {});
+            if (typeof opts.widgetSaveUrl != 'undefined' && opts.widgetSaveUrl != null && opts.widgetSaveUrl != '') {
+                data = (typeof data != 'undefined' ? data : {});
 
-            alert('save of widget data is not yet implemented...');
-            console.log('save widget data');
-            console.log(widget);
-            console.log(data);
+                jQuery.ajax({
+                    url: opts.widgetSaveUrl,
+                    type: 'POST',
+                    data: {
+                        type: 'update',
+                        widget: widget.serialize(),
+                        data: data
+                    },
+                    dataType: 'json',
+                    success: function(data, textStatus, jqXHR) {
+                        if (data.error) {
+                            makeMessage(data.error, 'error', {timeout: 5000});
+                        } else {
+                            // Update widget data and refresh contents
+                            jQuery.extend(widget, data);
+
+                            widget.refreshContent();
+                        }
+                    }
+                });
+            } else {
+                alert('Widget save url not defined');
+            }
         });
 
         jQuery(document).on('click', '.' + addOpts.addWidgetClass, function(e, widget, data) {
@@ -1348,6 +1371,7 @@
         widgetFullScreenClass: 'widgetopenfullscreen',
         iconsClass: 'icons',
         stateChangeUrl: '',
+        widgetSaveUrl: '',
         widgetSetupUrl: '',
         addWidgetSettings: {
             openDialogClass: 'openaddwidgetdialog',

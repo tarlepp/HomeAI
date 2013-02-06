@@ -16,6 +16,7 @@ jQuery(document).ready(function() {
     // call for the minimal dashboard
     function initDashboard() {
         var dashboard = jQuery("#dashboard").dashboard({
+            widgetSaveUrl: pageBaseHref + 'Widget/Save/',
             widgetSetupUrl: pageBaseHref + 'Widget/Setup/',
             stateChangeUrl: pageBaseHref + 'Dashboard/Update/',
             json_data : {
