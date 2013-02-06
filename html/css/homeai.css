@@ -67,6 +67,25 @@ footer, .wrapper {
     padding: 10px;
 }
 
+.ui-tooltip-rounded,
+.ui-tooltip-rounded .ui-tooltip-content {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.ui-tooltip-rounded .ui-tooltip-titlebar {
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.ui-tooltip-rounded .ui-tooltip-titlebar + .ui-tooltip-content {
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+}
+
 .ui-widget,
 .ui-dialog,
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button,
@@ -74,7 +93,6 @@ footer, .wrapper {
     font-family: 'Cuprum', sans-serif;
     font-size: 14px;
 }
-
 
 .ui-dialog-title {
     font-size: 16px;
