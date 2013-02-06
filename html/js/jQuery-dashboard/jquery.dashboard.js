@@ -694,6 +694,10 @@
                         'class': 'btn',
                         'click': function() {
                             jQuery(this).dialog( "close" );
+
+                            if (o.edit) {
+                                jQuery('#'+ o.widget.id).trigger('widgetEdit', {"widget": o.widget});
+                            }
                         }
                     },
                     'remove': {
@@ -1158,9 +1162,9 @@
                         text: 'Delete',
                         class: 'btn btn-danger pull-left',
                         click: function() {
-                            // TODO
-
                             jQuery(this).dialog('close');
+
+                            jQuery('#'+ widget.id).trigger('widgetDelete', {"widget": widget, "edit": true});
                         }
                     },
                     'ok': {
