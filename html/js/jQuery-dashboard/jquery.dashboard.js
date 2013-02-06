@@ -86,10 +86,10 @@
                 connectWith: columns,
                 opacity: opts.opacity,
                 handle: '.' + opts.widgetHeaderClass,
-                over: function(event, ui) {
+                over: function() {
                     jQuery(this).addClass("selectedcolumn");
                 },
-                out: function(event, ui) {
+                out: function() {
                     jQuery(this).removeClass("selectedcolumn");
                 },
                 receive: function(event, ui) {
@@ -103,7 +103,7 @@
                     dashboard.log('widgetDropped event thrown for widget ' + w.id, 2);
                     w.element.trigger("widgetDropped", {"widget": w});
                 },
-                deactivate: function(event, ui) {
+                deactivate: function() {
                     // This event is called for each column
                     dashboard.log('Widget is dropped: check if the column is now empty.', 1);
 
@@ -185,10 +185,7 @@
                     dashboard.loadWidgets(obj.data);
                 });
             } else {
-                var currentLayout = (typeof dashboard.layout != 'undefined') ? dashboard.layout : getLayout(json.layout);
-
-                dashboard.setLayout(currentLayout);
-                dashboard.loadWidgets(opts.json_data.data);
+                alert("No json_data.url defined!");
             }
         };
 
@@ -284,7 +281,7 @@
                 heights[index] = jQuery(this).outerHeight();
             });
 
-            columns.each(function(index) {
+            columns.each(function() {
                 jQuery(this).css('minHeight', Math.max.apply(Math, heights));
             });
 
@@ -350,7 +347,7 @@
 
                         widget.element.trigger("widgetShow", {"widget": widget});
 
-                        widget.element.find('.' + opts.widgetContentClass).load(this.url, function(response, status, xhr) {
+                        widget.element.find('.' + opts.widgetContentClass).load(this.url, function(response, status) {
                             if (status == "error") {
                                 widget.element.find('.' + opts.widgetContentClass).html(opts.widgetNotFoundHtml);
                             }
@@ -562,7 +559,7 @@
                         type: 'POST',
                         data: data,
                         dataType: 'text',
-                        success: function(data, textStatus, jqXHR) {
+                        success: function(data) {
                             widgetSetupDialog.html(data);
 
                             dashboard.element.trigger('addWidgetDialogSetupsLoaded', [widget, true]);
@@ -619,11 +616,11 @@
 
         // TODO
         jQuery(document).on('dashboardLayoutLoaded', '#' + dashboard.id, function() {
-            jQuery('#'+ dashboard.id).find('.'+ opts.columnClass).each(function(index, element) {
+            jQuery('#'+ dashboard.id).find('.'+ opts.columnClass).each(function() {
                 var column = jQuery(this);
 
                 column.children().each(function() {
-                    console.log('dddd');
+                    console.log('todo normalize column heights');
                 });
             });
         });
@@ -680,9 +677,9 @@
         jQuery(document).on('widgetDelete', '#' + dashboard.id + ' .' + opts.widgetClass, function(e, o) {
             dashboard.log("Event '"+ e.type +"' for widget " + jQuery(this).attr("id"), 1);
 
-            var tag = jQuery("<div></div>");
+            var dialog = jQuery("<div></div>");
 
-            tag.html(opts.deleteConfirmMessage).dialog({
+            dialog.html(opts.deleteConfirmMessage).dialog({
                 resizable: false,
                 draggable: false,
                 height: 115,
@@ -738,13 +735,13 @@
             o.widget.openContent();
         });
 
-        jQuery(document).on('widgetShow', '#' + dashboard.id + ' .' + opts.widgetClass, function(e, o) {
+        jQuery(document).on('widgetShow', '#' + dashboard.id + ' .' + opts.widgetClass, function(e) {
             dashboard.log("Event '"+ e.type +"' for widget " + jQuery(this).attr("id"), 1);
 
             jQuery(this).find('.' + opts.widgetContentClass).show();
         });
 
-        jQuery(document).on('widgetHide', '#' + dashboard.id + ' .' + opts.widgetClass, function(e, o) {
+        jQuery(document).on('widgetHide', '#' + dashboard.id + ' .' + opts.widgetClass, function(e) {
             dashboard.log("Event '"+ e.type +"' for widget " + jQuery(this).attr("id"), 1);
 
             jQuery(this).find('.' + opts.widgetContentClass).hide();
@@ -775,7 +772,7 @@
         });
 
         // Define a toggle event when clicking at the header
-        jQuery(document).on('click', '#' + dashboard.id + ' .' + opts.widgetTitleClass, function(e, o) {
+        jQuery(document).on('click', '#' + dashboard.id + ' .' + opts.widgetTitleClass, function() {
             dashboard.log("Click on the header detected for widget " + jQuery(this).attr("id"), 1);
 
             if (!jQuery(this).hasClass('noclick')) {
@@ -793,19 +790,6 @@
             }
 
             return false;
-        });
-
-        jQuery(document).on('mouseover', '#' + dashboard.id + ' .' + opts.widgetHeaderClass, function(e, o) {
-            jQuery(this).find('.' + opts.iconsClass).addClass("visible-desktop");
-        });
-
-        jQuery(document).on('mouseout', '#' + dashboard.id + ' .' + opts.widgetHeaderClass, function(e, o) {
-
-            jQuery(this).find('.' + opts.iconsClass).removeClass("visible-desktop");
-        });
-
-        jQuery('body').click(function() {
-            jQuery('.' + opts.menuClass).hide();
         });
 
         var addWidgetDialog = jQuery('#' + addOpts.dialogId);
@@ -866,6 +850,8 @@
             resizable: false,
             draggable: false,
             open: function(event, ui) {
+                dashboard.log('Widget setup event ' + event +' thrown.', 1);
+
                 var form = jQuery(this).find('#widgetSetupForm');
 
                 if (typeof getWidgetValidationRules == 'function') {
@@ -1008,10 +994,15 @@
                         dashboard:  dashboard.element.attr("id"),
                         settings:   dashboard.serialize()
                     },
-                    success: function (data) {
-                        // TODO: make error handling
-                        dashboard.log('dashboardSuccessfulSaved event thrown', 2);
-                        dashboard.element.trigger("dashboardSuccessfulSaved");
+                    success: function(data) {
+                        if (data.error) {
+                            dashboard.log('dashboardStateChange event was', 1);
+
+                            makeMessage(data.error, 'error', {timeout: 5000});
+                        } else {
+                            dashboard.log('dashboardSuccessfulSaved event thrown', 2);
+                            dashboard.element.trigger("dashboardSuccessfulSaved");
+                        }
                     }
                 });
             }
@@ -1026,7 +1017,7 @@
                 dashboard.log('Unable to find ' + layoutOpts.selectLayoutClass, 5);
             }
 
-            selectedLayout.bind('click', function (e) {
+            selectedLayout.bind('click', function () {
                 var currentLayout = dashboard.layout;
 
                 dashboard.log('dashboardCloseLayoutDialog event thrown', 2);
@@ -1245,7 +1236,7 @@
                         data: data
                     },
                     dataType: 'json',
-                    success: function(data, textStatus, jqXHR) {
+                    success: function(data) {
                         if (data.error) {
                             makeMessage(data.error, 'error', {timeout: 5000});
                         } else {
@@ -1261,7 +1252,7 @@
             }
         });
 
-        jQuery(document).on('click', '.' + addOpts.addWidgetClass, function(e, widget, data) {
+        jQuery(document).on('click', '.' + addOpts.addWidgetClass, function() {
             var widget = dashboard.widgetsToAdd[jQuery(this).attr("id").replace('addwidget', '')];
 
             dashboard.log('dashboardCloseWidgetDialog event thrown', 2);
@@ -1282,7 +1273,7 @@
                     type: 'POST',
                     data: data,
                     dataType: 'text',
-                    success: function(data, textStatus, jqXHR) {
+                    success: function(data) {
                         widgetSetupDialog.html(data);
 
                         dashboard.element.trigger('addWidgetDialogSetupsLoaded', [widget, false]);
@@ -1295,7 +1286,7 @@
             return false;
         });
 
-        jQuery(document).on('click', '.' + addOpts.openDialogClass, function(e, widget, data) {
+        jQuery(document).on('click', '.' + addOpts.openDialogClass, function() {
             dashboard.log('dashboardOpenWidgetDialog event thrown', 2);
             dashboard.element.trigger('dashboardOpenWidgetDialog');
 
@@ -1315,6 +1306,7 @@
             dialog.find('.' + addOpts.widgetClass).empty();
 
             dashboard.log('Opening dialog ' + addOpts.dialogId, 1);
+            dashboard.log('Previous opened category: ' + category, 1);
             dialog.dialog('open');
 
             dashboard.log('Getting JSON feed : ' + addOpts.widgetDirectoryUrl, 1);

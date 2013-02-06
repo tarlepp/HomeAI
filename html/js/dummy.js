@@ -18,3 +18,6 @@
 var pageBaseHref = '';  // Home AI base URL
 var pageModule = '';    // Current module name
 var pageAction = '';    // Current action name
+
+function getWidgetValidationRules() {}
+function getWidgetData() {}
