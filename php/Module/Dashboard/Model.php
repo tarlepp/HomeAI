@@ -70,6 +70,33 @@ class Model extends MModel implements Interfaces\Model
     }
 
     /**
+     * Method adds new widget to current user.
+     *
+     * @access  public
+     *
+     * @throws  Exception
+     *
+     * @param   array   $widget Widget data to be added
+     *
+     * @return  void
+     */
+    public function addWidget(array $widget)
+    {
+        // Get current user widgets
+        $widgets = $this->getWidgets();
+
+        // Check that user widgets are "valid"
+        if (!isset($widgets['result']['data']) || !is_array($widgets['result']['data'])) {
+            throw new Exception("Couldn't determine user widgets...");
+        }
+
+        // Add widget to data array
+        $widgets['result']['data'][] = $widget;
+
+        $this->setWidgets($widgets);
+    }
+
+    /**
      * Getter method for default widgets.
      *
      * TODO: Specify default widgets later...

@@ -203,7 +203,6 @@
 
                 // add it to the column
                 wi.appendTo(column);
-
             } else {
                 // build the widget
                 dashboard.log('Applying template : ' + opts.widgetTemplate, 1);
@@ -944,8 +943,6 @@
         });
 
         // Layout change dialog open method
-        // TODO
-
         jQuery(document).on('dashboardOpenLayoutDialog', dashboard.element, function() {
             dashboard.log('Opening dialog ' + layoutOpts.dialogId, 1);
 
@@ -1130,7 +1127,7 @@
             dashboard.element.trigger('addWidgetDialogWidgetsLoaded');
         });
 
-        // TODO
+        // Widget setup dialog content loaded
         jQuery(document).on('addWidgetDialogSetupsLoaded', function(e, widget, edit) {
             widgetSetupDialog.dialog('option', 'title', 'Configure of \''+ widget.title +'\' widget');
             widgetSetupDialog.dialog().data('widget', widget);
@@ -1147,6 +1144,7 @@
 
             var buttons = {};
 
+            // Specify used buttons for widget edit and add
             if (edit) {
                 buttons = {
                     'delete': {
@@ -1202,6 +1200,8 @@
                                 var widget = widgetSetupDialog.dialog().data('widget');
 
                                 dashboard.element.trigger('dashboardAddWidget', [widget, widgetData]);
+
+                                jQuery(this).dialog('close');
                             }
                         }
                     }
@@ -1216,10 +1216,33 @@
         jQuery(document).on('dashboardAddWidget', function(e, widget, data) {
             data = (typeof data != 'undefined' ? data : {});
 
-            alert('adding new widgets is not yet implemented...');
-            console.log('add widget');
-            console.log( widget.serialize());
-            console.log(data);
+            if (typeof opts.widgetSaveUrl != 'undefined' && opts.widgetSaveUrl != null && opts.widgetSaveUrl != '') {
+                data = (typeof data != 'undefined' ? data : {});
+
+                jQuery.ajax({
+                    url: opts.widgetSaveUrl,
+                    type: 'POST',
+                    data: {
+                        type: 'insert',
+                        widget: widget,
+                        data: data
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.error) {
+                            makeMessage(data.error, 'error', {timeout: 5000});
+                        } else {
+                            // Add new widget to dashboard
+                            dashboard.addWidget(data, dashboard.element.find('.' + opts.columnPrefix + data.column));
+
+                            // Trigger widgetShow -event to update actual content
+                            jQuery('#'+ data.id).trigger('widgetShow', {"widget": dashboard.widgets[data.id]});
+                        }
+                    }
+                });
+            } else {
+                alert('Widget save url not defined');
+            }
         });
 
         // Save existing widget data

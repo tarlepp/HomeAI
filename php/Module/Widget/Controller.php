@@ -360,11 +360,11 @@ class Controller extends MController implements Interfaces\Controller
     public function handleRequestSave()
     {
         try {
-            $type = $this->request->get('type');
+            $type = (string)$this->request->get('type');
             $data = (array)$this->request->get('data', array());
             $widget = (array)$this->request->get('widget', array());
 
-            if (!(strcmp($type, 'update') === 0 || strcmp($type, 'insert'))) {
+            if (!(strcmp($type, 'update') === 0 || strcmp($type, 'insert') === 0)) {
                 throw new Exception("Unknown type.");
             }
 
@@ -409,7 +409,7 @@ class Controller extends MController implements Interfaces\Controller
             $widget = $this->getWidgetData($widgetName);
 
             if (!is_array($widget)) {
-                die(__FILE__ .":". __LINE__);
+                die('TODO '. __FILE__ .":". __LINE__);
             }
         }
 

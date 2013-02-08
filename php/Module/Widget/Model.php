@@ -202,10 +202,65 @@ class Model extends MModel implements Interfaces\Model
         return $output;
     }
 
+    /**
+     * Widget insert method.
+     *
+     * @throws  Exception
+     *
+     * @param   array   $data   Widget content data
+     * @param   array   $widget Widget data
+     *
+     * @return  array           Inserted widget data
+     */
     private function insert(array $data, array $widget)
     {
-        // TODO: not yet implemented
+        // Fetch Dashboard model object
+        $model = new DModel($this->request);
 
-        return array();
+        // Determine 'real' widget data
+        $widgetData = $this->checkWidgetData(array_merge($widget, $data));
+
+        // Add new widget
+        $model->addWidget($widgetData);
+
+        return $widgetData;
+    }
+
+    /**
+     * Method checks specified data array contents to match widget content.
+     *
+     * @param   array   $data   Widget data to be checked
+     *
+     * @return  array           Valid widget data
+     */
+    private function checkWidgetData(array $data)
+    {
+        // Specify needed widget properties and default values
+        $properties = array(
+            'id'        => '',
+            'title'     => '',
+            'column'    => '',
+            'editurl'   => '',
+            'open'      => true,
+            'metadata'  => '',
+            'method'    => '',
+            'refresh'   => 0,
+        );
+
+        // Filter out not wanted widget properties
+        foreach ($data as $key => $value) {
+            if (!array_key_exists($key, $properties)) {
+                unset($data[$key]);
+            }
+        }
+
+        // Add missing widget properties
+        foreach ($properties as $property => $defaultValue) {
+            if (!array_key_exists($property, $data)) {
+                $data[$property] = $defaultValue;
+            }
+        }
+
+        return $data;
     }
 }
