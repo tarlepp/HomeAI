@@ -144,6 +144,12 @@ jQuery(document).ready(function() {
 
         dashboard.init();
     }
+
+    var sideMenu = jQuery('#sideMenu');
+
+    sideMenu.find('.dropdown-menu').on('click', 'a', function() {
+        sideMenu.find('.dropdown-menu').dropdown('hide');
+    });
 });
 
 
