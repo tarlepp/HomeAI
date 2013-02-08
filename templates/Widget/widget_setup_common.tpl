@@ -178,7 +178,7 @@
             columnSelect.append(jQuery('<option>', data).text(value));
         });
 
-        if (refreshValueContainer.val().length > 0) {
+        if (refreshValueContainer.val().length > 0 && parseInt(refreshValueContainer.val(), 10) > 0) {
             container.find('#widgetSetupRefreshCheckbox').prop('checked', true);
 
             refreshContainer.toggleClass('hide');
