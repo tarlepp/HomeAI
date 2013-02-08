@@ -8,7 +8,7 @@
                     <ul class="dropdown-menu" style="" role="menu">
                         <li><a class="widgetRefreshAll" href="#"><i class="icon-refresh"></i>Refresh all</a></li>
                         <li><a class="widgetEdit" href="#"><i class="icon-plus"></i>Add new widget</a></li>
-                        <li><a class="editlayout" href="#"><i class="icon-th"></i>Edit layout</a></li>
+                        <li><a class="editlayout" href="#"><i class="icon-th"></i>Change layout</a></li>
                     </ul>
                 </li>
             </ul>
