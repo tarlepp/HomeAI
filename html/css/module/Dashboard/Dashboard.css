@@ -196,6 +196,76 @@
     position: absolute;
     float: right;
     right: 0;
+    top: 47px;
+    margin: 0;
+    padding: 0;
+}
+
+#sideMenu .navbar-inner {
+    padding: 0;
+    min-height: 20px;
+    background-image: -moz-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#d2d2d2));
+    background-image: -webkit-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -o-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: linear-gradient(to bottom, #ffffff, #d2d2d2);
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    border-right: none;
+}
+
+#sideMenu .navbar .nav {
+    margin: 0;
+}
+
+#sideMenu .navbar .nav > li > a {
+    padding: 5px;
+}
+
+#sideMenu .navbar .nav > li > a i {
+    opacity: 0.3;
+}
+
+#sideMenu .navbar .nav > li > a i:hover,
+#sideMenu .navbar .nav li.dropdown.open > .dropdown-toggle i,
+#sideMenu .navbar .nav li.dropdown.active > .dropdown-toggle i,
+#sideMenu .navbar .nav li.dropdown.open.active > .dropdown-toggle i {
+    opacity: 1;
+}
+
+#sideMenu .navbar .nav .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 0;
+}
+
+#sideMenu .navbar .nav .dropdown-menu i {
+    position: relative;
+    left: -5px;
+    top: -1px;
+}
+
+#sideMenu .navbar .nav .dropdown-menu li > a {
+    font-size: 14px;
+    padding: 3px 10px;
+}
+
+#sideMenu .navbar .nav > li > .dropdown-menu::before {
+    right: 5px;
+    left: auto;
+}
+
+#sideMenu .navbar .nav > li > .dropdown-menu::after {
+    right: 6px;
+    left: auto;
+}
+
+/*
+#sideMenu {
+    position: absolute;
+    float: right;
+    right: 0;
     margin: 0;
     padding: 0;
 }
@@ -248,6 +318,7 @@
 #sideMenu ul {
     display: none;
 }
+*/
 
 ul.fullscreen {
     margin: 0;

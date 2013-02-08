@@ -22,8 +22,8 @@
                 </ul>
             </div>
         </div>
-        <div class="widgetcontent">
-        </div>
+
+        <div class="widgetcontent"></div>
     </div>
 </script>
 

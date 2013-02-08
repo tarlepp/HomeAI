@@ -94,6 +94,10 @@
     opacity: 1;
 }
 
+.widget .navbar .dropdown-menu {
+    min-width: 0;
+}
+
 .widget .navbar .dropdown-menu i {
     position: relative;
     left: -5px;

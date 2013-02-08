@@ -144,30 +144,6 @@ jQuery(document).ready(function() {
 
         dashboard.init();
     }
-
-    /*
-    jQuery(document).on('mouseover', '.dropdown-toggle', function() {
-        jQuery(this).trigger('click');
-    });
-    */
-
-    var sideMenu = jQuery('#sideMenu');
-
-    sideMenu.find('div').on('mouseenter', function() {
-        jQuery(this).find('span').hide();
-
-        sideMenu.find('ul').show();
-    });
-
-    sideMenu.find('div').on('mouseleave', function() {
-        jQuery(this).find('span').show();
-
-        sideMenu.find('ul').hide();
-    });
-
-    sideMenu.find('a').on('click', function() {
-        sideMenu.find('ul').hide();
-    });
 });
 
 
