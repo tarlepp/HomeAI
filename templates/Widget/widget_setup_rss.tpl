@@ -9,7 +9,7 @@
         {if isset($data.metadata.data.{$item})}
             {assign var=$key value=$data.metadata.data.{$item}}
         {else}
-            {assign var=$key value=""}
+            {assign var=$key value=null}
         {/if}
     {/foreach}
 

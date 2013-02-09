@@ -149,11 +149,18 @@ class View extends MView implements Interfaces\View
      */
     public function makeSetupCurl(array $widget, array $data)
     {
-        $template = $this->smarty->createTemplate('widget_setup_curl.tpl', $this->smarty);
-        $template->assign('widget', $widget);
-        $template->assign('data', $data);
+        // Used widget metadata
+        $metadata = array(
+            '_url'      => 'url',
+            '_type'     => 'type',
+            '_headers'  => 'headers',
+            '_postData' => 'postData',
+        );
 
-        return $template->fetch();
+        // Used template file
+        $template = 'widget_setup_curl.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
     }
 
     /**

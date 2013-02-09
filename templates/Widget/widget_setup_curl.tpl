@@ -5,6 +5,14 @@
         <li class=""><a href="#widgetSetupTabOutput">Output</a></li>
     </ul>
 
+    {foreach from=$metadata key=key item=item}
+        {if isset($data.metadata.data.{$item})}
+            {assign var=$key value=$data.metadata.data.{$item}}
+            {else}
+            {assign var=$key value=null}
+        {/if}
+    {/foreach}
+
     <form id="widgetSetupForm" class="form-horizontal row-fluid">
         <div class="tab-content">
 
@@ -16,7 +24,7 @@
                 <div class="control-group">
                     <label class="control-label span3">URL</label>
                     <div class="controls span9">
-                        <input type="text" name="url" class="span9" required placeholder="Add URL to fetch..." />
+                        <input type="text" name="url" class="span9" required placeholder="Add URL to fetch..." value="{$_url}"/>
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -25,32 +33,69 @@
                     <label class="control-label span3">Request type</label>
                     <div class="controls span9">
                         <select id="widgetSetupCurlType" name="type" class="span9">
-                            <option value="GET">GET</option>
-                            <option value="POST">POST</option>
+                            <option value="GET"{if $_type === 'GET'} selected="selected"{/if}>GET</option>
+                            <option value="POST"{if $_type === 'POST'} selected="selected"{/if}>POST</option>
                         </select>
                         <span class="help-block"></span>
                     </div>
                 </div>
 
-                <div id="postDataContainer" class="hide">
-                    <div class="control-group">
+                <div id="postDataContainer" class="{if $_type !== 'POST'}hide{/if}">
+                 {foreach from=$_postData key=key item=item name=postData}
+                     <div class="control-group">
+                     {if $smarty.foreach.postData.index == 0}
                         <label class="control-label span3" style="margin-bottom: 0;">Post data</label>
                         <div class="controls span9 input-append inline-inputs">
-                            <input data-type="key" type="text" name="data[key][]" class="span4" placeholder="Key" />
-                            <input data-type="value" type="text" name="data[value][]" class="span6 no-left-border-radious" placeholder="Value" />
-                            <button data-add="true" class="btn disabled" type="button">+</button>
-                        </div>
-                    </div>
+                     {else}
+                         <div class="controls span9 offset3 input-append inline-inputs">
+                     {/if}
+                             <input data-type="key" type="text" name="data[key][]" class="span4" placeholder="Key" value="{$key}" />
+                             <input data-type="value" type="text" name="data[value][]" class="span6 no-left-border-radious" placeholder="Value" value="{$item}" />
+                        {if $smarty.foreach.postData.index == 0}
+                             <button data-add="true" class="btn" type="button">+</button>
+                        {else}
+                            <button data-remove="true" data-dialog-close="false" class="btn" type="button">-</button>
+                        {/if}
+                         </div>
+                     </div>
+                 {foreachelse}
+                     <div class="control-group">
+                         <label class="control-label span3" style="margin-bottom: 0;">Post data</label>
+                         <div class="controls span9 input-append inline-inputs">
+                             <input data-type="key" type="text" name="data[key][]" class="span4" placeholder="Key" />
+                             <input data-type="value" type="text" name="data[value][]" class="span6 no-left-border-radious" placeholder="Value" />
+                             <button data-add="true" class="btn disabled" type="button">+</button>
+                         </div>
+                     </div>
+                 {/foreach}
                 </div>
 
                 <div id="headers">
+                {foreach from=$_headers key=key item=item name=headers}
+                    <div class="control-group">
+                    {if $smarty.foreach.headers.index == 0}
+                        <label class="control-label span3" style="margin-bottom: 0;">Request headers</label>
+                        <div class="controls span9 input-append">
+                    {else}
+                        <div class="controls span9 offset3 input-append">
+                    {/if}
+                            <input type="text" name="headers[]" class="span9" placeholder="Add custom header value for request..." value="{$item}" />
+                        {if $smarty.foreach.headers.index == 0}
+                            <button data-add="true" class="btn" type="button">+</button>
+                        {else}
+                            <button data-remove="true" data-dialog-close="false" class="btn" type="button">-</button>
+                        {/if}
+                        </div>
+                    </div>
+                {foreachelse}
                     <div class="control-group">
                         <label class="control-label span3" style="margin-bottom: 0;">Request headers</label>
                         <div class="controls span9 input-append">
-                            <input type="text" name="headers[]" class="span9" placeholder="Add custom header value for request..." />
+                            <input type="text" name="headers[]" class="span9" placeholder="Add custom header value for request..."/>
                             <button data-add="true" class="btn disabled" type="button">+</button>
                         </div>
                     </div>
+                {/foreach}
                 </div>
 
                 <div class="control-group">
@@ -179,6 +224,8 @@
             return true;
         });
 
+        console.log(metadata);
+
         return jQuery.extend({}, output, {metadata: metadata});
     }
 
@@ -190,6 +237,7 @@
         var tabOutput = container.find('#widgetSetupTabOutput');
         var templates = container.find('#widgetSetupTemplates');
         var form = container.find('form');
+        var button = form.find('#testCurlRequest');
 
         var postDataContainer = form.find('#postDataContainer');
 
@@ -198,6 +246,16 @@
 
             jQuery(this).tab('show');
         });
+
+        if (form.find('input[name=url]').val().length > 0) {
+            button.removeClass('disabled');
+        }
+
+        var firstHeader = form.find('#headers input').filter(':first');
+
+        if (firstHeader.val().length > 0) {
+            firstHeader.parent().find('button[data-add="true"]').removeClass('disabled');
+        }
 
         form.on('change', '#widgetSetupCurlType', function() {
             switch (jQuery('#widgetSetupCurlType option:selected', form).val()) {
@@ -212,7 +270,6 @@
 
         form.on('keyup', 'input[name=url]', function() {
             var value = jQuery.trim(jQuery(this).val());
-            var button = form.find('#testCurlRequest');
 
             if (value.length > 0) {
                 button.removeClass('disabled');
