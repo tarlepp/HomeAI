@@ -110,13 +110,13 @@ jQuery(document).ready(function() {
 
                     switch (o.widget.metadata.type) {
                         case 'curl':
-                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters);
+                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters, o.widget.metadata.type);
                             break;
                         case 'rss':
-                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters);
+                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters, o.widget.metadata.type);
                             break;
                         case 'highcharts':
-                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters);
+                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters, o.widget.metadata.type);
                             break;
                     }
                     break;
@@ -127,16 +127,37 @@ jQuery(document).ready(function() {
             }
         });
 
-        function handleRequest(url, widget, parameters) {
+        function handleRequest(url, widget, parameters, type) {
+            var dataType = 'text';
+
+            switch (type) {
+                case 'curl':
+                    dataType = 'json';
+                    break;
+                case 'rss':
+                    break;
+                case 'highcharts':
+                    break;
+            }
+
             jQuery.ajax({
                 url: url,
                 data: parameters,
-                dataType: 'text',
+                dataType: dataType,
                 beforeSend: function(){
                     widget.find('.widgetcontent').html(loading);
                 },
                 success: function(data) {
-                    widget.find('.widgetcontent').html(data);
+                    switch (type) {
+                        case 'curl':
+                            widget.find('.widgetcontent').html(data.content);
+                            break;
+                        case 'rss':
+                        case 'highcharts':
+                            widget.find('.widgetcontent').html(data);
+                            break;
+                    }
+
                     widget.find('.dropdown-toggle').dropdown();
                 }
             });

@@ -106,7 +106,23 @@
             </div>
 
             <div id="widgetSetupTabOutput" class="tab-pane">
-                <pre class="pre-scrollable"><em>Current cURL configuration not yet tested...</em></pre>
+                <ul class="nav nav-tabs nav-tabs-white" id="widgetSetupTabOutputNavigation">
+                    <li class="active"><a href="#widgetSetupTabOutputResult">Result</a></li>
+                    <li class=""><a href="#widgetSetupTabOutputHeaders">Headers</a></li>
+                    <li class=""><a href="#widgetSetupTabOutputStats">Stats</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="widgetSetupTabOutputResult" class="tab-pane active">
+                        <pre class="pre-scrollable"><em>Current cURL configuration not yet tested...</em></pre>
+                    </div>
+                    <div id="widgetSetupTabOutputHeaders" class="tab-pane">
+                        <pre class="pre-scrollable"><em>Current cURL configuration not yet tested...</em></pre>
+                    </div>
+                    <div id="widgetSetupTabOutputStats" class="tab-pane">
+                        <pre class="pre-scrollable"><em>Current cURL configuration not yet tested...</em></pre>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -247,6 +263,12 @@
             jQuery(this).tab('show');
         });
 
+        jQuery('#widgetSetupTabOutputNavigation').find('a').click(function (e) {
+            e.preventDefault();
+
+            jQuery(this).tab('show');
+        });
+
         if (form.find('input[name=url]').val().length > 0) {
             button.removeClass('disabled');
         }
@@ -358,13 +380,15 @@
             jQuery.ajax({
                 url: '{/literal}{$widget.url}{literal}',
                 data: data.metadata.data,
-                dataType: 'text',
+                dataType: 'json',
                 beforeSend: function() {
                     navigation.find('a[href="#widgetSetupTabOutput"]').tab('show');
                     tabOutput.find('pre').html(loading);
                 },
-                success: function(data) {
-                    tabOutput.find('pre').html(jQuery('<div/>').text(data).html());
+                success: function(/*Widget.Curl.Data*/data) {
+                    tabOutput.find('#widgetSetupTabOutputResult pre').html(jQuery('<div/>').text(data.content).html());
+                    tabOutput.find('#widgetSetupTabOutputHeaders pre').html(jQuery('<div/>').text(data.headers).html());
+                    tabOutput.find('#widgetSetupTabOutputStats pre').html(jQuery('<div/>').text(data.stats).html());
                 }
             });
 

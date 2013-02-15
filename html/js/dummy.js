@@ -15,9 +15,22 @@
  * @revision    $Rev$
  */
 
+
 var pageBaseHref = '';  // Home AI base URL
 var pageModule = '';    // Current module name
 var pageAction = '';    // Current action name
 
 function getWidgetValidationRules() {}
 function getWidgetData() {}
+
+var Widget = {
+    'Curl': {
+        'Data': function () {
+            return {
+                content: 'cUrl response',
+                headers: 'Response headers',
+                stats: 'Request stats'
+            }
+        }
+    }
+};

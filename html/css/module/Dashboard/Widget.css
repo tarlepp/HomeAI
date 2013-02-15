@@ -35,6 +35,12 @@
     }
 }
 
+.pre-scrollable {
+    max-height: 200px;
+    overflow-y: scroll;
+    margin-bottom: 0;
+}
+
 .widget .form-horizontal .control-label {
     width: 60px;
 }

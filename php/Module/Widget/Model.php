@@ -50,27 +50,41 @@ class Model extends MModel implements Interfaces\Model
         // Set cURL options
         curl_setopt($ch, \CURLOPT_URL, $url);
         curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, \CURLOPT_HEADER, 1);
         curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, $type);                    // Request type
         curl_setopt($ch, \CURLOPT_HTTPHEADER, $headers);                    // Request headers
         curl_setopt($ch, \CURLOPT_POSTFIELDS, http_build_query($postData)); // Request post fields
 
         // Get HTTP status code and actual response from server
-        $content = trim(curl_exec($ch));
-        $status  = curl_getinfo($ch, \CURLINFO_HTTP_CODE);
+        $response = trim(curl_exec($ch));
+        $status = curl_getinfo($ch, \CURLINFO_HTTP_CODE);
+        $info  = curl_getinfo($ch);
 
         // Error occurred
         if ($status >= 400) {
             $content = "<h1>Error occurred</h1><p>"
                     . Network::getStatusCodeString($status)
                     . ".<br />Content:<br />"
-                    . $content;
-        } elseif (empty($content)) {
+                    . $response;
+        } elseif (empty($response)) {
             $content = "Content not found...";
         }
 
         curl_close($ch);
 
+        $headers = substr($response, 0, $info['header_size']);
+        $content = substr($response, -$info['download_content_length']);
+
+        return array(
+            $content,
+            $status,
+            $headers,
+        );
+        /*
+        $content, $statusCode, $headers
+
         return $content;
+        */
     }
 
     /**

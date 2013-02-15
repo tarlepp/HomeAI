@@ -13,6 +13,7 @@ use HomeAI\Core\Exception as ExceptionCore;
 use HomeAI\Util\String as String;
 use HomeAI\Util\JSON as JSON;
 use HomeAI\Util\UUID as UUID;
+use HomeAI\Util\Network as Network;
 
 /**
  * Controller class for 'Widget' -module.
@@ -135,10 +136,31 @@ class Controller extends MController implements Interfaces\Controller
         $postData = (array)$this->request->get('postData', array());
 
         if (is_null($url)) {
-            echo "URL not defined.";
+            $output = array(
+                'content'   => 'URL not defined.',
+                'headers'   => '',
+                'stats'     => '',
+            );
         } else {
-            echo $this->model->getCurlResponse($url, $type, $headers, $postData);
+            list($content, $status, $headers) = $this->model->getCurlResponse($url, $type, $headers, $postData);
+
+$time = 0;
+
+            $size = memory_get_usage();
+
+            $unit=array('b','kb','mb','gb','tb','pb');
+            $size = @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
+
+            $output = array(
+                'content'   => trim($content),
+                'headers'   => trim($headers),
+                'stats'     => "Status ". Network::getStatusCodeString($status) ."\nRequest time: ". $time ."s\nMemory: ". $size ,
+            );
+
+            //echo $this->model->getCurlResponse($url, $type, $headers, $postData);
         }
+
+        echo JSON::encode($output);
 
         exit(0);
     }
