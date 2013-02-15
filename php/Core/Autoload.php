@@ -52,7 +52,7 @@ class Autoload
 
             $check = array_shift($bits);
 
-            if ($check != 'HomeAI') {
+            if ($check !== 'HomeAI') {
                 return;
             }
 
