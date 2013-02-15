@@ -73,7 +73,9 @@ class Logger implements Interfaces\Logger
      */
     public static function write($message, $type = null)
     {
-        new self($message, $type);
+        if (defined('BASE_PATH') && constant('BASE_PATH')) {
+            new self($message, $type);
+        }
     }
 
     /**
