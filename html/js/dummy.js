@@ -19,7 +19,9 @@ var pageBaseHref = '';  // Home AI base URL
 var pageModule = '';    // Current module name
 var pageAction = '';    // Current action name
 
+function getWidgetValidationRulesDefault() {}
 function getWidgetValidationRules() {}
+function getWidgetDataDefault() {}
 function getWidgetData() {}
 
 var Widget = {

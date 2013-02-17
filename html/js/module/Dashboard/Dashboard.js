@@ -168,7 +168,11 @@ jQuery(document).ready(function() {
     var sideMenu = jQuery('#sideMenu');
 
     sideMenu.find('.dropdown-menu').on('click', 'a', function() {
-        sideMenu.find('.dropdown-menu').dropdown('hide');
+        sideMenu.find('.dropdown-menu').parent().removeClass('open');
+    });
+
+    jQuery(document).on('click', '.widget .navbar .dropdown-menu li > a', function() {
+        jQuery(this).parent().parent().parent().removeClass('open');
     });
 });
 

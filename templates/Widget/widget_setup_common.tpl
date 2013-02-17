@@ -36,39 +36,39 @@
             </label>
         </div>
     </div>
+{/if}
 
-    <div class="widgetSetupRefresh hide">
-        <div class="control-group control-group-slider">
-            <label class="control-label control-label-slider span3">hours</label>
-            <div class="controls span9">
-                <div id="widgetSetupRefreshHours" class="sliderInput span9" data-index="0" data-min="0" data-max="23"></div>
-            </div>
-        </div>
-        <div class="control-group control-group-slider">
-            <label class="control-label control-label-slider span3">minutes</label>
-            <div class="controls span9">
-                <div id="widgetSetupRefreshMinutes" class="sliderInput span9" data-index="1" data-min="0" data-max="59"></div>
-            </div>
-        </div>
-        <div class="control-group control-group-slider">
-            <label class="control-label control-label-slider span3">seconds</label>
-            <div class="controls span9">
-                <div id="widgetSetupRefreshSeconds" class="sliderInput span9" data-index="2" data-min="0" data-max="59"></div>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label span3">Refresh every</label>
-            <div class="controls span9 input-append">
-                <input name="refreshValue" class="span2 pagination-right" type="text" value="{$_refresh}" />
-                <span class="add-on">/ seconds</span>
-                <span id="widgetSetupRefreshTime" class="add-on">00:00:00</span>
-            </div>
-            <span class="controls span9 help-block hide"></span>
+<div class="widgetSetupRefresh hide">
+    <div class="control-group control-group-slider">
+        <label class="control-label control-label-slider span3">hours</label>
+        <div class="controls span9">
+            <div id="widgetSetupRefreshHours" class="sliderInput span9" data-index="0" data-min="0" data-max="23"></div>
         </div>
     </div>
+    <div class="control-group control-group-slider">
+        <label class="control-label control-label-slider span3">minutes</label>
+        <div class="controls span9">
+            <div id="widgetSetupRefreshMinutes" class="sliderInput span9" data-index="1" data-min="0" data-max="59"></div>
+        </div>
+    </div>
+    <div class="control-group control-group-slider">
+        <label class="control-label control-label-slider span3">seconds</label>
+        <div class="controls span9">
+            <div id="widgetSetupRefreshSeconds" class="sliderInput span9" data-index="2" data-min="0" data-max="59"></div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label span3">Refresh every</label>
+        <div class="controls span9 input-append">
+            <input name="refreshValue" class="span2 pagination-right" type="text" value="{$_refresh}" />
+            <span class="add-on">/ seconds</span>
+            <span id="widgetSetupRefreshTime" class="add-on">00:00:00</span>
+        </div>
+        <span class="controls span9 help-block hide"></span>
+    </div>
+</div>
 
-    <script type="text/javascript">
-
+<script type="text/javascript">
     var selectedColumn = '{if isset($data.column)}{$data.column}{/if}';
 
     {literal}
@@ -256,5 +256,4 @@
         return (t.length == 1) ? "0" + t : t;
     }
     {/literal}
-    </script>
-{/if}
+</script>

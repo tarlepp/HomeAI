@@ -188,6 +188,27 @@ class View extends MView implements Interfaces\View
     }
 
     /**
+     * Method makes Clock widget setup GUI. This is shown in jQuery dialog.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for Clock widget -setup
+     */
+    public function makeSetupClock(array $widget, array $data)
+    {
+        // Used widget metadata
+        $metadata = array();
+
+        // Used template file
+        $template = 'widget_setup_clock.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
+    }
+
+    /**
      * @param   string  $template   Used template file
      * @param   array   $widget     Widget data
      * @param   array   $data       HTML form data
@@ -195,7 +216,7 @@ class View extends MView implements Interfaces\View
      *
      * @return  string              HTML content for specified widget -setup
      */
-    private function createTemplate($template, $widget, $data, $metadata)
+    private function createTemplate($template, array $widget, array $data, array $metadata)
     {
         $template = $this->smarty->createTemplate($template, $this->smarty);
         $template->assign('widget', $widget);
