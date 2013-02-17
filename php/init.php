@@ -15,6 +15,8 @@
  */
 use \HomeAI\Core\System;
 
+// HomeAI autoload classes
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'Core/Interfaces/Autoload.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'Core/Autoload.php';
 
 // Register HomeAI autoload functionality
