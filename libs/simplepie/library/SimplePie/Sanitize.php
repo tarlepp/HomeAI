@@ -33,7 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @version 1.4-dev
+ * @version 1.3.1
  * @copyright 2004-2012 Ryan Parman, Geoffrey Sneddon, Ryan McCue
  * @author Ryan Parman
  * @author Geoffrey Sneddon
@@ -247,10 +247,6 @@ class SimplePie_Sanitize
 			if ($type & (SIMPLEPIE_CONSTRUCT_HTML | SIMPLEPIE_CONSTRUCT_XHTML))
 			{
 
-				if (!class_exists('DOMDocument'))
-				{
-					throw new SimplePie_Exception('DOMDocument not found, unable to use sanitizer');
-				}
 				$document = new DOMDocument();
 				$document->encoding = 'UTF-8';
 				$data = $this->preprocess($data, $type);

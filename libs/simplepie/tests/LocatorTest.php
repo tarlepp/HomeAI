@@ -35,7 +35,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @version 1.4-dev
+ * @version 1.3.1
  * @copyright 2004-2011 Ryan Parman, Geoffrey Sneddon, Ryan McCue
  * @author Ryan Parman
  * @author Geoffrey Sneddon
@@ -182,5 +182,22 @@ class LocatorTest extends PHPUnit_Framework_TestCase
 	protected static function map_url_file($file)
 	{
 		return $file->url;
+	}
+}
+
+/**
+ * Acts as a fake feed request
+ */
+class MockSimplePie_File extends SimplePie_File
+{
+	public function __construct($url)
+	{
+		$this->url = $url;
+		$this->headers = array(
+			'content-type' => 'application/atom+xml'
+		);
+		$this->method = SIMPLEPIE_FILE_SOURCE_REMOTE;
+		$this->body = '<?xml charset="utf-8"?><feed />';
+		$this->status_code = 200;
 	}
 }

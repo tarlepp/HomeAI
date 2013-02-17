@@ -33,7 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @version 1.4-dev
+ * @version 1.3.1
  * @copyright 2004-2012 Ryan Parman, Geoffrey Sneddon, Ryan McCue
  * @author Ryan Parman
  * @author Geoffrey Sneddon
@@ -147,7 +147,7 @@ class SimplePie_Cache_Memcache implements SimplePie_Cache_Base
 
 		if ($data !== false)
 		{
-			// essentially ignore the mtime because Memcache expires on its own
+			// essentially ignore the mtime because Memcache expires on it's own
 			return time();
 		}
 

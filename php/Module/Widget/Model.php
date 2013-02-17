@@ -102,7 +102,6 @@ class Model extends MModel implements Interfaces\Model
         $feed = new \SimplePie();
         $feed->set_feed_url($url);
         $feed->enable_cache(false);
-        $feed->enable_exceptions(true);
         $feed->init();
 
         return $feed->get_items(0, $limit);
