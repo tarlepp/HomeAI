@@ -2,8 +2,8 @@
 /**
  * \php\Util\YuiCompressor.php
  *
- * @package     Util
- * @subpackage  YuiCompressor
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    UI
  */
 namespace HomeAI\Util;
@@ -11,13 +11,13 @@ namespace HomeAI\Util;
 /**
  * This class compress Javascript/CSS using the YUI Compressor.
  *
- * @package     Util
- * @subpackage  YuiCompressor
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    UI
  *
- * @date        $Date: 2012-06-02 18:01:42 +0300 (Sat, 02 Jun 2012) $
- * @author      $Author: tle $
- * @revision    $Rev: 4 $
+ * @date        $Date$
+ * @author      $Author$
+ * @revision    $Rev$
  */
 class YuiCompressor implements Interfaces\YuiCompressor
 {

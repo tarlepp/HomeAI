@@ -2,8 +2,8 @@
 /**
  * \php\Util\Network.php
  *
- * @package     Util
- * @subpackage  Network
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Network
  */
 namespace HomeAI\Util;
@@ -15,8 +15,8 @@ use HomeAI\Core\Request;
  *
  * This class contains different network related helper methods.
  *
- * @package     Util
- * @subpackage  Network
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Network
  *
  * @date        $Date$

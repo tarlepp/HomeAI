@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\Config.php
  *
- * @package     Util
- * @subpackage  Config
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\Config -class.
  *
- * @package     Util
- * @subpackage  Config
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

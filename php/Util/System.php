@@ -2,8 +2,8 @@
 /**
  * \php\Util\System.php
  *
- * @package     Util
- * @subpackage  System
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    System
  */
 namespace HomeAI\Util;
@@ -12,8 +12,8 @@ namespace HomeAI\Util;
  * System specified class which contains method to get different
  * information about current system.
  *
- * @package     Util
- * @subpackage  System
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    System
  *
  * @date        $Date$

@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\String.php
  *
- * @package     Util
- * @subpackage  String
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\String -class.
  *
- * @package     Util
- * @subpackage  String
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

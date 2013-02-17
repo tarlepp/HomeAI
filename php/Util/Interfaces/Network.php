@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\Network.php
  *
- * @package     Util
- * @subpackage  Network
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\Network -class.
  *
- * @package     Util
- * @subpackage  Network
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\System.php
  *
- * @package     Util
- * @subpackage  System
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\System -class.
  *
- * @package     Util
- * @subpackage  System
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

@@ -2,8 +2,8 @@
 /**
  * \php\Util\JSON.php
  *
- * @package     Util
- * @subpackage  JSON
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    JSON
  */
 namespace HomeAI\Util;
@@ -11,8 +11,8 @@ namespace HomeAI\Util;
 /**
  * This class contains JSON helper methods.
  *
- * @package     Util
- * @subpackage  JSON
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    JSON
  *
  * @date        $Date$

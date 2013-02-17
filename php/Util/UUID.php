@@ -2,8 +2,8 @@
 /**
  * \php\Util\UUID.php
  *
- * @package     Util
- * @subpackage  UUID
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    UUID
  */
 namespace HomeAI\Util;
@@ -11,8 +11,8 @@ namespace HomeAI\Util;
 /**
  * Generic UUID generator class.
  *
- * @package     Util
- * @subpackage  UUID
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    UUID
  *
  * @date        $Date$
