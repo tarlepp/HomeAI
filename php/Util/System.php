@@ -1,26 +1,48 @@
 <?php
 /**
- * \php\Util\Time.php
+ * \php\Util\System.php
  *
  * @package     Util
- * @subpackage  Time
- * @category    Time
+ * @subpackage  System
+ * @category    System
  */
 namespace HomeAI\Util;
 
 /**
- * Generic Time class.
+ * System specified class which contains method to get different
+ * information about current system.
  *
  * @package     Util
- * @subpackage  Time
- * @category    Time
+ * @subpackage  System
+ * @category    System
  *
  * @date        $Date$
  * @author      $Author$
  * @revision    $Rev$
  */
-class Time implements Interfaces\Time
+class System implements Interfaces\System
 {
+    /**
+     * Method returns current memory usage.
+     *
+     * @param   bool    $format Return memory usage as human readable format
+     *
+     * @return  integer|string
+     */
+    public static function getMemoryUsage($format = true)
+    {
+        $size = memory_get_usage();
+
+        if ($format) {
+            $unit = array('b','kb','mb','gb','tb','pb');
+
+            $size = number_format(round($size / pow(1024, ($i = (int)floor(log($size, 1024)))), 2), 2);
+            $size .= $unit[$i];
+        }
+
+        return $size;
+    }
+
     /**
      * Method returns current process time from the HomeAI start.
      *
@@ -47,7 +69,7 @@ class Time implements Interfaces\Time
      *
      * @return  string
      */
-    public static function toHumanReadable($ms)
+    protected static function toHumanReadable($ms)
     {
         $ms = abs($ms);
         $ss = floor($ms / 1000);

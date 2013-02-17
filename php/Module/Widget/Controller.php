@@ -13,7 +13,7 @@ use HomeAI\Core\Exception as ExceptionCore;
 use HomeAI\Util\String as String;
 use HomeAI\Util\JSON as JSON;
 use HomeAI\Util\UUID as UUID;
-use HomeAI\Util\Network as Network;
+use HomeAI\Util\System as System;
 
 /**
  * Controller class for 'Widget' -module.
@@ -144,24 +144,19 @@ class Controller extends MController implements Interfaces\Controller
         } else {
             list($content, $status, $headers) = $this->model->getCurlResponse($url, $type, $headers, $postData);
 
-$time = 0;
+            // Determine memory usage and request time
+            $memory = System::getMemoryUsage(true);
+            $time = System::getProcessTime(true);
 
-            $size = memory_get_usage();
-
-            $unit=array('b','kb','mb','gb','tb','pb');
-            $size = @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
-
+            // Make output
             $output = array(
                 'content'   => trim($content),
                 'headers'   => trim($headers),
-                'stats'     => "Status ". Network::getStatusCodeString($status) ."\nRequest time: ". $time ."s\nMemory: ". $size ,
+                'stats'     => "Request time: ". $time ."\nMemory usage: ". $memory,
             );
-
-            //echo $this->model->getCurlResponse($url, $type, $headers, $postData);
         }
 
         echo JSON::encode($output);
-
         exit(0);
     }
 

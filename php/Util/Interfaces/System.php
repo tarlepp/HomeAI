@@ -1,24 +1,24 @@
 <?php
 /**
- * \php\Util\Interfaces\Time.php
+ * \php\Util\Interfaces\System.php
  *
  * @package     Util
- * @subpackage  Time
+ * @subpackage  System
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
 
 /**
- * Interface for \HomeAI\Util\Time -class.
+ * Interface for \HomeAI\Util\System -class.
  *
  * @package     Util
- * @subpackage  Time
+ * @subpackage  System
  * @category    Interface
  *
  * @date        $Date$
  * @author      $Author$
  * @revision    $Rev$
  */
-interface Time
+interface System
 {
 }
