@@ -181,13 +181,31 @@ class Controller extends MController implements Interfaces\Controller
         $limit = $this->request->get('limit', 5);
 
         if (is_null($url)) {
-            echo "RSS feed URL not defined.";
+            $output = array(
+                'content'   => 'RSS feed URL not defined.',
+                'stats'     => '',
+            );
         } else {
             require_once PATH_BASE .'libs/simplepie/autoloader.php';
 
-            echo $this->view->makeRssFeed($this->model->getRssItems($url, $limit));
+            try {
+                $content = $this->view->makeRssFeed($this->model->getRssItems($url, $limit));
+            } catch (\Exception $error) {
+                $content = "Error: ". $error->getMessage();
+            }
+
+            // Determine memory usage and request time
+            $memory = System::getMemoryUsage(true);
+            $time = System::getProcessTime(true);
+
+            // Make output
+            $output = array(
+                'content'   => $content,
+                'stats'     => "Request time: ". $time ."\nMemory usage: ". $memory,
+            );
         }
 
+        echo JSON::encode($output);
         exit(0);
     }
 

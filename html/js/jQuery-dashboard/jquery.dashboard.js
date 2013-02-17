@@ -402,25 +402,40 @@
 
                     switch (widget.metadata.type) {
                         case 'curl':
-                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters);
+                            handleRequest('Widget/Curl', widget, parameters);
                             break;
                         case 'rss':
-                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters);
+                            handleRequest('Widget/Rss', widget, parameters);
                             break;
                         case 'highcharts':
-                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters);
+                            handleRequest('Widget/Highcharts', widget, parameters);
                             break;
                     }
                 }
             };
 
             function handleRequest(url, widget, parameters) {
+                var dataType = 'text';
+
+                switch (widget.metadata.type) {
+                    case 'curl':
+                    case 'rss':
+                        dataType = 'json';
+                        break;
+                    case 'highcharts':
+                        break;
+                }
+
                 jQuery.ajax({
-                    url: url,
+                    url: pageBaseHref + url,
                     data: parameters,
-                    dataType: 'text',
+                    dataType: dataType,
                     success: function(data) {
                         var widgetElement = jQuery('#'+ widget.id).find('.widgetcontent');
+
+                        if (dataType == 'json') {
+                            data = data.content;
+                        }
 
                         if (widgetElement.html() != data) {
                             widgetElement.html(data);

@@ -132,9 +132,8 @@ jQuery(document).ready(function() {
 
             switch (type) {
                 case 'curl':
-                    dataType = 'json';
-                    break;
                 case 'rss':
+                    dataType = 'json';
                     break;
                 case 'highcharts':
                     break;
@@ -150,9 +149,9 @@ jQuery(document).ready(function() {
                 success: function(data) {
                     switch (type) {
                         case 'curl':
+                        case 'rss':
                             widget.find('.widgetcontent').html(data.content);
                             break;
-                        case 'rss':
                         case 'highcharts':
                             widget.find('.widgetcontent').html(data);
                             break;

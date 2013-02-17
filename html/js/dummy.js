@@ -15,7 +15,6 @@
  * @revision    $Rev$
  */
 
-
 var pageBaseHref = '';  // Home AI base URL
 var pageModule = '';    // Current module name
 var pageAction = '';    // Current action name
@@ -24,11 +23,19 @@ function getWidgetValidationRules() {}
 function getWidgetData() {}
 
 var Widget = {
-    'Curl': {
-        'Data': function () {
+    Curl: {
+        Data: function() {
             return {
                 content: 'cUrl response',
                 headers: 'Response headers',
+                stats: 'Request stats'
+            }
+        }
+    },
+    Rss: {
+        Data: function() {
+            return {
+                content: 'RSS response',
                 stats: 'Request stats'
             }
         }
