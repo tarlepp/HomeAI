@@ -209,6 +209,27 @@ class View extends MView implements Interfaces\View
     }
 
     /**
+     * Method makes Egg Timer widget setup GUI. This is shown in jQuery dialog.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for Egg Timer widget -setup
+     */
+    public function makeSetupEggTimer(array $widget, array $data)
+    {
+        // Used widget metadata
+        $metadata = array();
+
+        // Used template file
+        $template = 'widget_setup_eggtimer.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
+    }
+
+    /**
      * @param   string  $template   Used template file
      * @param   array   $widget     Widget data
      * @param   array   $data       HTML form data

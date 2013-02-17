@@ -504,6 +504,21 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
+     * Method makes setup for 'Egg Timer' -widget.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   Widget content data
+     *
+     * @return  void
+     */
+    public function widgetSetupEggTimer(array $widget, array $data)
+    {
+        echo $this->view->makeSetupEggTimer($widget, $data);
+    }
+
+    /**
      * Method determines specified widget data. Widget data is determined
      * via it's metadata which is defined to actual widget -method comments.
      *
