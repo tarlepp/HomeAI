@@ -1118,6 +1118,8 @@
 
             dashboard.log('Getting JSON feed : ' + url, 1);
 
+
+
             // get the widgets
             jQuery.getJSON(url, {"cache": true}, function(json) {
                 // load the widgets from the category
@@ -1145,6 +1147,14 @@
                     var html = tmpl(widgetTemplate.html(), item);
 
                     jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).append(html);
+
+                    if (dashboard.getWidget(item.id)) {
+                        jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).find('button')
+                            .addClass('disabled')
+                            .removeClass('addwidget')
+                            .html('<em>Widget already exists on dashboard</em>')
+                        ;
+                    }
                 });
             });
 

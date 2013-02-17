@@ -4,7 +4,6 @@
     </li>
 </script>
 
-
 <script type="text/html" id="widgettemplate">
     <div class="ui-widget ui-corner-all ui-widget-content widget" id="<%= id %>" title="<%= title %>">
         <div class="navbar">
@@ -36,7 +35,6 @@
     <li class="layoutchoice" id="<%= id %>" style="background-image: url('<%= image %>')"></li>
 </script>
 
-
 <script type="text/html" id="addwidgettemplate">
     <li class="widgetitem">
         <div class="row-fluid">
@@ -59,8 +57,6 @@
 <div id="widgetSetupDialog" class="dialog">
 </div>
 
-
-
 <div class="dialog" id="addwidgetdialog" title="Widget Directory">
     <div class="row-fluid">
         <div class="span3">
@@ -76,11 +72,9 @@
     </div>
 </div>
 
-
 <div class="dialog" id="editLayout" title="Choose dashboard layout">
     <div class="panel-body" id="layout-dialog">
         <ul class="layoutselection">
         </ul>
     </div>
 </div>
-
