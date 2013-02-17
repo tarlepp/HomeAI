@@ -60,7 +60,7 @@ class Autoload
         }
 
         if (isset($bits) && is_array($bits) && count($bits) > 0) {
-            $classDir  = implode('/', $bits);
+            $classDir  = implode(DIRECTORY_SEPARATOR, $bits);
             $classFile = $this->path . $classDir . DIRECTORY_SEPARATOR . $class . ".php";
 
             if (is_readable($classFile)) {
