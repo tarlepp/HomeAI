@@ -549,8 +549,6 @@ class Controller extends MController implements Interfaces\Controller
      *
      * Note that method will modify given comment block data array.
      *
-     * @todo    Check if widget image exists on fs.
-     *
      * @param   array   $comments   Method comments
      * @param   string  $methodName Name of the method
      *
@@ -560,6 +558,12 @@ class Controller extends MController implements Interfaces\Controller
     {
         // Store HomeAI base url
         $url = $this->request->getBaseUrl(false, true);
+
+        if (is_readable(PATH_BASE .'html/images/widget/'. str_replace('handleRequest', '', $methodName) .'.jpg')) {
+            $image = $url .'images/widget/'. str_replace('handleRequest', '', $methodName) .'.jpg';
+        } else {
+            $image = $url .'images/widget/no_image.jpg';
+        }
 
         // Widget metadata properties
         $properties = array(
@@ -586,7 +590,7 @@ class Controller extends MController implements Interfaces\Controller
             ),
             'image'         => array(
                 'required'  => false,
-                'default'   => $url .'images/widgets/'. str_replace('handleRequest', '', $methodName) .'.jpg',
+                'default'   => $image,
             ),
             'refreshable'   => array(
                 'required'  => false,
@@ -597,7 +601,6 @@ class Controller extends MController implements Interfaces\Controller
 
         // Iterate "default" properties
         foreach ($properties as $property => $values) {
-
             // Property is required, but it doesn't exists
             if ($values['required'] && !isset($comments[$property])) {
                 return false;
