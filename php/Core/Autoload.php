@@ -20,7 +20,7 @@ namespace HomeAI\Core;
  * @version     $Rev$
  * @author      $Author$
  */
-class Autoload
+class Autoload implements Interfaces\Autoload
 {
     /**
      * Used base path for classes.
