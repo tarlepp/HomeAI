@@ -294,11 +294,20 @@ ul.fullscreen {
     min-height: 0;
     margin: 0 0 0 10px;
     padding: 0 0 40px 0;
+    border-radius: 4px;
 }
 
 .selectedcolumn {
     border: none;
-    background-color: rgba(200, 200, 200, 0.1);
+    background: #666666 url(../../js/jQueryUI/images/ui-bg_diagonals-thick_20_666666_40x40_light.png) 50% 50% repeat;
+}
+
+.column .widget.draggActivated {
+    opacity: 0.8;
+}
+
+.column .widget.draggedWidget {
+    opacity: 1;
 }
 
 .layout {

@@ -84,7 +84,6 @@
             // make the columns sortable, see http://jqueryui.com/demos/sortable/ for explanation
             columns.sortable({
                 connectWith: columns,
-                opacity: opts.opacity,
                 handle: '.' + opts.widgetHeaderClass,
                 over: function() {
                     jQuery(this).addClass("selectedcolumn");
@@ -122,12 +121,23 @@
                 },
                 start: function(event, ui) {
                     ui.item.find('.' + opts.widgetTitleClass).addClass('noclick');
+                    ui.item.addClass('draggedWidget');
+
+                    columns.find('.widget').each(function() {
+                        jQuery(this).addClass('draggActivated')
+                    })
                 },
                 stop: function(event, ui) {
                     //sorting changed (within one list)
                     setTimeout(function() {
                         ui.item.find('.' + opts.widgetTitleClass).removeClass('noclick');
                     }, 300);
+
+                    ui.item.removeClass('draggedWidget');
+
+                    columns.find('.widget').each(function() {
+                        jQuery(this).removeClass('draggActivated')
+                    })
                 }
             });
 
