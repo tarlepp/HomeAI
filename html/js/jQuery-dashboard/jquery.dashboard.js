@@ -80,7 +80,6 @@
             }
 
             var columns = jQuery('.' + opts.columnClass);
-            var heights = [];
 
             // make the columns sortable, see http://jqueryui.com/demos/sortable/ for explanation
             columns.sortable({
