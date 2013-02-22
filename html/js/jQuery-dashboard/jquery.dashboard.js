@@ -141,7 +141,17 @@
 
                     columns.find('.widget').each(function() {
                         jQuery(this).removeClass('draggActivated')
-                    })
+                    });
+
+                    columns.each(function() {
+                        var height = 0;
+
+                        jQuery(this).find('.widget').each(function() {
+                            height += jQuery(this).height() + 10;
+                        });
+
+                        jQuery(this).height(height + 10);
+                    });
                 }
             });
 
