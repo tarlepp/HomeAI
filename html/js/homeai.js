@@ -50,11 +50,11 @@ jQuery(document).ready(function() {
 });
 
 function createQtipDiv(el) {
-    createQtip(el, el.find('.tooltipDivContainer h1').html(), el.find('.tooltipDivContainer div'), 'auto', 'top left', 'bottom left', true, 100);
+    createQtip(el, el.find('.tooltipDivContainer h1').html(), el.find('.tooltipDivContainer div'), 'auto', 'top left', 'bottom center', true, 100);
 }
 
 function createQtipTitle(el) {
-    createQtip(el, '', el.attr('title'), 'auto', 'top left', 'bottom left', false, 50);
+    createQtip(el, '', el.attr('title'), 'auto', 'top left', 'bottom center', false, 50);
 }
 
 function createQtip(element, tipTitle, tipText, tipWidth, tipMy, tipAt, tipFixed, tipDelay) {
