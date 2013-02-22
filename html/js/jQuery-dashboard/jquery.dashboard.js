@@ -80,6 +80,7 @@
             }
 
             var columns = jQuery('.' + opts.columnClass);
+            var heights = [];
 
             // make the columns sortable, see http://jqueryui.com/demos/sortable/ for explanation
             columns.sortable({
@@ -120,14 +121,18 @@
                     }
                 },
                 start: function(event, ui) {
+                    columns.css('height', columns.height() + (jQuery(window).height() - columns.height()));
+
                     ui.item.find('.' + opts.widgetTitleClass).addClass('noclick');
                     ui.item.addClass('draggedWidget');
 
                     columns.find('.widget').each(function() {
                         jQuery(this).addClass('draggActivated')
-                    })
+                    });
                 },
                 stop: function(event, ui) {
+                    columns.css('height', columns.height() - (jQuery(window).height() - columns.height()));
+
                     //sorting changed (within one list)
                     setTimeout(function() {
                         ui.item.find('.' + opts.widgetTitleClass).removeClass('noclick');
