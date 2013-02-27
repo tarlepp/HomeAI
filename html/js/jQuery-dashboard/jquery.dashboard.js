@@ -128,6 +128,8 @@
                     columns.find('.widget').each(function() {
                         jQuery(this).addClass('draggActivated')
                     });
+
+                    jQuery('footer').hide();
                 },
                 stop: function(event, ui) {
                     columns.css('height', columns.height() - (jQuery(window).height() - columns.height()));
@@ -152,6 +154,8 @@
 
                         jQuery(this).height(height + 10);
                     });
+
+                    jQuery('footer').show();
                 }
             });
 
@@ -1132,8 +1136,6 @@
 
             dashboard.log('Getting JSON feed : ' + url, 1);
 
-
-
             // get the widgets
             jQuery.getJSON(url, {"cache": true}, function(json) {
                 // load the widgets from the category
@@ -1159,11 +1161,12 @@
                     }
 
                     var html = tmpl(widgetTemplate.html(), item);
+                    var widget = jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass);
 
-                    jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).append(html);
+                    widget.append(html);
 
                     if (dashboard.getWidget(item.id)) {
-                        jQuery('#' + addOpts.dialogId).find('.' + addOpts.widgetClass).find('button')
+                        widget.find('button')
                             .addClass('disabled')
                             .removeClass('addwidget')
                             .html('<em>Widget already exists on dashboard</em>')
