@@ -629,7 +629,6 @@
             return widget;
         }
 
-
         // FIXME: can this be done easier??
         function getLayout(id) {
             dashboard.log('entering getLayout function', 1);
@@ -655,17 +654,6 @@
 
             return r;
         }
-
-        // TODO
-        jQuery(document).on('dashboardLayoutLoaded', '#' + dashboard.id, function() {
-            jQuery('#'+ dashboard.id).find('.'+ opts.columnClass).each(function() {
-                var column = jQuery(this);
-
-                column.children().each(function() {
-                    console.log('todo normalize column heights');
-                });
-            });
-        });
 
         jQuery(document).on('click', '#' + dashboard.id + ' .menutrigger', function() {
             dashboard.log('widgetOpenMenu event thrown for widget ' + widget.id, 2);
@@ -1411,10 +1399,19 @@
                 dashboard.log('addWidgetDialogCategoriesLoaded event thrown', 2);
                 dashboard.element.trigger('addWidgetDialogCategoriesLoaded');
 
-                // TODO determine which category to open
+                var dialogContent = jQuery('#' + addOpts.dialogId);
+                var selectedCategory = dialogContent.find('.' + addOpts.categoryClass + '>li:first');
+
+                if (typeof category != 'undefined') {
+                    dialogContent.find('.' + addOpts.categoryClass + ' > li').each(function() {
+                        if (jQuery(this).data('category') == category) {
+                            selectedCategory = jQuery(this);
+                        }
+                    });
+                }
 
                 dashboard.log('addWidgetDialogSelectCategory event thrown', 2);
-                dashboard.element.trigger('addWidgetDialogSelectCategory', {"category": jQuery('#' + addOpts.dialogId).find('.' + addOpts.categoryClass + '>li:first')});
+                dashboard.element.trigger('addWidgetDialogSelectCategory', {"category": selectedCategory});
             });
         });
 
