@@ -1,8 +1,9 @@
 .responsiveWidth {
-    position: relative;
+    position: absolute;
     float: right;
     color: #FFFFFF;
     line-height: 40px;
+    right: 5px;
 }
 
 .responsiveWidth:before {

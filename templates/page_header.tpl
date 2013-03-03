@@ -12,12 +12,11 @@
 
                 <div class="responsiveWidth"></div>
 
-                <div class="nav-collapse collapse">
+                <div id="mainNavigation" class="nav-collapse collapse">
                 {$pageNavigation}
                 </div>
 
             </div>
-
         </div>
     </div>
 </div>
