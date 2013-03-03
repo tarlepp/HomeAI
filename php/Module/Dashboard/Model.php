@@ -145,6 +145,21 @@ class Model extends MModel implements Interfaces\Model
                         'method'        => 'Rss',
                     ),
                     array(
+                        'id'            => 'widgetAmpparit',
+                        'title'         => 'Uusimmat uutiset (ampparit.com)',
+                        'column'        => 'second',
+                        'open'          => true,
+                        'metadata'      => array(
+                            'type'      => 'rss',
+                            'data'      => array(
+                                'url'   => 'http://feeds.feedburner.com/ampparit-uutiset',
+                                'limit' => 10,
+                            ),
+                        ),
+                        'refresh'       => 60,
+                        'method'        => 'Rss',
+                    ),
+                    array(
                         'id'            => 'widget4',
                         'title'         => 'RSS feed from hs.fi',
                         'column'        => 'second',
@@ -173,23 +188,6 @@ class Model extends MModel implements Interfaces\Model
                         ),
                         'method'        => 'Curl',
                     ),
-                    array(
-                        'id'            => 'widgetAmpparit',
-                        'title'         => 'Uusimmat uutiset (ampparit.com)',
-                        'column'        => 'third',
-                        'open'          => true,
-                        'metadata'      => array(
-                            'type'      => 'rss',
-                            'data'      => array(
-                                'url'   => 'http://feeds.feedburner.com/ampparit-uutiset',
-                                'limit' => 10,
-                            ),
-                        ),
-                        'refresh'       => 60,
-                        'method'        => 'Rss',
-                    ),
-
-                    /*
                     array(
                         'id'            => 'widget6',
                         'title'         => 'Highcharts example 1',
@@ -220,7 +218,6 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                     ),
-                    */
                 ),
             ),
         );
