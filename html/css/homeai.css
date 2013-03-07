@@ -11,6 +11,10 @@ body {
 
 html {
     overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.jtain {
 }
 
 footer {
