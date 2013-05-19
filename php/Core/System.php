@@ -24,12 +24,11 @@ use Doctrine\Common\ClassLoader;
 class System
 {
     /*
-    **
-    * Singleton class variable.
-    *
-    * @access  protected
-    * @var     \HomeAI\Core\System
-    */
+     * Singleton class variable.
+     *
+     * @access  protected
+     * @var     \HomeAI\Core\System
+     */
     protected static $instance = null;
 
     /**
@@ -208,13 +207,11 @@ class System
     {
         if (!(defined('INIT_NO_DATABASE') && constant('INIT_NO_DATABASE'))) {
             // Require doctrine class loader
-            require_once PATH_BASE .'libs/DoctrineDBAL/Doctrine/Common/ClassLoader.php';
+            require_once PATH_BASE . 'libs/Doctrine/Doctrine/Common/ClassLoader.php';
 
             // Register doctrine class loader
-            $classLoader = new ClassLoader('Doctrine', PATH_BASE .'libs/DoctrineDBAL/');
+            $classLoader = new ClassLoader('Doctrine', PATH_BASE .'libs/Doctrine/');
             $classLoader->register();
-        } elseif (!(defined('INIT_NO_SESSION') && constant('INIT_NO_SESSION'))) {
-            define('INIT_NO_SESSION', true);
         }
     }
 

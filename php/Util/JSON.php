@@ -185,4 +185,33 @@ class JSON implements Interfaces\JSON
             throw new Exception($title . $message);
         }
     }
+
+    /**
+     * Common method to convert HomeAI exception to "standard" JSON
+     * error which is easily be usable in javascript.
+     *
+     * @param   \Exception  $error
+     *
+     * @return  void
+     */
+    public static function makeExceptionError(\Exception $error)
+    {
+        $data = array(
+            'message'   => $error->getMessage(),
+            'code'      => $error->getCode(),
+        );
+
+        // If debug mode is on, writ some extra info, do we need a trace?
+        if (defined('DEVELOPMENT_DEBUG') && constant('DEVELOPMENT_DEBUG')) {
+            $data['file'] = $error->getFile();
+            $data['line'] = $error->getLine();
+        }
+
+        header("HTTP/1.0 400 Bad Request");
+
+        JSON::makeHeaders();
+        echo JSON::encode($data);
+
+        exit(0);
+    }
 }

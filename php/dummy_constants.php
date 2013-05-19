@@ -15,3 +15,4 @@
  */
 define("SYSTEM_NAME", "see constants.ini");
 define("SYSTEM_VERSION", "see constants.ini");
+define("DEVELOPMENT_DEBUG", "see constants.ini");

@@ -23,7 +23,7 @@ use HomeAI\Util\Network;
  *
  * Login status check is very simple with following example:
  *
- *  if (\HomeAI\Auth\Login::isAuthenticated()) {
+ *  if (\HomeAI\Auth\Login::$auth) {
  *      \\ user is logged in.
  *  }
  *
@@ -63,12 +63,12 @@ class Login implements Interfaces\Login
      * @var     array
      */
     protected $meta = array(
-        'ID'        => Login::TYPE_INTEGER,
-        'Name'      => Login::TYPE_STRING,
-        'Email'     => Login::TYPE_STRING,
-        'SessionId' => Login::TYPE_STRING,
-        'IP'        => Login::TYPE_STRING,
-        'Agent'     => Login::TYPE_STRING,
+        'id'        => Login::TYPE_INTEGER,
+        'username'  => Login::TYPE_STRING,
+        'email'     => Login::TYPE_STRING,
+        'sessionId' => Login::TYPE_STRING,
+        'ip'        => Login::TYPE_STRING,
+        'agent'     => Login::TYPE_STRING,
     );
 
     /**
@@ -216,8 +216,9 @@ class Login implements Interfaces\Login
     }
 
     /**
-     * Method performs user logout procedure. This is basically just a
-     * redirection to /Admin/Logout -action
+     * Method performs user logout procedure. This is basically just a redirection to /Auth/Logout -action.
+     *
+     * @todo: how to handle AJAX requests?
      *
      * @access  protected
      *
@@ -226,7 +227,7 @@ class Login implements Interfaces\Login
     protected function logout()
     {
         // Redirect user to logout action
-        header("Location: " . $this->request->getBaseUrl(false, true) . "Admin/Logout");
+        header("Location: " . $this->request->getBaseUrl(false, true) . "Auth/Logout");
         exit(0);
     }
 }

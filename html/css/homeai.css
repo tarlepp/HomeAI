@@ -217,3 +217,11 @@ input[type="checkbox"] {
     font-size: 10px;
     line-height: 12px;
 }
+
+span.help-block {
+    clear: left;
+}
+
+#loginDialogForm {
+    margin: 5px 0 10px 0;
+}

@@ -17,7 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-require_once 'Doctrine/Common/ClassLoader.php';
+require_once 'libs/Doctrine/Doctrine/Common/ClassLoader.php';
 
 $classLoader = new \Doctrine\Common\ClassLoader('Doctrine');
 $classLoader->register();
@@ -28,6 +28,7 @@ $classLoader->register();
 $configFile = getcwd() . DIRECTORY_SEPARATOR . 'cli-config.php';
 
 $helperSet = null;
+
 if (file_exists($configFile)) {
     if ( ! is_readable($configFile)) {
         trigger_error(

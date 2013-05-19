@@ -10,6 +10,7 @@ namespace HomeAI\Module;
 
 use HomeAI\Auth;
 use HomeAI\Core\Request;
+use HomeAI\Util\JSON;
 
 /**
  * Generic module controller class. All module controller classes must extend
@@ -193,7 +194,7 @@ abstract class Controller implements Interfaces\Controller
             }
         } catch (\Exception $error) {
             if ($this->request->isAjax()) {
-                echo $error->getMessage();
+                JSON::makeExceptionError($error);
             } else {
                 $this->view->display($this->view->makeExceptionError($error));
             }

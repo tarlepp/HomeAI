@@ -24,7 +24,15 @@ jQuery(document).ready(function() {
                 message = 'Uncaught Error.\n' + jqXHR.responseText;
             }
 
-            makeMessage(message, 'error', {timeout: 5000});
+            if (isJsonString(jqXHR.responseText)) {
+                var json = JSON.parse(jqXHR.responseText);
+
+                if (json.message) {
+                    message = json.message;
+                }
+            }
+
+            makeMessage(message, 'error', {timeout: 5000, dismissQueue: true});
         },
         dataType: "json",
         type: "post"
@@ -46,6 +54,96 @@ jQuery(document).ready(function() {
 
     jQuery(document).on('mouseover', '.tooltipTitle', function() {
         createQtipTitle(jQuery(this));
+    });
+
+    var mainNavigation = jQuery('#mainNavigation').find('li');
+
+    mainNavigation.find('#loginLink').on('click', function(event) {
+        event.preventDefault();
+
+        var options = {
+            dialog:{
+                modal: true,
+                title: 'Login',
+                resizable: false,
+                draggable: false,
+                buttons: {
+                    'close': {
+                        text: 'Close',
+                        class: 'btn',
+                        click: function () {
+                            jQuery(this).dialog('close');
+                        }
+                    },
+                    'login': {
+                        text:'Login',
+                        class:'btn btn-primary',
+                        click: function () {
+                            var form = jQuery(this).find('#loginDialogForm');
+
+                            form.validate().form();
+
+                            if (form.validate().valid()) {
+                                jQuery.ajax({
+                                    url: pageBaseHref +'Auth/Login',
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: form.serialize(),
+                                    success: function(data, textStatus, jqXHR) {
+                                        if (data === true) {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                },
+                open: function(event, ui) {
+                    var form = jQuery(this).find('#loginDialogForm');
+                    var options = {
+                        ignore: '',
+                        errorClass: 'error',
+                        validClass: '',
+                        errorElement: 'span',
+                        rules: {
+                            username: {
+                                required: true
+                            },
+                            password: {
+                                required: true
+                            }
+                        },
+                        invalidHandler: function(form, validator) {
+                            var errors = validator.numberOfInvalids();
+
+                            if (errors) {
+                                var message = errors == 1
+                                    ? 'Error in login! You missed 1 field. This field has been highlighted.'
+                                    : 'Error in login! You missed ' + errors + ' fields. These fields have been highlighted.';
+
+                                makeMessage(message, 'error', {timeout: 7000});
+                            }
+                        },
+                        highlight: function(element, errorClass, validClass) {
+                            jQuery(element).closest('div.control-group').removeClass(validClass).addClass(errorClass);
+                        },
+                        unhighlight: function(element, errorClass, validClass) {
+                            jQuery(element).closest('div.control-group').removeClass(errorClass).addClass(validClass);
+                            jQuery(element).next('span.help-block').text('');
+                        },
+                        errorPlacement: function(error, element) {
+                            error.addClass('help-block');
+                            error.insertAfter(element);
+                        }
+                    };
+
+                    form.validate(options);
+                }
+            }
+        };
+
+        showUrlInDialog(pageBaseHref +"Auth", {}, options);
     });
 });
 
@@ -131,4 +229,14 @@ function isAppleDevice() {
         (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) ||
         (navigator.userAgent.toLowerCase().indexOf("ipod") > -1)
     );
+}
+
+function isJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+
+    return true;
 }

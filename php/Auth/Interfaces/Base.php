@@ -8,6 +8,8 @@
  */
 namespace HomeAI\Auth\Interfaces;
 
+use HomeAI\Auth\Exception;
+
 /**
  * Interface for \HomeAI\Auth\Base -class.
  *
@@ -40,32 +42,39 @@ interface Base
     public function __construct($username = null, $password = null);
 
     /**
-     * Setter for user data.
+     * Method to make actual login procedures. Basically method initializes a new
+     * session and stores necessary user information to specified session.
      *
-     * @access  public
+     * After this, user is redirected to application base url or if request is made
+     * via AJAX boolean true value is outputted to client in JSON format.
      *
-     * @param   array   $data   User data.
+     * @throws  Exception
      *
      * @return  void
      */
-    public function setUserData(&$data);
+    public function login();
 
-    /**
-     * Getter for user data.
-     *
-     * @access  public
-     *
-     * @return  array
-     */
-    public function getUserData();
     /**#@-*/
 
     /**#@-
      * Methods that must be implemented in child classes
      */
 
+    /**
+     * Current auth object initializer method.
+     *
+     * @return  void
+     */
     public function initializeAuth();
 
+    /**
+     * Actual auth object authenticate method. This will check that given
+     * username + password are valid. If not method will throw an exception.
+     *
+     * @throws \HomeAI\Auth\Exception
+     *
+     * @return  void
+     */
     public function authenticate();
     /**#@-*/
 }

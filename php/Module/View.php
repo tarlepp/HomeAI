@@ -98,8 +98,8 @@ abstract class View implements Interfaces\View
         'jQueryUI-TouchPunch/',
         'jQuery-noty/',
         'jQuery-Validate/',
-        'bootstrap/',
         'qTip2/',
+        'bootstrap/',
         'homeai.js'
     );
 
@@ -811,7 +811,6 @@ abstract class View implements Interfaces\View
         $this->checkPageData(View::CHECK_TYPE_JAVASCRIPT, $directory);
     }
 
-
     /**
      * Method checks if current page has defined css files which must be
      * appended to current view.
@@ -952,7 +951,8 @@ abstract class View implements Interfaces\View
             'pageNavigation'      => '',
 
             // Is user logged on or not
-            'admin'               => Login::$auth,
+            'authStatus'            => Login::$auth,
+            'authData'              => $this->request->getSession('User'),
 
             // System variables
             'systemVersion'       => SYSTEM_VERSION,
