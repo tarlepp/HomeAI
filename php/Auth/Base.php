@@ -11,6 +11,7 @@ namespace HomeAI\Auth;
 use HomeAI\Core\Request;
 use HomeAI\ORM\ORM;
 use HomeAI\Util\JSON;
+use HomeAI\Util\Message;
 use HomeAI\Util\Network;
 
 /**
@@ -122,6 +123,8 @@ abstract class Base implements Interfaces\Base
 
         // Save user data to session
         $this->request->setSession('User', $sessionData);
+
+        Message::setOk("You're logged in.");
 
         if ($this->request->isAjax()) {
             JSON::makeHeaders();

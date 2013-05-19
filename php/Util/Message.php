@@ -28,9 +28,9 @@ class Message implements Interfaces\Message
      * @type       constant
      * @var        string
      */
-    const TYPE_OK      = 'Ok';
-    const TYPE_ERROR   = 'Error';
-    const TYPE_WARNING = 'Warning';
+    const TYPE_OK      = 'success';
+    const TYPE_ERROR   = 'error';
+    const TYPE_WARNING = 'warning';
     /**#@-*/
 
     /**
@@ -102,8 +102,8 @@ class Message implements Interfaces\Message
 
         // Add message data to session
         $_SESSION['Message'][$type][] = array(
-            'Message' => $message,
-            'Title'   => $title,
+            'message' => $message,
+            'title'   => $title,
         );
     }
 }

@@ -1187,7 +1187,7 @@ class Smarty extends Smarty_Internal_TemplateBase {
      * @param mixed $compile_id compile id to be used with this template
      * @param object $parent next higher level of Smarty variables
      * @param boolean $do_clone flag is Smarty object shall be cloned
-     * @return object template object
+     * @return Smarty_Internal_Template template object
      */
     public function createTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $do_clone = true)
     {

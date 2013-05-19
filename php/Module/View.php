@@ -441,7 +441,7 @@ abstract class View implements Interfaces\View
         }
 
         // Add requires JS library to show actual messages
-        $this->addJavascript('jQuery-ctNotify/');
+        $this->addJavascript('jQuery-noty/');
 
         // Iterate messages.
         foreach ($_SESSION['Message'] as $type => $data) {
@@ -450,7 +450,7 @@ abstract class View implements Interfaces\View
             }
 
             // Create message template and assign message data to it.
-            $message = $this->smarty->createTemplate('js_notify_message.tpl');
+            $message = $this->smarty->createTemplate('js_noty_message.tpl');
             $message->assign('data', $data);
             $message->assign('type', $type);
 

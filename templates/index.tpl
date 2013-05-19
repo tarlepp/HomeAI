@@ -43,6 +43,8 @@
                 {$script}
             {/foreach}
             {literal}});{/literal}
+        {else}
+            {$pageScript}
         {/if}
     </script>
 
