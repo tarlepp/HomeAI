@@ -9,7 +9,6 @@
 namespace HomeAI\Core;
 
 use HomeAI\Util\Logger as Logger;
-use HomeAI\Util\JSON as JSON;
 
 /**
  * Exception -class
@@ -19,7 +18,7 @@ use HomeAI\Util\JSON as JSON;
  *
  * @package     HomeAI
  * @subpackage  Core
- * @category    Session
+ * @category    Exception
  *
  * @date        $Date$
  * @author      $Author$
@@ -50,30 +49,5 @@ class Exception extends \Exception
         if ($this->writeLog) {
             Logger::write($this, Logger::TYPE_ERROR);
         }
-    }
-
-    /**
-     * Common method to convert HomeAI exception to "standard" JSON
-     * error which is easily be usable in javascript.
-     *
-     * @return  void
-     */
-    public function makeJsonResponse()
-    {
-        $data = array(
-            'message'   => $this->getMessage(),
-            'code'      => $this->getCode(),
-        );
-
-        // If debug mode is on, writ some extra info, do we need a trace?
-        if (defined('DEVELOPMENT_DEBUG') && constant('DEVELOPMENT_DEBUG')) {
-            $data['file'] = $this->getFile();
-            $data['line'] = $this->getLine();
-        }
-
-        header('Content-Type: application/json');
-        echo JSON::encode($data);
-
-        exit(0);
     }
 }

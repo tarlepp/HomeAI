@@ -33,7 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @version 1.4-dev
+ * @version 1.3.1
  * @copyright 2004-2012 Ryan Parman, Geoffrey Sneddon, Ryan McCue
  * @author Ryan Parman
  * @author Geoffrey Sneddon
@@ -50,7 +50,7 @@ define('SIMPLEPIE_NAME', 'SimplePie');
 /**
  * SimplePie Version
  */
-define('SIMPLEPIE_VERSION', '1.4-dev');
+define('SIMPLEPIE_VERSION', '1.3.1');
 
 /**
  * SimplePie Build
@@ -1196,16 +1196,6 @@ class SimplePie
 	}
 
 	/**
-	 * Enable throwing exceptions
-	 *
-	 * @param boolean $enable Should we throw exceptions, or use the old-style error property?
-	 */
-	public function enable_exceptions($enable = true)
-	{
-		$this->enable_exceptions = $enable;
-	}
-
-	/**
 	 * Initialize the feed object
 	 *
 	 * This is what makes everything happen.  Period.  This is where all of the
@@ -1973,21 +1963,7 @@ class SimplePie
 	 */
 	public function sanitize($data, $type, $base = '')
 	{
-		try
-		{
-			return $this->sanitize->sanitize($data, $type, $base);
-		}
-		catch (SimplePie_Exception $e)
-		{
-			if (!$this->enable_exceptions)
-			{
-				$this->error = $e->getMessage();
-				$this->registry->call('Misc', 'error', array($this->error, E_USER_WARNING, $e->getFile(), $e->getLine()));
-				return '';
-			}
-
-			throw $e;
-		}
+		return $this->sanitize->sanitize($data, $type, $base);
 	}
 
 	/**

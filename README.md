@@ -35,6 +35,7 @@ http://wunder.sytes.net/HomeAI/ - maybe down or not, may work or not, no guarant
 - qTip2 (http://craigsworks.com/projects/qtip2/)
 - YUI Compressor (http://developer.yahoo.com/yui/compressor/)
 - SimplePie (http://www.simplepie.org/)
+- password_compat (https://github.com/ircmaxell/password_compat)
 - <em>This list will be updated</em>
 
 ### Requirements

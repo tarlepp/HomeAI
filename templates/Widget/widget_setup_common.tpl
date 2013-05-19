@@ -1,12 +1,24 @@
+{if isset($data.title)}
+    {assign var="_title" value=$data.title}
+{else}
+    {assign var="_title" value=""}
+{/if}
+
+{if isset($data.refresh)}
+    {assign var="_refresh" value=$data.refresh}
+{else}
+    {assign var="_refresh" value=""}
+{/if}
+
 <div class="control-group">
     <label class="control-label span3">Widget title</label>
     <div class="controls span9">
-        <input type="text" name="title" class="span9" placeholder="Input widget title" />
+        <input type="text" name="title" class="span9" placeholder="Input widget title" value="{$_title}" />
         <span class="help-block"></span>
     </div>
 </div>
 
-<div class="control-group">
+<div class="control-group{if isset($data.id)} hidden{/if}">
     <label class="control-label span3">Column where to add</label>
     <div class="controls span9">
         <select name="column" class="span9">
@@ -19,43 +31,46 @@
     <div class="control-group">
         <div class="controls span9 offset3">
             <label class="checkbox">
-                <input id="widgetSetupRefreshCheckbox" name="refreshActive" type="checkbox"  value="1" />
+                <input id="widgetSetupRefreshCheckbox" name="refreshActive" type="checkbox" value="1" />
                 Configure refresh time?
             </label>
         </div>
     </div>
+{/if}
 
-    <div class="widgetSetupRefresh hide">
-        <div class="control-group control-group-slider">
-            <label class="control-label control-label-slider span3">hours</label>
-            <div class="controls span9">
-                <div id="widgetSetupRefreshHours" class="sliderInput span9" data-index="0" data-min="0" data-max="23"></div>
-            </div>
-        </div>
-        <div class="control-group control-group-slider">
-            <label class="control-label control-label-slider span3">minutes</label>
-            <div class="controls span9">
-                <div id="widgetSetupRefreshMinutes" class="sliderInput span9" data-index="1" data-min="0" data-max="59"></div>
-            </div>
-        </div>
-        <div class="control-group control-group-slider">
-            <label class="control-label control-label-slider span3">seconds</label>
-            <div class="controls span9">
-                <div id="widgetSetupRefreshSeconds" class="sliderInput span9" data-index="2" data-min="0" data-max="59"></div>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label span3">Refresh every</label>
-            <div class="controls span9 input-append">
-                <input name="refreshValue" class="span2 pagination-right" type="text" value="" />
-                <span class="add-on">/ seconds</span>
-                <span id="widgetSetupRefreshTime" class="add-on">00:00:00</span>
-            </div>
-            <span class="controls span9 help-block hide"></span>
+<div class="widgetSetupRefresh hide">
+    <div class="control-group control-group-slider">
+        <label class="control-label control-label-slider span3">hours</label>
+        <div class="controls span9">
+            <div id="widgetSetupRefreshHours" class="sliderInput span9" data-index="0" data-min="0" data-max="23"></div>
         </div>
     </div>
+    <div class="control-group control-group-slider">
+        <label class="control-label control-label-slider span3">minutes</label>
+        <div class="controls span9">
+            <div id="widgetSetupRefreshMinutes" class="sliderInput span9" data-index="1" data-min="0" data-max="59"></div>
+        </div>
+    </div>
+    <div class="control-group control-group-slider">
+        <label class="control-label control-label-slider span3">seconds</label>
+        <div class="controls span9">
+            <div id="widgetSetupRefreshSeconds" class="sliderInput span9" data-index="2" data-min="0" data-max="59"></div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label span3">Refresh every</label>
+        <div class="controls span9 input-append">
+            <input name="refreshValue" class="span2 pagination-right" type="text" value="{$_refresh}" />
+            <span class="add-on">/ seconds</span>
+            <span id="widgetSetupRefreshTime" class="add-on">00:00:00</span>
+        </div>
+        <span class="controls span9 help-block hide"></span>
+    </div>
+</div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
+    var selectedColumn = '{if isset($data.column)}{$data.column}{/if}';
+
     {literal}
     function getWidgetValidationRulesDefault() {
         return {
@@ -73,13 +88,10 @@
         }
     }
 
-
     function getWidgetDataDefault() {
         var container = jQuery('#widgetSetup');
         var form = container.find('form');
-        var output = {
-            errors: []
-        };
+        var output = {};
 
         var elements = {
             title: {
@@ -155,10 +167,18 @@
         });
 
         jQuery.each(options, function(key, value) {
-            columnSelect.append(jQuery('<option>', { value : key }).text(value));
+            var data = {
+                value: key
+            };
+
+            if (key == selectedColumn) {
+                jQuery.extend(data, {selected: 'selected'});
+            }
+
+            columnSelect.append(jQuery('<option>', data).text(value));
         });
 
-        if (refreshValueContainer.val().length > 0) {
+        if (refreshValueContainer.val().length > 0 && parseInt(refreshValueContainer.val(), 10) > 0) {
             container.find('#widgetSetupRefreshCheckbox').prop('checked', true);
 
             refreshContainer.toggleClass('hide');
@@ -213,7 +233,7 @@
                 parseInt(value / 60 ) % 60,
                 value % 60
             ];
-            console.log(jQuery(this).val());
+
             timeBits = jQuery.map(timeBits, function(value) {
                 return isNaN(value) ? 0 : value;
             });
@@ -236,5 +256,4 @@
         return (t.length == 1) ? "0" + t : t;
     }
     {/literal}
-    </script>
-{/if}
+</script>

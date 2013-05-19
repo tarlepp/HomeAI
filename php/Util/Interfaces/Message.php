@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\Message.php
  *
- * @package     Util
- * @subpackage  Message
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\Message -class.
  *
- * @package     Util
- * @subpackage  Message
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

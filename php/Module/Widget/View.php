@@ -149,11 +149,18 @@ class View extends MView implements Interfaces\View
      */
     public function makeSetupCurl(array $widget, array $data)
     {
-        $template = $this->smarty->createTemplate('widget_setup_curl.tpl', $this->smarty);
-        $template->assign('widget', $widget);
-        $template->assign('data', $data);
+        // Used widget metadata
+        $metadata = array(
+            '_url'      => 'url',
+            '_type'     => 'type',
+            '_headers'  => 'headers',
+            '_postData' => 'postData',
+        );
 
-        return $template->fetch();
+        // Used template file
+        $template = 'widget_setup_curl.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
     }
 
     /**
@@ -166,11 +173,76 @@ class View extends MView implements Interfaces\View
      *
      * @return  string          HTML content for RSS widget -setup
      */
-    public function makeSetupRss($widget, $data)
+    public function makeSetupRss(array $widget, array $data)
     {
-        $template = $this->smarty->createTemplate('widget_setup_rss.tpl', $this->smarty);
+        // Used widget metadata
+        $metadata = array(
+            '_url'      => 'url',
+            '_limit'    => 'limit',
+        );
+
+        // Used template file
+        $template = 'widget_setup_rss.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
+    }
+
+    /**
+     * Method makes Clock widget setup GUI. This is shown in jQuery dialog.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for Clock widget -setup
+     */
+    public function makeSetupClock(array $widget, array $data)
+    {
+        // Used widget metadata
+        $metadata = array();
+
+        // Used template file
+        $template = 'widget_setup_clock.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
+    }
+
+    /**
+     * Method makes Egg Timer widget setup GUI. This is shown in jQuery dialog.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   HTML form data
+     *
+     * @return  string          HTML content for Egg Timer widget -setup
+     */
+    public function makeSetupEggTimer(array $widget, array $data)
+    {
+        // Used widget metadata
+        $metadata = array();
+
+        // Used template file
+        $template = 'widget_setup_eggtimer.tpl';
+
+        return $this->createTemplate($template, $widget, $data, $metadata);
+    }
+
+    /**
+     * @param   string  $template   Used template file
+     * @param   array   $widget     Widget data
+     * @param   array   $data       HTML form data
+     * @param   array   $metadata   Widget metadata definitions
+     *
+     * @return  string              HTML content for specified widget -setup
+     */
+    private function createTemplate($template, array $widget, array $data, array $metadata)
+    {
+        $template = $this->smarty->createTemplate($template, $this->smarty);
         $template->assign('widget', $widget);
         $template->assign('data', $data);
+        $template->assign('metadata', $metadata);
 
         return $template->fetch();
     }

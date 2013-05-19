@@ -16,6 +16,7 @@ jQuery(document).ready(function() {
     // call for the minimal dashboard
     function initDashboard() {
         var dashboard = jQuery("#dashboard").dashboard({
+            widgetSaveUrl: pageBaseHref + 'Widget/Save/',
             widgetSetupUrl: pageBaseHref + 'Widget/Setup/',
             stateChangeUrl: pageBaseHref + 'Dashboard/Update/',
             json_data : {
@@ -76,7 +77,7 @@ jQuery(document).ready(function() {
         var dashboardWidget = jQuery('.widget');
         var loading = '<div class="loading"></div>';
 
-        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh widgetDelete", dashboardWidget, function(e, o) {
+        jQuery(document).on("widgetShow widgetOpen widgetClose widgetAdded widgetRefresh widgetDelete", '.widget', function(e, o) {
             //console.log(o.widget.id +" - event - "+ e.type);
 
             var widget = jQuery('#'+ o.widget.id);
@@ -100,7 +101,7 @@ jQuery(document).ready(function() {
 
                     if (refreshInterval) {
                         widgetIntervals[intervalId] = setInterval(function() {
-                            o.widget.refreshContent();
+                            o.widget.refreshContentSilently();
                         }, refreshInterval * 1000);
                     }
 
@@ -109,13 +110,13 @@ jQuery(document).ready(function() {
 
                     switch (o.widget.metadata.type) {
                         case 'curl':
-                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters);
+                            handleRequest(pageBaseHref +'Widget/Curl', widget, parameters, o.widget.metadata.type);
                             break;
                         case 'rss':
-                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters);
+                            handleRequest(pageBaseHref +'Widget/Rss', widget, parameters, o.widget.metadata.type);
                             break;
                         case 'highcharts':
-                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters);
+                            handleRequest(pageBaseHref +'Widget/Highcharts', widget, parameters, o.widget.metadata.type);
                             break;
                     }
                     break;
@@ -126,16 +127,37 @@ jQuery(document).ready(function() {
             }
         });
 
-        function handleRequest(url, widget, parameters) {
+        function handleRequest(url, widget, parameters, type) {
+            var dataType = 'text';
+
+            switch (type) {
+                case 'curl':
+                case 'rss':
+                    dataType = 'json';
+                    break;
+                case 'highcharts':
+                    break;
+            }
+
             jQuery.ajax({
                 url: url,
                 data: parameters,
-                dataType: 'text',
+                dataType: dataType,
                 beforeSend: function(){
                     widget.find('.widgetcontent').html(loading);
                 },
                 success: function(data) {
-                    widget.find('.widgetcontent').html(data);
+                    switch (type) {
+                        case 'curl':
+                        case 'rss':
+                            widget.find('.widgetcontent').html(data.content);
+                            break;
+                        case 'highcharts':
+                            widget.find('.widgetcontent').html(data);
+                            break;
+                    }
+
+                    widget.find('.dropdown-toggle').dropdown();
                 }
             });
         }
@@ -145,20 +167,12 @@ jQuery(document).ready(function() {
 
     var sideMenu = jQuery('#sideMenu');
 
-    sideMenu.find('div').on('mouseenter', function() {
-        jQuery(this).find('span').hide();
-
-        sideMenu.find('ul').show();
+    sideMenu.find('.dropdown-menu').on('click', 'a', function() {
+        sideMenu.find('.dropdown-menu').parent().removeClass('open');
     });
 
-    sideMenu.find('div').on('mouseleave', function() {
-        jQuery(this).find('span').show();
-
-        sideMenu.find('ul').hide();
-    });
-
-    sideMenu.find('a').on('click', function() {
-        sideMenu.find('ul').hide();
+    jQuery(document).on('click', '.widget .navbar .dropdown-menu li > a', function() {
+        jQuery(this).parent().parent().parent().removeClass('open');
     });
 });
 

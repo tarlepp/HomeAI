@@ -99,8 +99,19 @@ class Controller extends MController implements Interfaces\Controller
         // Get dashboard settings
         $settings = $this->request->get('settings');
 
+        $output = true;
+
         // Store current settings
-        $this->model->setWidgets(array('result' => $settings));
+        try {
+            $this->model->setWidgets(array('result' => $settings));
+        } catch (\Exception $error) {
+            $output = array(
+                'error'     => true,
+                'message'   => $error->getMessage(),
+            );
+        }
+
+        echo JSON::encode($output);
         exit(0);
     }
 

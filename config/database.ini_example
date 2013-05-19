@@ -17,6 +17,7 @@
 ; host          Hostname of SQL server
 ; port          Used port
 ; dbname        Name of the database
+; charset       Used charset in database
 ;
 ;  Below is an example of configuration set.
 ;
@@ -26,6 +27,7 @@
 ;   host     =  "localhost"
 ;   port     =  "3306"
 ;   dbname   =  "database"
+;   charset  =  "utf8"
 ;
 
 driver       =  ""

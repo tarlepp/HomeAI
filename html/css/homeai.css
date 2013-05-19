@@ -38,11 +38,6 @@ input[type="checkbox"] {
     padding-top: 42px;
 }
 
-footer, .wrapper {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 .push {
     height: 40px;
 }
@@ -67,6 +62,25 @@ footer, .wrapper {
     padding: 10px;
 }
 
+.ui-tooltip-rounded,
+.ui-tooltip-rounded .ui-tooltip-content {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.ui-tooltip-rounded .ui-tooltip-titlebar {
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.ui-tooltip-rounded .ui-tooltip-titlebar + .ui-tooltip-content {
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+}
+
 .ui-widget,
 .ui-dialog,
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button,
@@ -75,13 +89,21 @@ footer, .wrapper {
     font-size: 14px;
 }
 
-.ui-widget-header,
-.ui-dialog-header {
-    font-size: 16px;
+.ui-widget-header {
+    color: #000000;
 }
+
+.ui-dialog-title {
+    font-size: 16px;
+    font-weight: normal;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
 .ui-widget-content,
 .ui-dialog-content {
     font-size: 14px;
+    background-color: #FFFFFF;
+    background-image: none;
 }
 
 .ui-widget-content a {
@@ -102,12 +124,33 @@ footer, .wrapper {
 }
 
 .ui-dialog .ui-dialog-buttonpane {
-    margin: 0;
-    padding: 5px 3px 3px;
+    margin: 0 0 0 -2px;
+    padding: 5px 3px 3px 0;
+    text-align: right;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    width: 100%;
 }
 
 .ui-dialog .ui-dialog-titlebar {
+    margin: -0.2em;
+    margin-bottom: 0;
     padding: 5px 10px;
+    background-color: #fafafa;
+    background-image: -moz-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#d2d2d2));
+    background-image: -webkit-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -o-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: linear-gradient(to bottom, #ffffff, #d2d2d2);
+    background-repeat: repeat-x;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    border: none;
 }
 
 .ui-dialog .ui-dialog-buttonpane button {
@@ -118,8 +161,8 @@ footer, .wrapper {
     padding: 10px 5px 0 5px;
 }
 
-.ui-dialog .ui-dialog-titlebar-close span {
-    cursor: pointer;
+.ui-dialog-titlebar-close {
+    display: none;
 }
 
 .ui-dialog .form-horizontal .control-group {
@@ -173,4 +216,12 @@ footer, .wrapper {
 .text-mini {
     font-size: 10px;
     line-height: 12px;
+}
+
+span.help-block {
+    clear: left;
+}
+
+#loginDialogForm {
+    margin: 5px 0 10px 0;
 }

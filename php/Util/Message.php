@@ -2,18 +2,18 @@
 /**
  * \php\Uti\Message.php
  *
- * @package     Util
- * @subpackage  Message
- * @category    Util
+ * @package     HomeAI
+ * @subpackage  Util
+ * @category    Message
  */
 namespace HomeAI\Util;
 
 /**
  * Class to set different messages to message queue to be shown to users.
  *
- * @package     Util
- * @subpackage  Message
- * @category    Util
+ * @package     HomeAI
+ * @subpackage  Util
+ * @category    Message
  *
  * @date        $Date$
  * @author      $Author$

@@ -149,6 +149,15 @@
     cursor: pointer;
 }
 
+#layout-dialog .layoutchoice {
+    opacity: 0.7;
+}
+
+#layout-dialog .selected,
+#layout-dialog .layoutchoice:hover {
+    opacity: 1;
+}
+
 .widget {
     margin-bottom: 10px;
 }
@@ -187,57 +196,93 @@
     position: absolute;
     float: right;
     right: 0;
+    top: 47px;
     margin: 0;
     padding: 0;
 }
 
-#sideMenu span {
-    position: absolute;
-    top: 5px;
-    right: 0;
-    padding: 2px 10px 3px;
-    border: 1px solid #AAA;
+#sideMenu .navbar-inner {
+    padding: 0;
+    min-height: 21px;
+    background-image: -moz-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#d2d2d2));
+    background-image: -webkit-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: -o-linear-gradient(top, #ffffff, #d2d2d2);
+    background-image: linear-gradient(to bottom, #ffffff, #d2d2d2);
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
     border-right: none;
-    background: #CCC url(../../js/jQueryUI/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-    color: #666666;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
 }
 
-#sideMenu span:hover {
-    color: #000000;
+#sideMenu .navbar .nav {
+    margin: 0;
 }
 
-#sideMenu ul {
-    z-index: 900;
-    position: absolute;
-    top: 5px;
-    right: 0;
-    padding: 3px 7px;
-    border: 1px solid #AAA;
-    border-right: none;
-    list-style-type: none;
-    background: #CCC url(../../js/jQueryUI/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+#sideMenu .navbar .nav > li > a {
+    padding: 4px 0px 5px 5px;
 }
 
-#sideMenu ul li {
-    text-align: right;
-    white-space: nowrap;
-    margin: 0 0 0 5px;
+#sideMenu .navbar .nav > li > a i {
+    opacity: 0.3;
 }
 
-#sideMenu ul li i {
-    margin-left: 5px;
-    opacity: 0.6;
-}
-
-#sideMenu ul li a:hover i {
+#sideMenu .navbar .nav > li > a i:hover,
+#sideMenu .navbar .nav li.dropdown.open > .dropdown-toggle i,
+#sideMenu .navbar .nav li.dropdown.active > .dropdown-toggle i,
+#sideMenu .navbar .nav li.dropdown.open.active > .dropdown-toggle i {
     opacity: 1;
 }
 
-#sideMenu ul {
-    display: none;
+#sideMenu .navbar .nav .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 0;
+}
+
+#sideMenu .navbar .nav .dropdown-menu i {
+    position: relative;
+    left: -5px;
+    top: -1px;
+}
+
+#sideMenu .navbar .nav .dropdown-menu li > a {
+    font-size: 14px;
+    padding: 3px 10px;
+}
+
+#sideMenu .navbar .nav > li > .dropdown-menu::before {
+    right: 2px;
+    left: auto;
+}
+
+#sideMenu .navbar .nav > li > .dropdown-menu::after {
+    right: 3px;
+    left: auto;
+}
+
+@media (max-width: 979px) {
+    #sideMenu {
+        top: 46px;
+    }
+}
+
+@media (max-width: 767px) {
+    #sideMenu {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    #sideMenu {
+        display: none;
+    }
+}
+
+@media (max-width: 320px) {
+    #sideMenu {
+        display: none;
+    }
 }
 
 ul.fullscreen {
@@ -249,11 +294,20 @@ ul.fullscreen {
     min-height: 0;
     margin: 0 0 0 10px;
     padding: 0 0 40px 0;
+    border-radius: 4px;
 }
 
 .selectedcolumn {
     border: none;
-    background-color: rgba(200, 200, 200, 0.1);
+    background: #666666 url(../../js/jQueryUI/images/ui-bg_diagonals-thick_20_666666_40x40_light.png) 50% 50% repeat;
+}
+
+.column .widget.draggActivated {
+    opacity: 0.6;
+}
+
+.column .widget.draggedWidget {
+    opacity: 1;
 }
 
 .layout {

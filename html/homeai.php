@@ -16,6 +16,13 @@
 use \HomeAI\Core\Router;
 use \HomeAI\Core\Request;
 
+// We want to show all errors.
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
+
+// Specify HomeAI initialize time
+define('TIMESTART', str_replace(',', '.', microtime(true)));
+
 try {
     // Require initialize file
     require_once __DIR__ .'/../php/init.php';

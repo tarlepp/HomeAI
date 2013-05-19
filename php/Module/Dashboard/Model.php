@@ -70,6 +70,33 @@ class Model extends MModel implements Interfaces\Model
     }
 
     /**
+     * Method adds new widget to current user.
+     *
+     * @access  public
+     *
+     * @throws  Exception
+     *
+     * @param   array   $widget Widget data to be added
+     *
+     * @return  void
+     */
+    public function addWidget(array $widget)
+    {
+        // Get current user widgets
+        $widgets = $this->getWidgets();
+
+        // Check that user widgets are "valid"
+        if (!isset($widgets['result']['data']) || !is_array($widgets['result']['data'])) {
+            throw new Exception("Couldn't determine user widgets...");
+        }
+
+        // Add widget to data array
+        $widgets['result']['data'][] = $widget;
+
+        $this->setWidgets($widgets);
+    }
+
+    /**
      * Getter method for default widgets.
      *
      * TODO: Specify default widgets later...
@@ -92,6 +119,7 @@ class Model extends MModel implements Interfaces\Model
                         'column'        => 'first',
                         'open'          => true,
                         'url'           => $url . '/Widget/Clock',
+                        'method'        => 'Clock',
                     ),
                     array(
                         'id'            => 'EggTimer',
@@ -99,6 +127,7 @@ class Model extends MModel implements Interfaces\Model
                         'column'        => 'first',
                         'open'          => true,
                         'url'           => $url . '/Widget/EggTimer',
+                        'method'        => 'EggTimer',
                     ),
                     array(
                         'id'            => 'widget3',
@@ -113,6 +142,22 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                         'refresh'       => 120,
+                        'method'        => 'Rss',
+                    ),
+                    array(
+                        'id'            => 'widgetAmpparit',
+                        'title'         => 'Uusimmat uutiset (ampparit.com)',
+                        'column'        => 'second',
+                        'open'          => true,
+                        'metadata'      => array(
+                            'type'      => 'rss',
+                            'data'      => array(
+                                'url'   => 'http://feeds.feedburner.com/ampparit-uutiset',
+                                'limit' => 10,
+                            ),
+                        ),
+                        'refresh'       => 60,
+                        'method'        => 'Rss',
                     ),
                     array(
                         'id'            => 'widget4',
@@ -126,7 +171,8 @@ class Model extends MModel implements Interfaces\Model
                                 'limit' => 5,
                             ),
                         ),
-                        'refresh'       => 60,
+                        'refresh'       => 120,
+                        'method'        => 'Rss',
                     ),
                     array(
                         'id'            => 'widget5',
@@ -140,8 +186,8 @@ class Model extends MModel implements Interfaces\Model
                                 'url'   => 'http://wunder.sytes.net/fizzbuzz.php',
                             ),
                         ),
+                        'method'        => 'Curl',
                     ),
-                    /*
                     array(
                         'id'            => 'widget6',
                         'title'         => 'Highcharts example 1',
@@ -172,7 +218,6 @@ class Model extends MModel implements Interfaces\Model
                             ),
                         ),
                     ),
-                    */
                 ),
             ),
         );

@@ -2,8 +2,8 @@
 /**
  * \php\Util\String.php
  *
- * @package     Util
- * @subpackage  String
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    String
  */
 namespace HomeAI\Util;
@@ -11,8 +11,8 @@ namespace HomeAI\Util;
 /**
  * This class contains common string modifiers methods.
  *
- * @package     Util
- * @subpackage  String
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    String
  *
  * @date        $Date$

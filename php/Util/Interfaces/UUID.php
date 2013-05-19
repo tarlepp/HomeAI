@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\UUID.php
  *
- * @package     Util
- * @subpackage  UUID
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\UUID -class.
  *
- * @package     Util
- * @subpackage  UUID
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

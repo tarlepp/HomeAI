@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\JSON.php
  *
- * @package     Util
- * @subpackage  JSON
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\JSON -class.
  *
- * @package     Util
- * @subpackage  JSON
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

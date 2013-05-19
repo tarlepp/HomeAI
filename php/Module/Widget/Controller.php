@@ -13,6 +13,7 @@ use HomeAI\Core\Exception as ExceptionCore;
 use HomeAI\Util\String as String;
 use HomeAI\Util\JSON as JSON;
 use HomeAI\Util\UUID as UUID;
+use HomeAI\Util\System as System;
 
 /**
  * Controller class for 'Widget' -module.
@@ -75,6 +76,7 @@ class Controller extends MController implements Interfaces\Controller
     {
         // TODO
         echo "Make list of all available widgets or something?";
+        exit(__FILE__ .":". __LINE__);
     }
 
     /**
@@ -84,7 +86,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       Clock
      * @description This is a simple widget which will shown a clock with time and current date. Everybody needs a <em>clock</em>, right?
      * @category    Common
-     * @configure   false
      *
      * @access  public
      *
@@ -103,7 +104,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       Egg Timer
      * @description This widget is used to generate all-purpose egg timer. You can specify desired timer value and let the widget notify you when the <em>eggs are ready</em>... Everyone needs this!
      * @category    Common
-     * @configure   false
      *
      * @access  public
      *
@@ -121,7 +121,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       cURL
      * @description With this widget you can fetch specified url contents to be shown in widget content. You can specify used parameters for actual cURL request if those are needed.
      * @category    Network
-     * @configure   true
      * @refreshable true
      *
      * @access  public
@@ -137,11 +136,27 @@ class Controller extends MController implements Interfaces\Controller
         $postData = (array)$this->request->get('postData', array());
 
         if (is_null($url)) {
-            echo "URL not defined.";
+            $output = array(
+                'content'   => 'URL not defined.',
+                'headers'   => '',
+                'stats'     => '',
+            );
         } else {
-            echo $this->model->getCurlResponse($url, $type, $headers, $postData);
+            list($content, $status, $headers) = $this->model->getCurlResponse($url, $type, $headers, $postData);
+
+            // Determine memory usage and request time
+            $memory = System::getMemoryUsage(true);
+            $time = System::getProcessTime(true);
+
+            // Make output
+            $output = array(
+                'content'   => trim($content),
+                'headers'   => trim($headers),
+                'stats'     => "Request time: ". $time ."\nMemory usage: ". $memory,
+            );
         }
 
+        echo JSON::encode($output);
         exit(0);
     }
 
@@ -153,7 +168,6 @@ class Controller extends MController implements Interfaces\Controller
      * @title       RSS Reader
      * @description Generic RSS feed reader widget. With this you can specify desired RSS url where to fetch items to be shown in widget.
      * @category    Network
-     * @configure   true
      * @refreshable true
      *
      * @access  public
@@ -167,13 +181,31 @@ class Controller extends MController implements Interfaces\Controller
         $limit = $this->request->get('limit', 5);
 
         if (is_null($url)) {
-            echo "RSS feed URL not defined.";
+            $output = array(
+                'content'   => 'RSS feed URL not defined.',
+                'stats'     => '',
+            );
         } else {
             require_once PATH_BASE .'libs/simplepie/autoloader.php';
 
-            echo $this->view->makeRssFeed($this->model->getRssItems($url, $limit));
+            try {
+                $content = $this->view->makeRssFeed($this->model->getRssItems($url, $limit));
+            } catch (\Exception $error) {
+                $content = "Error: ". $error->getMessage();
+            }
+
+            // Determine memory usage and request time
+            $memory = System::getMemoryUsage(true);
+            $time = System::getProcessTime(true);
+
+            // Make output
+            $output = array(
+                'content'   => $content,
+                'stats'     => "Request time: ". $time ."\nMemory usage: ". $memory,
+            );
         }
 
+        echo JSON::encode($output);
         exit(0);
     }
 
@@ -186,9 +218,9 @@ class Controller extends MController implements Interfaces\Controller
      * method and used in actual view method.
      *
      * @title       Highcharts
-     * @description Generic Highcharts widget
+     * @description Generic Highcharts widget.
      * @category    Charts
-     * @configure   true
+     * @refreshable true
      *
      * @access  public
      *
@@ -351,6 +383,46 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
+     * Method handles widget save request. Method handles both 'insert' and 'update'
+     * actions for widgets. Method echoes widget data as a JSON string if save action
+     * was made successfully. Otherwise method echoes error JSON string which is
+     * processed in javascript.
+     *
+     * @throws  Exception
+     *
+     * @return  void
+     */
+    public function handleRequestSave()
+    {
+        try {
+            $type = (string)$this->request->get('type');
+            $data = (array)$this->request->get('data', array());
+            $widget = (array)$this->request->get('widget', array());
+
+            if (!(strcmp($type, 'update') === 0 || strcmp($type, 'insert') === 0)) {
+                throw new Exception("Unknown type.");
+            }
+
+            if (empty($data)) {
+                throw new Exception("Missing widget content data.");
+            }
+
+            if (empty($widget)) {
+                throw new Exception("Missing widget data.");
+            }
+
+            $output = $this->model->store($type, $data, $widget);
+        } catch (\Exception $error) {
+            $output = array(
+                'error' => $error->getMessage(),
+            );
+        }
+
+        echo JSON::encode($output);
+        exit(0);
+    }
+
+    /**
      * Generic widget setup handler.
      *
      * @access  public
@@ -367,6 +439,14 @@ class Controller extends MController implements Interfaces\Controller
 
         // Determine setup method name
         $method = 'widgetSetup'. $widgetName;
+
+        if (empty($widget)) {
+            $widget = $this->getWidgetData($widgetName);
+
+            if (!is_array($widget)) {
+                die('TODO '. __FILE__ .":". __LINE__);
+            }
+        }
 
         // Call actual widget setup method if it exists, otherwise show error
         if (method_exists($this, $method)) {
@@ -409,8 +489,68 @@ class Controller extends MController implements Interfaces\Controller
     }
 
     /**
-     * @param   array   $comments
-     * @param   string  $methodName
+     * Method makes setup for 'Clock' -widget.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   Widget content data
+     *
+     * @return  void
+     */
+    public function widgetSetupClock(array $widget, array $data)
+    {
+        echo $this->view->makeSetupClock($widget, $data);
+    }
+
+    /**
+     * Method makes setup for 'Egg Timer' -widget.
+     *
+     * @access  public
+     *
+     * @param   array   $widget Widget data
+     * @param   array   $data   Widget content data
+     *
+     * @return  void
+     */
+    public function widgetSetupEggTimer(array $widget, array $data)
+    {
+        echo $this->view->makeSetupEggTimer($widget, $data);
+    }
+
+    /**
+     * Method determines specified widget data. Widget data is determined
+     * via it's metadata which is defined to actual widget -method comments.
+     *
+     * @param   string  $widgetName
+     *
+     * @return  array|null
+     */
+    private function getWidgetData($widgetName)
+    {
+        // Specify widget method name
+        $method = 'handleRequest'. $widgetName;
+
+        // Get widget comments and parse it
+        $method = new \ReflectionMethod($this, $method);
+        $comments = String::parseDocBlock($method->getDocComment());
+
+        // No valid widget
+        if (!$this->isWidget($comments, $method->getName())) {
+            return null;
+        }
+
+        return $comments;
+    }
+
+    /**
+     * Method checks if specified comment block contains all necessary widget
+     * metadata information or not.
+     *
+     * Note that method will modify given comment block data array.
+     *
+     * @param   array   $comments   Method comments
+     * @param   string  $methodName Name of the method
      *
      * @return  bool
      */
@@ -419,6 +559,13 @@ class Controller extends MController implements Interfaces\Controller
         // Store HomeAI base url
         $url = $this->request->getBaseUrl(false, true);
 
+        if (is_readable(PATH_BASE .'html/images/widget/'. str_replace('handleRequest', '', $methodName) .'.jpg')) {
+            $image = $url .'images/widget/'. str_replace('handleRequest', '', $methodName) .'.jpg';
+        } else {
+            $image = $url .'images/widget/no_image.jpg';
+        }
+
+        // Widget metadata properties
         $properties = array(
             'id'            => array(
                 'required'  => false,
@@ -443,11 +590,7 @@ class Controller extends MController implements Interfaces\Controller
             ),
             'image'         => array(
                 'required'  => false,
-                'default'   => $url .'images/widgets/'. str_replace('handleRequest', '', $methodName) .'.jpg',
-            ),
-            'configure'     => array(
-                'required'  => true,
-                'convert'   => 'boolean'
+                'default'   => $image,
             ),
             'refreshable'   => array(
                 'required'  => false,
@@ -458,7 +601,6 @@ class Controller extends MController implements Interfaces\Controller
 
         // Iterate "default" properties
         foreach ($properties as $property => $values) {
-
             // Property is required, but it doesn't exists
             if ($values['required'] && !isset($comments[$property])) {
                 return false;

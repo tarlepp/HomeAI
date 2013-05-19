@@ -2,8 +2,8 @@
 /**
  * \php\Util\Interfaces\YuiCompressor.php
  *
- * @package     Util
- * @subpackage  YuiCompressor
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  */
 namespace HomeAI\Util\Interfaces;
@@ -11,8 +11,8 @@ namespace HomeAI\Util\Interfaces;
 /**
  * Interface for \HomeAI\Util\YuiCompressor -class.
  *
- * @package     Util
- * @subpackage  YuiCompressor
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Interface
  *
  * @date        $Date$

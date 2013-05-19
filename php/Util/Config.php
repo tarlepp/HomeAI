@@ -2,8 +2,8 @@
 /**
  * \php\Util\Config.php
  *
- * @package     Util
- * @subpackage  Config
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Config
  */
 namespace HomeAI\Util;
@@ -13,8 +13,8 @@ namespace HomeAI\Util;
  *
  * Common purpose config class.
  *
- * @package     Util
- * @subpackage  Config
+ * @package     HomeAI
+ * @subpackage  Util
  * @category    Config
  *
  * @date        $Date$
