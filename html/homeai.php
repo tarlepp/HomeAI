@@ -2,7 +2,7 @@
 /**
  * \html\homeai.php
  *
- * All system request are handled via this file. Basicly this file initializes
+ * All system request are handled via this file. Basically this file initializes
  * system libraries to use and routes user to desired page.
  *
  * @package     HomeAI
